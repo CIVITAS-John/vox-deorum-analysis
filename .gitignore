@@ -1,0 +1,6 @@
+__pycache__
+.claude/settings.local.json
+copy-data.bat
+mount-drive.bat
+*_predictions.csv
+*_data.csv

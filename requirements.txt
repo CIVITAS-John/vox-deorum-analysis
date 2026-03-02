@@ -1,0 +1,18 @@
+# Core data manipulation and analysis
+pandas
+
+# Numerical computing
+numpy
+
+# Statistical analysis
+scipy
+statsmodels
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Jupyter notebook support (optional, for running notebooks)
+jupyter
+ipykernel

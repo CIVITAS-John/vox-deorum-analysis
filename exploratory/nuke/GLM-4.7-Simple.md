@@ -1,0 +1,37 @@
+# Turn Use Nuke Rationale — GLM-4.7-Simple
+
+8 / 174 players escalated `flavor_use_nuke` to 100 (4.6%).
+
+---
+
+**America** · Turn 370 · Conquest
+
+> CRISIS CONTINUES - Washington took MASSIVE bombardment damage (900+ over multiple attacks) and is at CRITICAL ~11 HP. Lost 2 Gatling Guns defending Washington area. Shoshone has 3+ Tanks, 2+ Light Tanks, 4 Triplanes, and 2 Bombers now in attack positions. Arsenal completion in Chicago (6 turns) and Manhattan Project in Washington (4 turns) are lifeline projects - must maintain maximum prioritization. Gratz to Greece for holding Argos despite Shoshone Tank pressure. Greek Dreadnought damaged but still supporting naval zone near Chicago. NO strategic direction changes - survival first, nuclear deterrence imminent. All survival-focused flavors (Defense: 100, Mobilization: 95, Happiness: 100, Production: 100, Gold: 100, Science: 100) remain essential. No offensive capability exists - Offense at 10 is accurate for current reality. UseNuke at 100 unchanged - nuclear retaliation begins in 4 turns.
+
+**Mongolia** · Turn 408 · Conquest
+
+> Polynesia's Manhattan Project completion adds nuclear threat dimension, but current strategy (VictoryCompetitiveness 9, WarBias 9, Boldness 8, Offense 100, UseNuke 100) already accounts for maximum defensive and offensive posture against both Portugal and secondary threats. Coalition (Germany/Austria/Celts) with 55+ votes remaining stable against Portugal's 35. Military coordination with Germany (70,424 strength) maintains pressure on Portugal. Nuclear Fission research (4 turns) proceeding toward Advanced Ballistics for missile capability. No relationship changes needed - Portugal hostility (-40/-45) maximum, Germany alliance (+65) stable, Austria/Celts supporting coalition. Flavors already optimized: Nuke 100, Offense 100, Air 95, Ranged 90, MilitaryTraining 95. Golden Age incoming offsets combat penalty from unhappy status. Maintain status quo to let existing planning execute nuclear-first strategy against Portugal while coalition keeps pressure.
+
+**The Ottomans** · Turn 409 · Conquest
+
+> Japan's naval devastation this turn requires maximum defensive posture. Antiair 100, Nuke/UseNuke 100 - nuclear deterrence and air defense are now survival priorities. Naval 85 (from 75) - rebuilding after 4 capital ship losses. Defense 98, CityDefense 100 - Japan bombarding our cities from coastal waters. Production 95, Mobilization 98 - rapid unit replacement critical. Science 90 - must accelerate research gap (Japan 69 techs vs our 64). Gold 85 - fund upgrades and maintain military at 3x disadvantage.
+
+**Songhai** · Turn 411 · UnitedNations
+
+> DIPLOMATIC BLOCKADE HOLDING AGAINST RUSSIA: Spain alliance (30 delegates) + my 13 + vassals (Ottomans 8 + Aztecs 5) = 56 votes vs Russia's 40 - blocking advantage INTACT with 10 turns until UN vote. Russia at 95% victory but cannot win if coalition holds. Recent setbacks: Destroyer destroyed by Russian attack submarines (events 17-24), Jet Fighter produced by Russia this turn. However, defensive lines solid: Gao (5,990 strength), Truro (5,692), Tombouctu (4,775), Jenne (4,764) all friendly dominance. Nuclear Fission research in 4 turns provides backup deterrent if Russia breaks through diplomatic blockade. Workers' Faculties in 2 turns accelerates science production. No strategic changes needed - current diplomatic defense + nuclear preparation approach最佳 balances existential diplomatic threat with military reality. Focus: (1) Maintain Spain alliance, (2) Accelerate nuclear Fission, (3) Strengthen defensive positions, (4) Reassign spies for critical city-state election rigging.
+
+**France** · Turn 421 · Conquest
+
+> CRITICAL ADJUSTMENT for Shoshone nuclear threat: Offense 100 - maximum aggression to capture Moson Kahni and eliminate nuclear weapons before launch. UseNuke raised to 100 - potential preemptive strike required given Shoshone ACTIVE atomic bomb in play. Naval 100 - France lost Fleet Destroyer this turn to Shoshone, need naval supremacy immediately. Antiair 100 - Shoshone Heavy Bombers/Fighters must be countered to protect ground advances. Nuke 100 - must stockpile nuclear counter-deterrence. Defense reduced to 65 - full offensive posture required. Gold 90 - funding critical upgrades and mobilization. Science 100 - Satellites and military technology urgent. Flavors optimized for rapid conquest of Shoshone nuclear and cultural infrastructure.
+
+**Sweden** · Turn 427 · Conquest
+
+> MAXIMUM OFFENSE: Iroquois Cultural Victory in 2 turns. Nuke flavor increased to 95, UseNuke to MAXIMUM 100 - nuclear strikes now acceptable if Stealth Bomber bombardment fails to destroy Iroquois cultural infrastructure. Science to 100 - Lasers research critical for Nuclear Missile capability as final deterrent. Offense/Mobilization/Ranged/Mobile/Air all at 100 - maximum military pressure on Iroquois cities. Espionage 95 - critical intelligence on Iroquois cities with tourism wonders. Air 100 - 2 new Stealth Bombers completed (ID 19453, 19454), need immediate deployment against Iroquois cultural targets. Gold 95 - funding unit purchases/builds for war. Lasers technology means Nuclear Missiles available in ~3-4 turns - must prepare for nuclear option if conventional assault cannot prevent Iroquois victory by turn 428.
+
+**Songhai** · Turn 458 · UnitedNations
+
+> Continuing United Nations strategy with defense emphasis ahead of nuclear capability. Nuclear Fission completes in 2 turns - Atomic Bombs provide deterrence. Defense increased to 90 (from 85) - our fortified positions are holding but America's military advantage requires stronger defensive posture. Antiair increased to 95 (from 90) - critical after losing Heavy Bomber to American interception; need stronger air defense. Mobilization increased to 55 (from 50) - accelerate military production including atomic infrastructure. Air at 90 continues successful bomber-interceptor tactics. Gold at 100 maximizes economy for unit purchases and city-state influence. Diplomacy at 100 remains critical for World Congress coalition against America's 30 delegates (voting in 5 turns). Nuke and UseNuke remain 100 - once Nuclear Fission completes, atomic weapons become priority deterrent. Science 85 maintains tech pace. Offense stays 40 - continue defensive attrition war until nuclear capability achieved.
+
+**America** · Turn 499 · Spaceship
+
+> Maximum Science (100) and Production (100) to accelerate Stealth research and subsequent Stealth Bomber construction for air parity. Air (100), Defense (100), Antiair (100), and CityDefense (85) address existential threat from Russia's 8 Stealth Bombers by prioritizing air defense infrastructure and protecting homeland. UseNuke (100) and Nuke (100) maintain nuclear deterrence posture after Russia's 2 SS Boosters - Russia must understand that launching would trigger our response despite lacking uranium stockpile. Espionage (100) maxed to monitor Russian spaceship part production in Moscow, Yekaterinburg, and key cities - our 10 spies in Russian cities provide critical intelligence on their victory timeline. Diplomacy reduced to 5 since World Congress voting is now; alliances with England and The Celts (Autocracy-aligned) should naturally align against Russia's UN proposal. Spaceship flavor set to 0 as Stealth research takes immediate precedence - spaceship parts scheduled once production capacity supports parts with Stealth Bomber protection.

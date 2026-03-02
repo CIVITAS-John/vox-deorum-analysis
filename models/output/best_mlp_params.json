@@ -1,0 +1,21 @@
+{
+  "model": "mlp",
+  "metric": "log_loss",
+  "direction": "minimize",
+  "best_value": 0.24519901120082901,
+  "best_params": {
+    "n_layers": 2,
+    "layer_size": 116,
+    "activation": "relu",
+    "alpha": 2.5568038381745084,
+    "learning_rate_init": 0.0010252286829735488,
+    "solver": "adam",
+    "max_iter": 1470,
+    "early_stopping": false,
+    "batch_size": 1000,
+    "calibrate": false,
+    "exclude_turn_progress": false
+  },
+  "n_trials": 1000,
+  "resample_method": "undersample"
+}
