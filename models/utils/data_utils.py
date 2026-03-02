@@ -232,6 +232,30 @@ def add_competitive_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def drop_transformed_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop original/intermediate columns that have been superseded by transformations."""
+    cols_to_drop = [
+        # Raw per-turn rates (-> adjusted -> shares)
+        'science_per_turn', 'culture_per_turn', 'tourism_per_turn',
+        'gold_per_turn', 'faith_per_turn', 'production_per_turn', 'food_per_turn',
+        # Raw absolute (-> adjusted -> share)
+        'military_strength',
+        # Intermediate adjusted columns (-> shares)
+        'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
+        'faith_adj', 'production_adj', 'food_adj', 'military_adj',
+        # Intermediate computation columns
+        'city_multiplier', 'max_players',
+        # Raw columns (-> shares/gaps)
+        'cities', 'population', 'territory', 'votes', 'minor_allies',
+        'technologies', 'policies',
+        # Raw columns (-> relative features)
+        'score', 'max_score', 'rank', 'max_turn',
+        # Text column (space savings)
+        'rationale',
+    ]
+    return df.drop(columns=[c for c in cols_to_drop if c in df.columns])
+
+
 # Feature group definitions
 FEATURE_GROUPS = {
     'shares': [
@@ -512,27 +536,8 @@ def load_and_prepare_data(
     df = add_relative_features(df)
     df = add_competitive_features(df)
 
-    # Drop original columns superseded by transformations
-    cols_to_drop = [
-        # Raw per-turn rates (-> adjusted -> shares)
-        'science_per_turn', 'culture_per_turn', 'tourism_per_turn',
-        'gold_per_turn', 'faith_per_turn', 'production_per_turn', 'food_per_turn',
-        # Raw absolute (-> adjusted -> share)
-        'military_strength',
-        # Intermediate adjusted columns (-> shares)
-        'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-        'faith_adj', 'production_adj', 'food_adj', 'military_adj',
-        # Intermediate computation columns
-        'city_multiplier', 'max_players',
-        # Raw columns (-> shares/gaps)
-        'cities', 'population', 'territory', 'votes', 'minor_allies',
-        'technologies', 'policies',
-        # Raw columns (-> relative features)
-        'score', 'max_score', 'rank', 'max_turn',
-        # Text column (space savings)
-        'rationale',
-    ]
-    df = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
+    # Drop original/intermediate columns superseded by transformations
+    df = drop_transformed_columns(df)
 
     # Prepare features
     X, y = prepare_features(df)

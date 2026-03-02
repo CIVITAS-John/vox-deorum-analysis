@@ -561,7 +561,7 @@ def run_full_prediction(
             print("Resampling Method: None")
 
     # Load data (without creating CV splits)
-    from utils.data_utils import load_turn_data, apply_city_adjustments, add_relative_features, add_competitive_features, prepare_features
+    from utils.data_utils import load_turn_data, apply_city_adjustments, add_relative_features, add_competitive_features, prepare_features, drop_transformed_columns
 
     # Check if model needs full game data (e.g., PhaseEnsemble)
     needs_full_data = (
@@ -581,6 +581,7 @@ def run_full_prediction(
     df_train = apply_city_adjustments(df_train)
     df_train = add_relative_features(df_train)
     df_train = add_competitive_features(df_train)
+    df_train = drop_transformed_columns(df_train)
 
     # Prepare features for training
     X_train, y_train = prepare_features(df_train)
@@ -633,6 +634,7 @@ def run_full_prediction(
     df_all = apply_city_adjustments(df_all)
     df_all = add_relative_features(df_all)
     df_all = add_competitive_features(df_all)
+    df_all = drop_transformed_columns(df_all)
     X_all, _ = prepare_features(df_all)
 
     if verbose:

@@ -10,6 +10,7 @@ from .data_utils import (
     prepare_features,
     get_kfold_splits,
     load_and_prepare_data,
+    drop_transformed_columns,
     FEATURE_GROUPS,
     get_all_available_features,
     get_feature_group
@@ -38,6 +39,7 @@ __all__ = [
     'prepare_features',
     'get_kfold_splits',
     'load_and_prepare_data',
+    'drop_transformed_columns',
     'FEATURE_GROUPS',
     'get_all_available_features',
     'get_feature_group',
