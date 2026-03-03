@@ -141,6 +141,16 @@ CONDITION_PLAYER_MAPPING = {
         'GPT-OSS-120B-Simple',   # Player 6
         'GPT-OSS-120B-Briefed'   # Player 7
     ],
+    '2026-oss-v-qwen-v-minimax-standard': [
+        'Vanilla',             # Player 0
+        'Vanilla',             # Player 1
+        'Qwen-3.5-Simple',   # Player 2
+        'Qwen-3.5-Briefed',   # Player 3
+        'Minimax-M2.5-Simple',   # Player 4
+        'Minimax-M2.5-Briefed',   # Player 5
+        'GPT-OSS-120B-Simple',   # Player 6
+        'GPT-OSS-120B-Briefed'   # Player 7
+    ],
     '2026-glm-v-kimi2-v-minimax-standard': [
         'Vanilla',             # Player 0
         'Vanilla',             # Player 1
@@ -230,6 +240,7 @@ MODEL_COLORS = {
     'Minimax-M2.5': '#984EA3',    # Purple
     'Kimi-K2': '#E377C2',         # Pink/Magenta
     'Deepseek-3.2': '#8C564B',    # Brown
+    'Qwen-3.5': '#E41A1C',       # Red
     'Vanilla': '#999999',         # Gray
 }
 
