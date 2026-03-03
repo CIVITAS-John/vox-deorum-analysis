@@ -117,6 +117,8 @@ def _fetch_flavor_events(cursor, major_players):
 
     # Deduplicate per (player, turn): keep latest row, but don't let a
     # non-changed row override a changed one.
+    # When a duplicate would overwrite an entry, try to reassign
+    # the earlier (displaced) entry to turn-1 instead of dropping it.
     latest = {}  # (player_id, turn) -> (flavor_values, grand_strategy, rationale, changes_json, is_changed)
     for row in cursor.fetchall():
         player_id = row[0]
@@ -129,9 +131,33 @@ def _fetch_flavor_events(cursor, major_players):
 
         key = (player_id, turn)
         existing = latest.get(key)
-        if existing is not None and existing[4] == 1 and is_changed == 0:
+        if existing is None:
+            latest[key] = (flavor_values, grand_strategy, rationale, changes_json, is_changed)
+        elif existing[4] == 1 and is_changed == 0:
             continue  # don't let a non-changed row override a changed one
-        latest[key] = (flavor_values, grand_strategy, rationale, changes_json, is_changed)
+        else:
+            # New entry takes the current slot; cascade displaced entry backward
+            displaced = existing
+            latest[key] = (flavor_values, grand_strategy, rationale, changes_json, is_changed)
+
+            # Iteratively reassign displaced entries to turn-1, turn-2, etc.
+            cascade_turn = turn - 1
+            while displaced is not None:
+                prev_key = (player_id, cascade_turn)
+                prev_existing = latest.get(prev_key)
+
+                if prev_existing is None:
+                    # Empty slot found — place displaced entry and stop
+                    latest[prev_key] = displaced
+                    break
+                elif prev_existing[4] == 1 and displaced[4] == 0:
+                    # Non-changed can't override changed — chain breaks, drop displaced
+                    break
+                else:
+                    # Displace existing entry, continue cascading
+                    latest[prev_key] = displaced
+                    displaced = prev_existing
+                    cascade_turn -= 1
 
     # Convert to per-player sorted event lists
     result = {}

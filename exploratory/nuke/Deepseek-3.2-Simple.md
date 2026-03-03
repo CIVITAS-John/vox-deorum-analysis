@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Deepseek-3.2-Simple
 
-20 / 112 players escalated `flavor_use_nuke` to 100 (17.9%).
+20 / 115 players escalated `flavor_use_nuke` to 100 (17.4%).
 
 ---
 
@@ -44,17 +44,17 @@
 
 > The situation has escalated: peace treaty with Netherlands ends in 1 turn, England's treaty ends in 4 turns. The Netherlands is actively reinforcing with new units (Fleet Destroyer, Fighter, Heavy Bomber) and is contesting Polynesia at Aotearoa. We must prepare for immediate war. Increase UseNuke to 100 to prioritize Atomic Bomb development (Manhattan Project in 3 turns at Nimrud). Maintain Air, Antiair, and Mobilization at maximum to counter Dutch air superiority and produce units rapidly. Diplomacy at 90 to secure city-state alliances against Dutch diplomatic lead; Espionage at 100 to gather intelligence and counter spies. Science and Production remain critical to maintain tech edge and unit output.
 
-**Portugal** · Turn 410 · Conquest
+**Portugal** · Turn 409 · Conquest
 
-> Our strategic focus remains unchanged: we are in a total war to secure a domination victory. We are simultaneously besieging Athens (Greek capital), Cape Town (Greek ally), and Ephesus (Greek city). With our current overwhelming military dominance and production of atomic bombs, we must press the offensive to eliminate Greece quickly and then turn our attention to Maya and Netherlands. I've boosted Offense and Mobilization to maximum (100) to ensure the AI prioritizes finishing these sieges and building additional modern units (atomic bombs, infantry, tanks, artillery, and air support). Production at 100 is critical to churn out military units and atomic bombs from our high-production cities. All other values are maintained to support this total war effort.
+> We are shifting our military focus towards nuclear capabilities and naval superiority in preparation for the final wars of conquest.
 
 **France** · Turn 413 · Conquest
 
 > We are researching Atomic Theory next to unlock nuclear weapons. Setting Nuke and UseNuke flavors to 100 ensures we prioritize building nukes and are willing to use them strategically once available. This will be crucial for breaking Germany's heavily fortified coastal capitals (Berlin and Beijing) and accelerating the endgame. Other military flavors remain high to sustain our overwhelming conventional advantage.
 
-**The Shoshone** · Turn 429 · Conquest
+**The Shoshone** · Turn 428 · Conquest
 
-> We are in the final stages of domination victory. Our immediate targets are Spanish capitals Madrid and Cordoba, which require nuclear bombardment followed by ground assault. We must prioritize nuclear production (Nuke/UseNuke at 100) and naval/air supremacy to project power across oceans. Maintaining high production, gold, and science ensures we can continuously build military units and upgrade our forces. We increased Happiness flavor to 100 to address our unhappiness combat penalty by building happiness buildings and capturing cities with luxuries. Diplomatic and espionage flavors secure our city-state alliances and intelligence on enemy movements. Zero expansion/wonder focus as we are in total war mode.
+> We are in the final stages of domination victory. Our immediate targets are Spanish capitals Madrid and Cordoba, which require nuclear bombardment followed by ground assault. We must prioritize nuclear production (Nuke/UseNuke at 100) and naval/air supremacy to project power across oceans. Maintaining high production, gold, and science ensures we can continuously build military units and upgrade our forces. Diplomatic and espionage flavors secure our city-state alliances and intelligence on enemy movements. Zero expansion/wonder focus as we are in total war mode.
 
 **The Inca** · Turn 433 · Conquest
 

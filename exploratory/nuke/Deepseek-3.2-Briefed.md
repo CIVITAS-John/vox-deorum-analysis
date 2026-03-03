@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Deepseek-3.2-Briefed
 
-2 / 112 players escalated `flavor_use_nuke` to 100 (1.8%).
+2 / 115 players escalated `flavor_use_nuke` to 100 (1.7%).
 
 ---
 

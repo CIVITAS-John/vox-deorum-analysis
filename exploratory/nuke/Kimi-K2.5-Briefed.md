@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Briefed
 
-11 / 119 players escalated `flavor_use_nuke` to 100 (9.2%).
+11 / 122 players escalated `flavor_use_nuke` to 100 (9.0%).
 
 ---
 
@@ -16,13 +16,13 @@
 
 > EMERGENCY FINAL GAMBIT: Passport System will pass in 2 turns with 46 YES votes (my 'allies' betrayed me). Maya will get 50% tourism boost and become Influential over me immediately - cultural victory is inevitable in 2-3 turns. ONLY HOPE: Science victory before Maya's cultural victory triggers. Need to purchase Great Scientists IMMEDIATELY with Faith (180/turn), rush to Information Era, build spaceship parts. Also preparing maximum military mobilization - if I'm going to lose, I take Maya down with me through nuclear annihilation. Total war footing - no defense, all offense, all science.
 
+**Persia** · Turn 391 · Spaceship
+
+> T391 CRITICAL PRODUCTION CORRECTION: Military briefing confirms AA-Gun production failed to start in Tarsus and Research Lab missing in Gordium despite defensive priorities. Reduce Offense 70→50 and Mobile 85→70 to focus AI bandwidth on critical infrastructure. Increase UseNuke 85→100 to ensure immediate atomic deployment upon Manhattan Project completion. Increase Espionage 75→85 to capitalize on successful Panama City election rigging and continued Hunnic/Siamese intelligence operations. Maintain all defensive, antiair, and nuclear production priorities at maximum.
+
 **Sweden** · Turn 392 · Spaceship
 
 > SURVIVAL FLAVOR MATRIX: Grand Strategy Spaceship maintains - we have NO other path except Science Victory before Spain's culture wins or launches spaceship. Defense 100 is maximum - Antium at 23 HP requires every defensive priority. Air 100 still critical - Aerodrome MUST be next build in Stockholm. Production 100 enables rapid Landship/AA gun construction. Nuke 100/UseNuke 100 - Spain's cultural dominance (287% over us) and Apollo completion means conventional war is unwinnable. Nuclear weapons are only asymmetric option to destroy their spaceship parts or Dreadnought fleets. Offense 0 - we cannot attack, only defend and deter.
-
-**Persia** · Turn 392 · Spaceship
-
-> T391 CRITICAL PRODUCTION CORRECTION: Military briefing confirms AA-Gun production failed to start in Tarsus and Research Lab missing in Gordium despite defensive priorities. Reduce Offense 70→50 and Mobile 85→70 to focus AI bandwidth on critical infrastructure. Increase UseNuke 85→100 to ensure immediate atomic deployment upon Manhattan Project completion. Increase Espionage 75→85 to capitalize on successful Panama City election rigging and continued Hunnic/Siamese intelligence operations. Maintain all defensive, antiair, and nuclear production priorities at maximum.
 
 **The Ottomans** · Turn 420 · UnitedNations
 

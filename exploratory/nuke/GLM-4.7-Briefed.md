@@ -4,9 +4,9 @@
 
 ---
 
-**Mongolia** · Turn 395 · Conquest
+**Mongolia** · Turn 394 · Conquest
 
-> ETHIOPIA CULTURAL VICTORY IMMINENT - NUCLEAR PRIORITY: Ethiopia has influenced all 7 civs and can win any turn. Nuclear Fission is critical but 11+ turns away through Atomic Theory. INCREASED Recon to 50 (from 30) to locate Ethiopian cities for nuclear targeting faster - we MUST identify tourism infrastructure now to strike immediately when nuclear capability arrives. AirCarrier to 60 for potential naval-based nuclear delivery if coastal Ethiopian cities exist. Airlift to 90 for rapid unit redeployment. Defense reduced to 40 to free resources for offense. Production, Science, Nuke, UseNuke all maxed. Espionage to 100 to track Ethiopia's victory progress and identify tourism cities. Japan is Close to Ethiopia and already at war - encourage their offensive heavily while we build nuclear capability.
+> ETHIOPIA VICTORY IMMINENT - ALL-ONS: Ethiopia has 7/7 civs influenced and can win Cultural Victory ANY turn. Maximized Nuke and UseNuke to 100 (nuclear weapons are our only realistic option to destroy their tourism infrastructure given 30+ tile distance). Science maximized to 100 for urgent race to Nuclear Fission and atomic capabilities. Airlift increased to 80 for rapid troop deployment once forward bases established. Offense, Mobile, Air, Mobilization, Production all at 100 for maximum war readiness. Recon at 30 to find Ethiopian cities for nuclear targeting. Navy increased to 60 (from 50) for potential coastal delivery of nuclear weapons or establishing beachheads. Defense at 50 to conserve resources for offense. Every turn we delay is another turn Ethiopia might win - aggressive preparation for nuclear strike is the only viable path.
 
 **The Huns** · Turn 409 · Conquest
 

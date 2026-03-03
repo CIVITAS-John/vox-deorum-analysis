@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — GPT-OSS-120B-Simple
 
-2 / 118 players escalated `flavor_use_nuke` to 100 (1.7%).
+2 / 120 players escalated `flavor_use_nuke` to 100 (1.7%).
 
 ---
 
@@ -8,6 +8,6 @@
 
 > Maximize our nuclear capabilities and carrier support to decisively strike Polynesian island forts, while maintaining our current aggressive conquest posture and strong production, gold, and happiness engines.
 
-**Assyria** · Turn 365 · Conquest
+**Assyria** · Turn 364 · Conquest
 
-> Our empire suffers from low happiness (46%) causing combat penalties and high war weariness. Raising the Happiness flavor to 100 will prioritize happiness‑generating buildings and policies, improving combat effectiveness. Boosting CityDefense and Defense to better protect our key cities while we continue the conquest. Raising Science to 95 supports rapid research of our next tech, Nuclear Device, essential for our Nuke strategy.
+> Maintain the aggressive Conquest strategy while boosting nuclear capability and espionage to counter Rome's nuclear strike and spy activity. Keep production and mobilization at maximum to replace losses quickly and sustain offensive pressure on hostile capitals.
