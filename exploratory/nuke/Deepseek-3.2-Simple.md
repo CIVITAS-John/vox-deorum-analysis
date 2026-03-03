@@ -10,7 +10,7 @@
 
 **Songhai** · Turn 369 · Conquest
 
-> China has declared war, confirming our preemptive preparations. Our current flavor settings are optimal for multi-front conquest: maximum offense, nuclear focus, and strong economic backing. Egypt's military movements into our territory indicate allied support. We must continue pressing our advantages against The Aztecs and Japan while engaging China, aiming to secure nuclear weapons soon to break their defenses.
+> Increasing UseNuke and Nuke flavors to maximum ensures the in-game AI prioritizes nuclear arsenal buildup and aggressive nuclear strike planning once we unlock Atomic Bombs. This aligns with our imminent war against China and The Maya, where nuclear weapons will be decisive in overcoming their numerical and defensive advantages. All other military and economic flavors remain high to sustain multi-front warfare and rapid conquest.
 
 **The Iroquois** · Turn 396 · Conquest
 
@@ -50,7 +50,7 @@
 
 **France** · Turn 413 · Conquest
 
-> Our current strategic direction remains sound. We are on the verge of capturing Florence (down to 7% health) and Vientiane (31% health), which will eliminate Siam and remove an Assyrian ally. Our military production and naval superiority are strong, and the focus on Atomic Theory for nuclear weapons will be crucial for breaking Germany's coastal defenses once the peace treaty expires in 2 turns. The existing flavor settings prioritize conquest, nuke development, and naval/air dominance, which align with our immediate goals. No adjustment is needed at this time.
+> We are researching Atomic Theory next to unlock nuclear weapons. Setting Nuke and UseNuke flavors to 100 ensures we prioritize building nukes and are willing to use them strategically once available. This will be crucial for breaking Germany's heavily fortified coastal capitals (Berlin and Beijing) and accelerating the endgame. Other military flavors remain high to sustain our overwhelming conventional advantage.
 
 **The Shoshone** · Turn 429 · Conquest
 
@@ -74,7 +74,7 @@
 
 **Denmark** · Turn 456 · Conquest
 
-> Maintaining current aggressive strategy with Conquest grand strategy and maxed military flavors. Our atomic bombs are now ready and positioned at Rapa Nui, with UseNuke and Nuke flavors at 100 to ensure they are employed against key targets. The AI is making progress on multiple fronts: bombarding Tahiti (England's last city), pressuring Polish cities, and engaging Roman forces. We are also building Apollo Program (1 turn left) as a backup. The existing persona, research (Lasers after Advanced Ballistics), and policy (Iron Curtain after People's Army) settings remain optimal for imminent large-scale warfare. No adjustments needed this turn.
+> Maintain aggressive military focus on capturing Polish, Roman, and soon Indonesian capitals. Increased UseNuke and Nuke to 100 to prioritize strategic nuclear strikes against enemy concentrations and cities, leveraging our atomic bomb stockpile. Air raised to 100 to maximize bomber and fighter effectiveness. All other high-priority flavors (Production, Science, Gold, Happiness, Diplomacy) kept at peak to support war economy, research, city-state alliances, and combat unhappiness penalty.
 
 **Siam** · Turn 459 · UnitedNations
 

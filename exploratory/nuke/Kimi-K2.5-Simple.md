@@ -1,12 +1,12 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Simple
 
-26 / 116 players escalated `flavor_use_nuke` to 100 (22.4%).
+26 / 119 players escalated `flavor_use_nuke` to 100 (21.8%).
 
 ---
 
 **Portugal** · Turn 355 · Conquest
 
-> Current war footing maintained. Research on Atomic Theory continues (11 turns) - cannot change mid-research. No policy slots available. All strategic elements aligned for desperate final assault on India before cultural victory triggers.
+> India is 100% Popular with me - on the verge of cultural victory. Must launch immediate total war with all available forces. Prioritizing air power, paratroopers, and nuclear preparation (Atomic Theory in 11 turns). Need maximum offensive punch to capture Indian cities before cultural victory triggers. Abandoning culture/diplomacy - only war matters now.
 
 **Indonesia** · Turn 367 · Spaceship
 
@@ -30,7 +30,7 @@
 
 **Germany** · Turn 384 · Conquest
 
-> Persona and relationships optimally configured: Austria 100/100 to resist Dutch influence, Netherlands -100/-100 for total war, Mongolia 100/100 for 5 crucial World Congress delegates. Rome at -60 public but they just captured Satricum - keeping hostile stance without escalation. Peace treaty with Songhai completed but they have defensive pact with Netherlands. No relationship changes needed - ALL EFFORT ON MILITARY DESTRUCTION OF DUTCH CULTURAL CENTERS.
+> Maximum offensive posture for existential cultural war. UseNuke 100 and Nuke 100 authorize nuclear strikes on Dutch cultural centers (Amsterdam/Rotterdam/Utrecht) to destroy tourism buildings before Netherlands influences Austria in 6 turns. Mobile 100 and Air 100 enable rapid strikes. Production 100 and Mobilization 100 ensure nuclear missile replacement. Netherlands at 97% with Austria - only 6 turns left. Must destroy their tourism NOW or lose cultural victory.
 
 **Venice** · Turn 388 · Conquest
 
@@ -42,7 +42,7 @@
 
 **Russia** · Turn 390 · Culture
 
-> Defensive posture is successfully holding against 3:1 Greek military superiority. All tactical zones show Friendly dominance around core cities. Current flavors (Defense 100, CityDefense 100, Mobilization 100, UseNuke 100) are optimal for survival until nuclear deterrence operational in 11 turns. Diplomacy at 80 is securing 42/43 votes needed to block Greek UN proposal. No flavor adjustments needed while existing strategy works.
+> Emergency defensive posture with nuclear deterrent imminent. Greece's 3:1 military superiority and diplomatic victory attempt in 6 turns creates existential crisis. Nuclear Fission completes in 1 turn with 14 uranium ready. Maximize UseNuke (100) for immediate atomic deployment. Maintain Defense/CityDefense/Mobilization at 100 to survive until deterrent operational. Reduce Naval from 95 to 85 as American destroyer threat is severe but manageable. Boost Espionage to 100 to protect science cities and maintain election rigging in Enns. Increase Spaceship to 95 as backup victory path if culture is disrupted. Diplomacy raised to 80 to counter Greece's 34 delegates in upcoming World Congress vote on United Nations proposal.
 
 **Assyria** · Turn 392 · Conquest
 
@@ -70,7 +70,7 @@
 
 **The Zulus** · Turn 406 · Conquest
 
-> TURN 406 STATUS QUO MAINTAINED - NUCLEAR COUNTDOWN CONTINUES: Atomic Theory at 7 turns remaining. All strategic parameters remain optimal for terminal assault phase. Heavy Bomber production completed, Mechanized Infantry and Bazooka upgrades deployed successfully. Naval combat proceeding - destroyed Dutch submarine ID 15946. Amsterdam spy network (Agent Phesheya) at 494, rising steadily toward sabotage threshold. Cusco network (Agent Jama) massive at 1360. Five-Year Plan policy in 4 turns will boost production for Manhattan Project. Ottoman alliance stable at 100/100 with 49 delegates - critical for WC coordination. Dutch cultural victory imminent - 164% influence, 6/6 civs. No parameter changes needed - maintaining maximum aggression, production, science, and nuclear readiness until atomic weapons deployable.
+> TURN 405 EXISTENTIAL CRISIS - MAXIMUM NUCLEAR READINESS: Dutch cultural victory imminent (163% influence, 6/6 civs). Increased UseNuke from 60 to 100 - we must deploy atomic bombs immediately upon completing Manhattan Project to break Amsterdam's defenses. All other flavors sustained: Offense/Mobilization/Air/Mobile at 100 drive Heavy Bomber and Mechanized Infantry production. Naval 85 maintains destroyer/submarine pressure. Espionage 100 sustains critical spy networks (Amsterdam 450, Cusco 1341). Science 100 prioritizes Atomic Theory (9 turns) then Nuclear Fission path. Zero expansion, zero wonder focus - all resources to terminal assault. Spies in Amsterdam ready for sabotage when network peaks; Cusco network already massive for military intelligence.
 
 **Spain** · Turn 410 · Spaceship
 
@@ -78,7 +78,7 @@
 
 **Sweden** · Turn 413 · Conquest
 
-> TURN 413 - NUCLEAR CRISIS MAINTAINED: Shoshone has deployed an Atomic Bomb to Sigtuna (adjacent to our territory) and is actively paradropping Special Forces into Swedish lands. Athens is at 10HP and must fall immediately to free forces for the existential defensive battle. Current total war configuration (Defense/CityDefense/Mobilization/Nuke/UseNuke all at 100) remains essential for survival against 5.5:1 military odds. Rocketry research continues toward Nuclear Fission for our own deterrent. Military-Industrial Complex policy in 6 turns will enable emergency unit purchasing. No strategic changes - we are in pure survival mode awaiting nuclear capability while holding the line against Shoshone's genocidal assault.
+> TURN 412 - TOTAL WAR CONFIGURATION: Declared war on Shoshone (5:1 military disadvantage) and Ottomans. Athens at 18HP must fall immediately. Shoshone has Artillery, Machine Guns, Special Forces and Triplanes adjacent to Sigtuna (zone 3173). UseNuke 100 ensures immediate launch capability when Nuclear Fission completes. CityDefense 100 for survival against overwhelming force. Mobilization 100 for emergency unit production. Maintain Offense/Defense/Air/Nuke/Antiair at 100 for desperate defensive stand.
 
 **The Huns** · Turn 414 · Conquest
 
