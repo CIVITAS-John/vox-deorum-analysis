@@ -94,6 +94,9 @@ def _fetch_flavor_events(cursor, major_players):
     Pre-fetch all FlavorChanges rows for major players (deduplicated per player+turn).
     Returns per-player sorted event lists for carry-forward processing.
 
+    Deduplication: for each (player, turn), later rows override earlier ones,
+    except a non-changed row never overrides a changed one.
+
     Returns:
         dict: {player_id: [(turn, flavor_values_tuple, grand_strategy, rationale, changes_json, is_changed), ...]}
               sorted by turn ascending. Empty dict if table doesn't exist.
@@ -103,24 +106,18 @@ def _fetch_flavor_events(cursor, major_players):
 
     try:
         cursor.execute(f"""
-            WITH latest_changes AS (
-                SELECT Key, Turn, MAX(ID) as MaxID
-                FROM FlavorChanges
-                WHERE Key IN ({placeholders})
-                GROUP BY Key, Turn
-            )
             SELECT fc.Key, fc.Turn, {db_cols},
-                   fc.GrandStrategy, fc.Rationale, fc.Changes,
-                   CASE WHEN fc.Changes IN ('[]', '["Rationale"]') THEN 0 ELSE 1 END as is_changed
+                   fc.GrandStrategy, fc.Rationale, fc.Changes
             FROM FlavorChanges fc
-            INNER JOIN latest_changes lc
-                ON fc.Key = lc.Key AND fc.Turn = lc.Turn AND fc.ID = lc.MaxID
-            ORDER BY fc.Key, fc.Turn
+            WHERE fc.Key IN ({placeholders})
+            ORDER BY fc.Key, fc.Turn, fc.ID
         """, major_players)
     except Exception:
         return {}
 
-    result = {}
+    # Deduplicate per (player, turn): keep latest row, but don't let a
+    # non-changed row override a changed one.
+    latest = {}  # (player_id, turn) -> (flavor_values, grand_strategy, rationale, changes_json, is_changed)
     for row in cursor.fetchall():
         player_id = row[0]
         turn = row[1]
@@ -128,11 +125,20 @@ def _fetch_flavor_events(cursor, major_players):
         grand_strategy = row[2 + len(FLAVOR_COLUMNS)]
         rationale = row[3 + len(FLAVOR_COLUMNS)]
         changes_json = row[4 + len(FLAVOR_COLUMNS)]
-        is_changed = row[5 + len(FLAVOR_COLUMNS)]
+        is_changed = 0 if changes_json in ('[]', '["Rationale"]') else 1
 
+        key = (player_id, turn)
+        existing = latest.get(key)
+        if existing is not None and existing[4] == 1 and is_changed == 0:
+            continue  # don't let a non-changed row override a changed one
+        latest[key] = (flavor_values, grand_strategy, rationale, changes_json, is_changed)
+
+    # Convert to per-player sorted event lists
+    result = {}
+    for (player_id, turn), entry in sorted(latest.items()):
         if player_id not in result:
             result[player_id] = []
-        result[player_id].append((turn, flavor_values, grand_strategy, rationale, changes_json, is_changed))
+        result[player_id].append((turn, *entry))
 
     return result
 
