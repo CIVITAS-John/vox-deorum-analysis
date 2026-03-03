@@ -249,7 +249,7 @@ def drop_transformed_columns(df: pd.DataFrame) -> pd.DataFrame:
         'cities', 'population', 'territory', 'votes', 'minor_allies',
         'technologies', 'policies',
         # Raw columns (-> relative features)
-        'score', 'max_score', 'rank', 'max_turn',
+        'score', 'max_score', 'rank',
         # Text column (space savings)
         'rationale',
     ]
