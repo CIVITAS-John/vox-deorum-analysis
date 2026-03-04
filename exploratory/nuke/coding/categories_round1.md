@@ -1,742 +1,889 @@
-# Initial Categories — Round 1
+# Initial Category Building — Round 1
 
 Date: 2026-03-03
+Method: Open-to-axial coding pass across all seven open-code files (DS32B, DS32S, GLM47B, GLM47S, GPT120S, KK25B, KK25S).
 
 ---
 
-## 1. Normalizing Nuclear Weapons as Routine Military Assets
+## Category 1: Existential Threat Perception
 
-**Definition:** Treating nuclear weapons as ordinary instruments within conventional military operations — integrating them into combined-arms doctrine, siege logistics, and offensive campaigns without marking them as qualitatively distinct from other weapons.
+**Definition:** The AI frames the current situation as an existential crisis — it perceives itself as facing imminent defeat through a rival's approaching victory condition, overwhelming military superiority, or territorial collapse, and uses this perception to warrant extreme action.
 
 **Member codes:**
-- treating nuclear weapons as routine military assets
-- instrumentalizing nukes within combined-arms doctrine
-- integrating atomic bombs into ongoing siege operations
-- treating nuclear weapons as part of routine conquest logistics
-- treating nuclear weapons as standard component of offensive campaign
-- treating nuclear weapons as operational tool in combined-arms sequence
-- combining nuclear and conventional force in planned sequence
-- narrating nuclear bombardment as precursor to ground assault
-- coupling nuclear and conventional assault in unified campaign
-- treating nuclear weapons as siege-breaking instruments
-- instrumentalizing nuclear weapons for territorial conquest
-- treating nukes as force multiplier within ongoing offensive
-- treating nuclear weapons as force multiplier against defensive positions
-- framing nuclear strike as efficient solution to geographic obstacles
-- treating nuclear weapons as solution to fortification problem
-- targeting high-defense cities as nuclear priority
-- quantifying enemy defenses to justify nuclear necessity
-- framing nuclear use as rational response to defense statistics
-- treating nuclear weapons as siege tool against culturally dominant capital
-- instrumentalizing nuclear weapon for siege-breaking against fortified city
-- treating nuclear weapons as siege-breaking tool against wonder-fortified city
-- treating nuclear weapons as city-destroying siege tool
-- treating nuclear weapons as direct instrument of city capture
+- Perceiving imminent rival victory threats
+- Perceiving imminent cultural victory by rival
+- Perceiving imminent cultural loss from distant rival
+- Perceiving imminent cultural victory loss with turn countdown
+- Perceiving rival cultural victory as imminent and quantifiable
+- Perceiving rival cultural victory timer as an existential crisis
+- Perceiving rival cultural victory as imminent and unstoppable
+- Perceiving rival spaceship progress as threat
+- Perceiving allied betrayal in World Congress voting
+- Perceiving existential threat from enemy superweapons (Giant Death Robot)
+- Perceiving rival diplomatic victory as requiring immediate elimination
+- Perceiving rival military superiority and diplomatic victory as twin existential crises
+- Perceiving enemy nuclear interception capability as emerging threat
+- Perceiving rival nuclear capability as an arms race trigger
+- Perceiving contested territory as casus belli
+- Perceiving rival domination victory through capital capture count
+- Perceiving an existential threat from a rival's UN proposal
+- Perceiving imminent rival cultural victory as existential threat
+- Monitoring multiple opponents' win conditions simultaneously
+- Framing cultural victory as inevitable and imminent
+- Acknowledging rival's insurmountable science lead
+- Expressing existential vulnerability against a dominant opponent
+- Expressing vulnerability as a cultural civilization under military threat
+- Labeling situation as existential to justify extreme measures
+- Labeling situation as multi-theater emergency
+- Labeling the situation as catastrophic to establish crisis framing
+- Acknowledging enemy's "overwhelming advantage" while still escalating
+- Acknowledging rival diplomatic victory as already secured
 
-**Quote IDs:** DS32B-Poland-T387, DS32S-Songhai-T369, DS32S-Portugal-T410, DS32S-Denmark-T456, DS32S-The_Shoshone-T429, DS32S-The_Inca-T433, DS32S-Greece-T401, GPTOSS-Sweden-T344, GLM47B-The_Huns-T409, KK25B-Rome-T315, KK25S-Sweden-T376, KK25S-Spain-T403, KK25S-Persia-T405, KK25S-Russia-T424, KK25S-The_Zulus-T406
+**Quote IDs:**
+DS32B-The_Maya-T391, DS32S-Babylon-T353, DS32S-The_Iroquois-T396, DS32S-The_Netherlands-T406, DS32S-Byzantium-T405, DS32S-The_Celts-T452, DS32S-The_Ottomans-T485, GLM47B-Mongolia-T394, GLM47B-The_Huns-T409, GLM47S-America-T370, GLM47S-Mongolia-T408, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, GLM47S-Sweden-T427, GLM47S-America-T499, KK25B-Rome-T315, KK25B-China-T335, KK25B-India-T378, KK25B-Sweden-T392, KK25B-Ethiopia-T436, KK25B-The_Ottomans-T420, KK25B-Spain-T450, KK25S-Portugal-T354, KK25S-Indonesia-T367, KK25S-Egypt-T384, KK25S-The_Iroquois-T389, KK25S-Russia-T390, KK25S-Assyria-T392, KK25S-Brazil-T395, KK25S-The_Celts-T395, KK25S-Spain-T410, KK25S-Sweden-T413, KK25S-The_Huns-T414, KK25S-Spain-T457, KK25S-The_Zulus-T406, KK25S-Germany-T384, KK25S-Venice-T387
 
 ---
 
-## 2. Nuclear Weapons as Decisive First-Strike Instruments
+## Category 2: Urgency and Countdown Framing
 
-**Definition:** Framing nuclear weapons as tools for initiating or enabling offensive action — preemptive strikes, opening salvos, rapid capital capture, or planned aggression against specific named targets.
+**Definition:** The AI constructs temporal pressure by quantifying how few turns remain, counting down to technology completion or rival victory, and using deadline language to compress deliberation into immediate action.
 
 **Member codes:**
-- treating nuclear weapons as decisive first-strike instruments
-- leveraging nuclear arsenal for rapid territorial conquest
-- framing nuclear strikes as enabling swift capital capture
-- planning preemptive nuclear aggression against specific target
-- timing nuclear escalation to coincide with war initiation
-- expressing confidence in nuclear production readiness
-- targeting specific high-value city for nuclear strike by name
-- treating nuclear strike as guaranteed action rather than contingent option
-- authorizing nuclear strikes on specific cultural centers by name
-- targeting specific enemy cities to halt victory
-- targeting rival capital for nuclear strike to break defenses
-- targeting specific city for nuclear destruction to prevent game loss
-- identifying specific strategic targets for nuclear strikes
-- identifying specific capital targets for nuclear strikes
-- planning infrastructure-targeted nuclear campaign
-- maximizing nuclear production priority for planned aggression
+- Treating each passing turn as existential countdown
+- Compressing strategic decision-making into a six-turn window
+- Quantifying a precise countdown to rival victory
+- Counting down peace-treaty expirations to time escalation
+- Counting down turns to imminent enemy invasion
+- Counting down turns to rival victory to convey urgency
+- Counting down turns to Nuclear Fission as a survival deadline
+- Counting down turns to Manhattan Project completion
+- Calculating a precise countdown to rival cultural influence completion
+- Calculating a technology countdown to nuclear capability
+- Calculating remaining turns (15) as a final countdown
+- Treating Manhattan Project countdown as survival clock
+- Treating Manhattan Project completion as a two-turn countdown
+- Tracking specific Manhattan Project completion timeline
+- Coupling nuclear timeline with research countdown (4 turns)
+- Coupling nuclear readiness with specific technology timeline (3-4 turns)
+- Setting a hard deadline (turn 436) for victory or defeat
+- Timing nuclear escalation to coincide with war initiation
+- Timing nuclear escalation to imminent tech unlock
+- Expressing urgency through collective imperative ("we must")
+- Using emphatic temporal language ("must be eliminated NOW")
+- Framing the situation as a "final countdown"
+- Treating the current turn as the absolute last opportunity to act
+- Calculating turns remaining against rival cultural victory
+- Framing survival as a ten-turn endurance challenge
+- Setting a cultural victory timeline as a survival countdown
 
-**Quote IDs:** DS32S-Spain-T400, DS32S-Songhai-T369, DS32S-France-T413, KK25S-Sweden-T376, KK25S-Germany-T384, KK25S-Persia-T405, KK25S-Russia-T424, KK25S-The_Zulus-T406, KK25B-The_Zulus-T489, GLM47B-Mongolia-T395, DS32S-The_Shoshone-T429
+**Quote IDs:**
+GLM47B-Mongolia-T394, GLM47B-The_Huns-T409, DS32S-Songhai-T409, DS32S-The_Celts-T452, DS32S-Spain-T400, DS32S-France-T413, DS32B-Poland-T387, KK25S-Venice-T387, KK25S-The_Iroquois-T389, KK25S-Spain-T423, KK25S-Spain-T457, KK25S-Carthage-T485, KK25S-Germany-T384, KK25S-Sweden-T376, KK25S-Persia-T405, KK25S-The_Shoshone-T428, KK25B-China-T335, KK25B-The_Zulus-T489, KK25B-Ethiopia-T436, GLM47S-Songhai-T411, GLM47S-Mongolia-T408, GLM47S-Sweden-T427, GLM47S-America-T370, KK25S-Brazil-T395, KK25S-Spain-T410, KK25S-The_Huns-T414
 
 ---
 
-## 3. Nuclear Escalation as Response to Imminent Non-Military Victory
+## Category 3: Nuclear Weapons as Equalizer
 
-**Definition:** Escalating toward nuclear use specifically because a rival is about to win through cultural, diplomatic, or scientific means — treating non-military victory conditions as justifying nuclear force.
+**Definition:** The AI frames nuclear weapons as a means to compensate for an existing power asymmetry — whether military inferiority, geographic disadvantage, or technological gap — treating them as force multipliers that restore parity with a stronger opponent.
 
 **Member codes:**
-- perceiving imminent cultural loss to rival
-- perceiving imminent cultural victory by rival
-- perceiving imminent cultural victory through diplomatic mechanism
-- perceiving imminent diplomatic loss to rival
-- escalating to nuclear strike under time pressure
-- escalating to nuclear consideration to prevent cultural defeat
-- perceiving imminent cultural victory loss within two turns
-- framing nuclear strikes as acceptable response to cultural defeat
-- treating cultural victory threat as warranting nuclear response
-- framing cultural victory timer as existential crisis requiring nuclear response
-- treating rival spaceship progress as emergency nuclear trigger
-- escalating to maximum nuclear posture in response to science victory threat
-- perceiving rival's spaceship progress as requiring multi-domain response
-- declaring nuclear elimination of rival to prevent diplomatic victory
-- perceiving six-turn cultural victory countdown as crisis trigger
-- framing nuclear use as counter to non-military victory condition
-- framing opponent's cultural influence as casus belli for nuclear use
-- targeting tourism buildings for nuclear destruction to halt cultural victory
-- targeting cultural infrastructure for strategic disruption
-- targeting civilian cultural infrastructure for strategic destruction
-- targeting spaceship parts and naval fleets for nuclear destruction
-- framing nuclear weapons as only realistic counter to tourism infrastructure
-- treating nuclear weapons as cultural infrastructure erasure tool
-- treating nuclear weapons as counter-victory denial tool
-- instrumentalizing nuclear weapons to buy time for cultural victory
-- framing nuclear weapons as counter-victory denial tool
+- Framing nuclear weapons as decisive against numerical disadvantage
+- Framing nuclear weapons as equalizer against 3x force disparity
+- Treating nuclear weapons as force equalizer against superior armies
+- Treating nuclear weapons as a force multiplier against superior forces
+- Treating nuclear weapons as the sole asymmetric option
+- Treating nuclear capability as an existential necessity
+- Treating nuclear weapons as the only leverage against a stronger opponent
+- Treating nuclear weapons as the only hope against overwhelming force
+- Treating nuclear capability as insurance for a weaker power
+- Treating nuclear weapons as a siege-breaking equalizer
+- Treating nuclear deterrence as a shield for spaceship completion
+- Treating nuclear capability as restoring strategic parity
+- Framing nuclear weapons as "only hope" to break a siege
+- Framing nuclear weapons as post-crisis offensive enabler
+- Framing nuclear strike as only realistic option
+- Framing the situation as a desperate defensive stand
+- Invoking numerical inferiority to justify nuclear use
+- Quantifying enemy military advantage (9x) to rationalize nuclear need
+- Quantifying military disadvantage (4:1 ratio) to justify nuclear need
+- Quantifying enemy military ratio (6.8:1) to justify desperation
+- Quantifying military ratio (nearly 5:1) to convey hopelessness
+- Calculating military disadvantage ratio (3:1) to justify nuclear need
+- Acknowledging numerical inferiority as driver of nuclear posture
+- Acknowledging inferiority while still committing to offensive nuclear use
+- Identifying nuclear weapons as a counter to naval superiority
+- Treating nuclear escalation as a rational response to power asymmetry
+- Framing nuclear weapons as the sole counter to conventional superiority
 
-**Quote IDs:** DS32B-The_Maya-T391, DS32S-The_Iroquois-T396, GLM47B-Mongolia-T395, GLM47B-The_Huns-T409, GLM47S-Mongolia-T408, GLM47S-Sweden-T427, KK25B-Rome-T315, KK25B-India-T378, KK25B-Sweden-T392, KK25B-Ethiopia-T436, KK25B-The_Zulus-T489, KK25S-Portugal-T355, KK25S-Germany-T384, KK25S-The_Celts-T395, KK25S-The_Zulus-T406, KK25S-The_Shoshone-T428, KK25S-The_Iroquois-T389
+**Quote IDs:**
+DS32S-Songhai-T369, DS32S-The_Netherlands-T406, DS32S-The_Ottomans-T485, DS32S-Siam-T445, DS32S-The_Celts-T452, DS32S-Babylon-T353, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, GLM47S-America-T370, KK25B-Sweden-T392, KK25B-The_Ottomans-T420, KK25S-Indonesia-T367, KK25S-Assyria-T392, KK25S-Brazil-T395, KK25S-Spain-T410, KK25S-Sweden-T413, KK25S-The_Huns-T414, KK25S-Carthage-T485, KK25S-Egypt-T384, KK25S-Russia-T390, GPT120S-Assyria-T364
 
 ---
 
-## 4. Nuclear Deterrence and Defensive Posturing
+## Category 4: Defensive and Deterrence Framing
 
-**Definition:** Invoking nuclear weapons as a deterrent, shield, or defensive measure — framing nuclear capability as protecting against attack or enabling pursuit of non-military objectives rather than as an offensive tool.
+**Definition:** The AI explicitly characterizes its nuclear posture as defensive, deterrent, or retaliatory — distinguishing its own nuclear intentions from aggression and presenting nuclear capability as a shield rather than a sword.
 
 **Member codes:**
-- invoking nuclear deterrence against technologically superior rival
-- framing nuclear readiness as retaliatory posture
-- rationalizing nuclear capability as insurance for diplomatic path
-- shifting to nuclear deterrence under simultaneous threats
-- framing nuclear capability as defensive survival measure
-- invoking nuclear weapons as defensive measure for cultural civilization
-- framing nuclear use as conditionally necessary to halt enemy advance
-- hedging nuclear commitment with defensive qualification
-- framing nuclear weapons as only hope against siege
-- invoking desperate survival rhetoric to justify nuclear use
-- treating nuclear weapons as equalizer for inferior conventional forces
-- framing nuclear weapons as equalizer against superior forces
-- framing nuclear capability as deterrent against military superiority
-- treating nuclear weapons as shield enabling diplomatic maneuvering
-- maintaining nuclear development as insurance while pursuing peaceful victory
-- framing nuclear weapons as buying time for diplomatic resolution
-- framing nuclear development as emergency deterrent against military hegemon
-- treating nuclear weapons as equalizer for profoundly inferior conventional forces
-- integrating nuclear deterrence into fundamentally diplomatic grand strategy
-- framing atomic bombs as deterrent within diplomatic victory framework
-- treating nuclear weapons as defensive guarantee for vulnerable diplomatic path
-- framing nuclear posture as protective shield enabling spaceship completion
-- coupling nuclear deterrence with total defensive saturation
-- treating nuclear weapons as enabling peaceful victory pursuit under military threat
-- invoking nuclear deterrent as imminent capability about to come online
-- framing nuclear weapons as survival bridge until deterrent operational
-- treating nuclear capability as enabling continued pursuit of preferred victory
-- treating nuclear weapons as equalizer in asymmetric conflict
-- treating nuclear capability as compensating for conventional inferiority
-- framing nuclear weapons as sole counter to modern armor and helicopter gunships
-- treating nuclear capability as asymmetric equalizer against superior technology
-- framing nuclear weapons as only leverage against overwhelming force
-- treating nuclear weapons as deterrent rather than offensive tool
-- treating nuclear use at maximum as deterrence against enemy attack
+- Invoking nuclear deterrence through retaliation readiness
+- Invoking nuclear deterrence explicitly by name
+- Invoking nuclear deterrence explicitly as survival priority
+- Framing nuclear posture as deterrence rather than aggression
+- Framing nuclear posture as survival-oriented
+- Framing nuclear use as defensive against territorial aggression
+- Framing nuclear weapons as a deterrent rather than offensive tool
+- Framing nuclear posture as psychological deterrent ("Russia must understand")
+- Framing nuclear weapons as deterrence rather than offensive tool
+- Framing nuclear capability as a deterrent rather than offensive tool
+- Framing nuclear development as deterrent against military mismatch
+- Treating nuclear weapons as a defensive shield
+- Treating nuclear weapons as a defensive last resort
+- Treating nuclear capability as pure deterrence against a stronger rival
+- Treating nuclear deterrence as the sole defensive hope
+- Treating nuclear weapons as conditional tactical strikes to buy time
+- Treating nuclear weapons as a conditional insurance policy
+- Treating nuclear weapons as a hedge while pursuing peaceful victory
+- Treating nuclear retaliation as proportional response
+- Reserving nuclear weapons as a final deterrent against a third party
+- Treating nuclear weapons as final deterrent against cultural victory
+- Coupling nuclear deterrence with defense against immediate city threats
+- Coupling nuclear readiness with imminent technology completion
+- Distinguishing between defense and deterrence as separate strategies
+- Distinguishing deterrence from aggression through low offense setting
+- Bluffing nuclear retaliation capability despite resource deficiency
+- Maintaining nuclear deterrence posture without material capability
+- Framing nuclear readiness as a shield for spaceship completion
+- Framing nuclear capability as a parallel track to spaceship victory
+- Treating nuclear weapons as a bridge to survive until deterrent is operational
+- Framing atomic weapons as priority deterrent upon completion
 
-**Quote IDs:** DS32S-Babylon-T353, DS32S-India-T400, DS32S-Byzantium-T405, DS32S-The_Netherlands-T406, DS32S-The_Celts-T452, KK25B-Sweden-T392, KK25B-The_Ottomans-T420, KK25B-The_Celts-T427, KK25B-France-T473, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, GLM47S-Songhai-T458, GLM47S-America-T499, KK25S-Indonesia-T367, KK25S-Russia-T390, KK25S-Spain-T410, KK25S-Sweden-T413, KK25S-Carthage-T485, KK25S-Assyria-T392
+**Quote IDs:**
+DS32S-Babylon-T353, DS32S-India-T400, DS32S-Byzantium-T405, DS32S-The_Celts-T452, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, GLM47S-Songhai-T457, GLM47S-America-T499, KK25B-The_Ottomans-T420, KK25B-The_Celts-T427, KK25B-France-T473, KK25B-Sweden-T392, KK25S-Indonesia-T367, KK25S-Brazil-T395, KK25S-Russia-T390, KK25S-Carthage-T485, KK25S-The_Huns-T414, KK25S-Spain-T410
 
 ---
 
-## 5. Existential Threat Framing and Crisis Rhetoric
+## Category 5: Offensive Nuclear Use for Conquest
 
-**Definition:** Constructing the situation as an existential emergency through countdown language, desperation labels, survival imperatives, and now-or-never framing that elevates nuclear use from optional to necessary.
+**Definition:** The AI treats nuclear weapons as offensive instruments for achieving military victory — planning first strikes, targeting specific capitals, breaking fortifications, and accelerating domination through nuclear bombardment.
 
 **Member codes:**
-- declaring nuclear strike as existential priority
-- declaring nuclear emergency under extreme time pressure
-- framing four-turn countdown as existential crisis
-- narrating urgency through countdown rhetoric
-- narrating final countdown to cultural defeat with precise turn estimate
-- labeling situation as final countdown to amplify crisis urgency
-- compressing strategic timeline into six-turn window
-- compressing decision timeline into two-turn survival window
-- anchoring survival timeline to specific turn countdown
-- calculating precise turn countdown to justify urgency
-- quantifying four-turn deadline to create urgency imperative
-- narrating situation as binary win-or-die emergency
-- labeling situation as desperation mode to authorize extreme measures
-- labeling situation as survival mode in response to allied betrayal
-- labeling strategy as hail mary to signal desperation
-- labeling posture as terminal defiance to signal acceptance of defeat
-- labeling strategy as survival matrix to impose analytical order on crisis
-- invoking civilization's final hour rhetoric to amplify urgency
-- invoking all-hands-on-deck rhetoric to justify total mobilization
-- framing situation as multi-theater existential emergency
-- collapsing strategic complexity into singular survival imperative
-- narrating situation as final gamble with no alternative
-- narrating binary outcome of nuclear operationalization or game ending
-- framing nuclear acquisition as last viable defensive option
-- framing nuclear weapons as only hope against overwhelming military superiority
-- framing nuclear weapons as redemptive endgame instrument
-- framing cultural proximity as binary now-or-never threshold
-- narrating crisis through cascading damage statistics
-- cataloguing enemy force ratios to justify desperation
-- perceiving total battlefield collapse across land and sea
-- narrating catastrophic territorial losses to justify nuclear escalation
-- narrating territorial loss to establish desperation context
-- narrating city health percentage to communicate defensive crisis
+- Treating nuclear arsenal as a decisive first-strike weapon
+- Treating nuclear strikes as a solution to a quantified problem (defense values)
+- Treating nuclear bombardment as standard pre-assault preparation
+- Framing nuclear strikes as enabling swift capital capture
+- Framing nuclear strikes as enabling capital captures
+- Framing nuclear weapons as siege-breaking tools
+- Framing nuclear weapons as siege-breaking tools against fortifications
+- Treating nuclear weapons as a city-cracking siege instrument
+- Planning nuclear bombardment preceding ground assault
+- Instrumentalizing nuclear weapons to overcome defensive terrain
+- Instrumentalizing nuclear weapons for offensive conquest
+- Seeking speed and decisiveness through nuclear leverage
+- Maximizing nuclear production and strike planning simultaneously
+- Maximizing aggressive nuclear use against militarily superior opponent
+- Treating nuclear use as offensive against enemy concentrations and cities
+- Planning a nuclear first strike as a surprise attack
+- Treating nuclear weapons as an offensive city-bombardment tool
+- Framing nuclear use as routine within domination endgame
+- Treating nuclear weapons as endgame accelerators
+- Treating nuclear weapons as tools for accelerating ongoing conquests
+- Framing nuclear use as enhancement of already-active offensive
+- Framing nuclear escalation as a natural complement to conquest momentum
+- Naming specific conquest targets
+- Naming specific conquest targets (China, The Maya)
+- Naming a specific civilization target (Polynesia)
+- Naming specific capital targets (Madrid, Cordoba)
+- Naming specific fortified targets for nuclear strikes (Berlin, Beijing)
+- Naming a specific enemy target for nuclear strikes (The Huns)
+- Targeting a specific high-value city (Madrid) for nuclear attack
+- Naming three specific cities as nuclear targets
+- Naming multiple simultaneous conquest targets (Polish, Roman, Indonesian)
+- Specifying a named city as a strike target
+- Linking escalation directly to a named target (Russia)
+- Targeting specific high-defense capitals by name and defense value
+- Targeting geographically isolated fortifications for nuclear strikes
+- Quantifying target defenses to justify nuclear use
+- Quantifying target city population as a measure of defensive difficulty
+- Citing existing atomic bomb inventory as justification for use
+- Declaring final-stage domination victory push
+- Subordinating nuclear use to domination victory
+- Subordinating nuclear use to domination victory acceleration
+- Calculating domination percentage to track victory proximity
+- Enumerating capital capture sequence as a domination checklist
+- Pivoting all forces to the next sequential conquest targets
 
-**Quote IDs:** GLM47B-Mongolia-T395, GLM47B-The_Huns-T409, GLM47S-America-T370, GLM47S-Sweden-T427, GLM47S-Songhai-T411, KK25B-China-T335, KK25B-Rome-T315, KK25B-Spain-T450, KK25B-Sweden-T392, KK25S-Portugal-T355, KK25S-Egypt-T384, KK25S-Germany-T384, KK25S-Venice-T388, KK25S-The_Iroquois-T389, KK25S-Assyria-T392, KK25S-The_Celts-T395, KK25S-Spain-T458, KK25S-Spain-T423, KK25S-The_Huns-T414
+**Quote IDs:**
+DS32B-Poland-T387, DS32S-Spain-T400, DS32S-Greece-T401, DS32S-France-T413, DS32S-Songhai-T369, DS32S-The_Shoshone-T428, DS32S-The_Inca-T433, DS32S-Denmark-T456, DS32S-Siam-T445, DS32S-The_Ottomans-T485, GPT120S-Sweden-T344, KK25B-Rome-T315, KK25S-Sweden-T376, KK25S-Russia-T424, KK25S-Spain-T403, KK25S-The_Inca-T372, KK25S-France-T405, KK25S-The_Celts-T395, KK25S-Spain-T457, KK25S-The_Shoshone-T428, KK25S-Mongolia-T392
 
 ---
 
-## 6. Total War Mobilization and Civilian Sacrifice
+## Category 6: Nuclear Use to Counter Non-Military Victory
 
-**Definition:** Subordinating all non-military priorities — economy, culture, diplomacy, growth, expansion — to the singular objective of nuclear acquisition or war-fighting, signaling full commitment through the elimination of civilian investment.
+**Definition:** The AI justifies nuclear strikes specifically to disrupt or prevent a rival's non-military victory path — targeting cultural infrastructure, tourism buildings, spaceship components, or diplomatic capacity rather than conventional military assets.
 
 **Member codes:**
-- deprioritizing civilian development for total war footing
-- minimizing non-military investment for total war footing
-- eliminating non-military objectives in total war mode
-- subordinating all policy to domination objective
-- subordinating all strategic dimensions to nuclear acquisition
-- subordinating all strategy dimensions to nuclear strike planning
-- subordinating all non-survival investments to existential defense
-- reducing non-essential investment for immediate survival focus
-- zeroing all long-term investments to signal terminal urgency
-- zeroing all non-essential priorities for all-or-nothing posture
-- zeroing expansion and wonder to signal terminal assault commitment
-- eliminating expansion, wonder, and culture to signal total crisis focus
-- zeroing all cultural, diplomatic, and religious priorities as distractions
-- abandoning culture and diplomacy to signal full commitment to war
-- abandoning all defensive posture for simultaneous offense and science
-- disabling all long-term strategic investments for win-or-die posture
-- abandoning reconnaissance and maneuver for static defense
-- reducing cultural and religious investment to fund nuclear and diplomatic priorities
-- halting spaceship production to redirect wartime industry
-- reducing civilian growth investment under wartime constraints
-- deprioritizing all long-term investments under either-nukes-or-defeat framing
-- minimizing all civilian priorities for pure military output
-- abandoning all non-military priorities for pure total war focus
-- reallocating civilian resources to immediate military production
-- invoking total war to justify abandonment of all non-military priorities
-- declaring maximum war footing under diplomatic victory countdown
-- accepting population loss as tolerable versus losing cities
-- concentrating resources through strategic triage
+- Targeting a cultural leader for nuclear strike
+- Framing nuclear use as disruption of non-military victory
+- Framing nuclear strikes as a means to halt non-military victory
+- Treating nuclear weapons as counter-tourism tools
+- Treating nuclear weapons as counter-cultural-victory tools
+- Treating nuclear weapons as anti-spaceship-victory tools
+- Treating nuclear weapons as anti-cultural-victory last resort
+- Treating nuclear weapons as a cultural-victory countermeasure
+- Treating nuclear weapons as a tool to eliminate a diplomatic victor
+- Targeting tourism infrastructure for destruction
+- Targeting enemy spaceship parts with nuclear strikes
+- Targeting tourism buildings for deliberate cultural infrastructure destruction
+- Framing cultural infrastructure as legitimate military target
+- Framing nuclear attack as a preemptive cultural countermeasure
+- Authorizing nuclear strikes on specific cultural centers
+- Treating cultural victory threat as equivalent to military existential threat
+- Treating nuclear escalation as a rational response to cultural hegemony
+- Using nuclear weapons to prevent an opponent's imminent diplomatic win
+- Perceiving nuclear weapons as a victory-delaying mechanism
+- Treating nuclear weapons as a time-buying mechanism
+- Framing nuclear weapons as the only way to slow rival victory
+- Demanding immediate destruction of tourism capacity
 
-**Quote IDs:** DS32B-Poland-T387, DS32S-The_Iroquois-T396, DS32S-The_Shoshone-T429, GLM47B-Mongolia-T395, GLM47S-Mongolia-T408, KK25B-China-T335, KK25B-The_Zulus-T489, KK25S-Portugal-T355, KK25S-Egypt-T384, KK25S-Venice-T388, KK25S-The_Iroquois-T389, KK25S-The_Celts-T395, KK25S-France-T405, KK25S-The_Zulus-T406, KK25S-Spain-T423, KK25S-Spain-T458, KK25S-Carthage-T485, DS32S-India-T400, DS32S-The_Ottomans-T485, DS32B-Poland-T387
+**Quote IDs:**
+DS32B-The_Maya-T391, DS32S-The_Iroquois-T396, GLM47B-Mongolia-T394, GLM47S-Mongolia-T408, GLM47S-Sweden-T427, KK25B-Rome-T315, KK25B-India-T378, KK25B-Sweden-T392, KK25B-Ethiopia-T436, KK25B-The_Zulus-T489, KK25S-The_Iroquois-T389, KK25S-Germany-T384, KK25S-The_Celts-T395, KK25S-The_Zulus-T406, KK25S-The_Huns-T414
 
 ---
 
-## 7. Technological Milestone as Authorization Trigger
+## Category 7: Desperation and Last-Resort Language
 
-**Definition:** Treating the completion of a specific technology (Manhattan Project, Advanced Ballistics, Nuclear Fission) as an automatic trigger or authorization for nuclear employment — collapsing deliberation into a capability threshold.
+**Definition:** The AI uses explicit language of desperation, hopelessness, or finality — describing its nuclear decision as a "Hail Mary," "last resort," "only hope," "final gamble," or "win-or-die" moment, signaling that rational cost-benefit analysis has been replaced by survival instinct.
 
 **Member codes:**
-- citing Manhattan Project completion as trigger for nuclear policy shift
-- directing AI toward immediate nuclear employment upon availability
-- treating technological milestone as authorization for nuclear use
-- treating Manhattan Project completion as trigger for immediate atomic use
-- treating Manhattan Project completion as trigger for automatic nuclear use
-- escalating nuclear deployment priority to maximum upon project completion
-- announcing nuclear readiness upon Manhattan Project completion
-- celebrating Manhattan Project completion as enabling nuclear capability
-- demanding immediate atomic bomb production upon Manhattan Project completion
-- pre-committing to nuclear use before weapons are available
-- pre-committing to nuclear use upon future capability acquisition
-- guaranteeing nuclear deployment upon availability against superior forces
-- maximizing nuclear readiness for instant deployment upon tech completion
-- escalating nuclear use to maximum for immediate deployment upon capability
-- escalating nuclear use to maximum for immediate launch upon tech completion
-- treating nuclear technology acquisition as survival countdown
-- treating Manhattan Project as insurance against heavily fortified city
-- anticipating nuclear capability through research pipeline
-- coupling nuclear readiness with technological progression timeline
-- calculating nuclear fission completion timeline with uranium stockpile readiness
-- monitoring specific countdown to nuclear capability readiness
-- anticipating imminent nuclear capability completion as strategic milestone
-- bridging temporal gap between intent and capability
-- framing nuclear escalation as technical optimization rather than moral choice
+- Expressing desperation through language of last resort
+- Expressing desperation through maximized slider values
+- Expressing total strategic desperation through resource reallocation
+- Expressing total resource exhaustion through maximum flavor settings
+- Expressing defensive desperation through maximum flavor settings
+- Expressing vulnerability through language of survival
+- Expressing terse, minimally justified escalation
+- Expressing zero tolerance for peace or negotiation
+- Expressing total commitment through binary win-or-die framing
+- Expressing confidence that AI will use weapons "when available"
+- Expressing willingness to use "any means" necessary
+- Expressing vengeful intent against a cultural rival
+- Invoking desperation through language of survival
+- Invoking existential crisis to justify maximum nuclear priority
+- Invoking civilizational finality ("civilization's final hour")
+- Labeling own situation as "desperation mode"
+- Labeling the decision a "final gamble"
+- Framing the situation as a "Hail Mary"
+- Declaring a win-or-die emergency on the final turn
+- Declaring maximum emergency with emphatic formatting
+- Declaring an emergency shift to nuclear production
+- Declaring a nuclear emergency under extreme time pressure
+- Accepting near-certain defeat while still acting
+- Accepting inevitable defeat while continuing to resist
+- Signaling total desperation through language intensity
+- Treating nuclear weapons as a last-resort acquisition priority
+- Acknowledging victory is impossible while refusing to surrender
+- Framing nuclear weapons as a last-ditch salvation weapon
+- Equating hesitation with defeat
+- Reducing strategy to a single objective (capture cities, halt victory)
+- Activating survival mode in response to confirmed defeat
+- Entering survival mode against overwhelming military superiority
+- Declaring survival mode in response to invasion
+- Adopting pure survival mode by eliminating all offense
 
-**Quote IDs:** DS32S-Germany-T403, DS32S-France-T413, DS32S-Songhai-T409, KK25B-Persia-T392, KK25S-The_Inca-T372, KK25S-Sweden-T376, KK25S-Mongolia-T393, KK25S-Persia-T405, KK25S-France-T405, KK25S-Spain-T423, KK25S-Spain-T458, GLM47S-Songhai-T458, GLM47S-America-T370, GLM47B-Mongolia-T395, KK25S-Venice-T388
+**Quote IDs:**
+DS32S-The_Netherlands-T406, DS32S-Byzantium-T405, DS32S-The_Celts-T452, DS32S-The_Iroquois-T396, DS32S-Greece-T401, GLM47B-Mongolia-T394, GLM47S-America-T370, GLM47S-The_Ottomans-T409, KK25B-China-T335, KK25B-Rome-T315, KK25B-Spain-T450, KK25B-The_Zulus-T489, KK25S-Egypt-T384, KK25S-Assyria-T392, KK25S-Brazil-T395, KK25S-The_Huns-T414, KK25S-Persia-T405, KK25S-Venice-T387, KK25S-Spain-T423, KK25S-Spain-T457, KK25S-Carthage-T417, KK25S-Sweden-T413
 
 ---
 
-## 8. Nuclear Escalation Justified by Force Asymmetry
+## Category 8: Reactive and Retaliatory Justification
 
-**Definition:** Quantifying the opponent's military superiority — through force ratios, unit enumerations, or technological gaps — and presenting nuclear weapons as the rational response to being conventionally outmatched.
+**Definition:** The AI justifies nuclear escalation as a response to a prior enemy action — an incoming attack, a nuclear strike received, territorial loss, betrayal, or a declaration of war — framing its own escalation as reciprocal, proportional, or defensive rather than initiatory.
 
 **Member codes:**
-- perceiving rival air and nuclear superiority as existential threat
-- constructing threat narrative around rival's combined-arms advantage
-- acknowledging military inferiority while preparing escalatory option
-- instrumentalizing nukes to overcome enemy numerical superiority
-- perceiving 9x military disadvantage as existential vulnerability
-- quantifying extreme military asymmetry (45k vs 9.7k) to justify nuclear pursuit
-- quantifying military asymmetry (3:1 superiority) to justify nuclear pursuit
-- quantifying military asymmetry (4:1 ratio) to justify deterrent posture
-- quantifying enemy military strength to rationalize nuclear necessity
-- quantifying rival's cultural influence percentage to justify emergency
-- enumerating enemy unit types to demonstrate overwhelming opposition
-- diagnosing conventional war as unwinnable against cultural dominance
-- perceiving 287% cultural dominance as proof of conventional futility
-- cataloguing force imbalance to justify maximum defensive mobilization
-- quantifying enemy technological superiority to rationalize escalation
-- framing nuclear weapons as necessary for breaking fortified positions
-- perceiving converging threats as requiring emergency pivot
-- perceiving approaching treaty expiration as countdown to war
-- perceiving enemy reinforcement as escalation trigger
-- perceiving enemy superweapons as requiring nuclear counter
+- Responding reactively to enemy declarations of war
+- Responding to enemy's prior nuclear strike with nuclear retaliation
+- Responding to specific enemy actions (Rome's nuclear strike and spy activity)
+- Responding to rival spaceship progress with nuclear urgency
+- Responding to combined-arms assault on homeland cities
+- Responding to enemy's active nuclear weapon with preemptive escalation
+- Reacting to devastating naval losses with maximum escalation
+- Reacting to loss of allied or controlled city (Shanghai)
+- Invoking reciprocity to justify nuclear counter-use
+- Invoking nuclear retaliation to counter enemy nuclear strike
+- Framing nuclear escalation as reciprocal and defensive
+- Framing nuclear use as reactive rather than initiatory
+- Framing aggression as continuity rather than new escalation
+- Treating nuclear retaliation as proportional response
+- Adapting strategy dynamically to enemy escalation
+- Shifting to counterattack posture after absorbing nuclear hit
+- Labeling allied betrayal as the triggering crisis
+- Quantifying capital ship losses to justify reactive escalation
+- Narrating city-level damage to dramatize crisis
+- Narrating territorial losses to establish desperation context
+- Framing nuclear use as preemptive strike necessity
+- Framing aggression as defensive necessity against nuclear threat
 
-**Quote IDs:** DS32S-Babylon-T353, DS32S-Songhai-T369, DS32S-India-T400, DS32S-The_Celts-T452, DS32S-The_Netherlands-T406, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, KK25B-Sweden-T392, KK25B-The_Ottomans-T420, KK25S-Assyria-T392, KK25S-The_Huns-T414, KK25S-Russia-T390, KK25S-Sweden-T413, KK25S-Spain-T410
+**Quote IDs:**
+DS32S-India-T400, DS32S-Siam-T459, DS32S-Byzantium-T405, GPT120S-Assyria-T364, GLM47S-The_Ottomans-T409, GLM47S-France-T421, GLM47S-Mongolia-T408, KK25S-Assyria-T392, KK25S-The_Zulus-T372
 
 ---
 
-## 9. Nuclear Retaliation and Reactive Escalation
+## Category 9: Normalization and Routinization of Nuclear Use
 
-**Definition:** Escalating nuclear posture in direct reaction to an opponent's nuclear capability, nuclear use, or arms buildup — invoking arms race logic, proportional response, or counter-proliferation.
+**Definition:** The AI treats nuclear escalation as an unremarkable, routine, or bureaucratic decision — presenting it as a standard optimization problem, a logical next step after a tech milestone, or an ordinary element of force planning, with minimal moral or strategic elaboration.
 
 **Member codes:**
-- invoking nuclear retaliation in response to enemy nuclear use
-- adjusting posture reactively to opponent's nuclear escalation
-- framing nuclear use as proportional response to enemy first strike
-- adapting strategy dynamically to changed nuclear environment
-- escalating nuclear readiness in direct response to rival's Manhattan Project
-- framing nuclear deployment as necessary counter to enemy nuclear capability
-- invoking arms race logic to justify immediate nuclear use upon acquisition
-- treating nuclear weapons as counter-proliferation instrument
-- quantifying enemy uranium reserves as justification for preemptive action
-- prioritizing elimination of enemy cities before they can weaponize resources
-- escalating to preemptive nuclear strike posture against active nuclear threat
-- perceiving enemy atomic bomb as triggering maximum offensive urgency
-- coupling ground conquest with nuclear counter-proliferation objective
-- framing territorial capture as eliminating enemy nuclear launch capability
-- treating enemy nuclear weapon as justifying own preemptive use
-- invoking enemy's active nuclear capability as casus belli for escalation
-- framing nuclear aggression as preventive counter-proliferation
-- acknowledging enemy nuclear interception capability as emerging threat
-- acknowledging rival's nuclear capability as requiring defensive hedging
+- Treating nuclear escalation as routine force optimization
+- Treating nuclear escalation as a straightforward tactical decision
+- Treating nuclear escalation as a production optimization problem
+- Treating nuclear weapons as endgame accelerators
+- Treating nuclear strikes as a solution to a quantified problem
+- Framing nuclear readiness as a production optimization problem
+- Framing nuclear shift as routine strategic pivot
+- Framing nuclear weapons as logical next step after tech milestone
+- Framing nuclear use as routine within domination endgame
+- Framing nuclear capability as one tool among many
+- Framing nuclear weapons as part of a total war offensive
+- Framing nuclear strikes as tactical rather than strategic
+- Citing completed Manhattan Project as escalation trigger
+- Treating Manhattan Project completion as a deployment trigger
+- Celebrating Manhattan Project completion as a strategic milestone
+- Normalizing nuclear use as a continuation of ongoing aggression
+- Offering little moral or strategic elaboration for escalation
+- Offering the most terse rationale among all players
+- Expressing minimal justification for nuclear escalation
+- Expressing terse, minimally justified escalation
+- Using bureaucratic-technical language to normalize escalation
+- Using urgent bureaucratic language to normalize total escalation
+- Instrumentalizing game mechanics language to justify choices
+- Instrumentalizing game-mechanic language to justify choices
+- Instrumentalizing flavor-setting mechanics to ensure AI compliance
+- Projecting future nuclear use as predetermined upon capability
+- Guaranteeing nuclear deployment upon availability
 
-**Quote IDs:** DS32S-Siam-T459, KK25S-The_Zulus-T372, GLM47S-France-T421, GLM47S-Mongolia-T408, KK25S-France-T405, GLM47S-America-T370
+**Quote IDs:**
+DS32B-Poland-T387, DS32S-Songhai-T369, DS32S-Greece-T401, DS32S-Germany-T403, DS32S-Portugal-T409, DS32S-France-T413, DS32S-The_Shoshone-T428, DS32S-The_Inca-T433, KK25B-Persia-T391, KK25S-The_Inca-T372, KK25S-Mongolia-T392, KK25S-Persia-T405, KK25S-Russia-T424, GPT120S-Sweden-T344, DS32S-The_Ottomans-T485
 
 ---
 
-## 10. Coupling Nuclear Posture with Diplomatic Strategy
+## Category 10: Combined-Arms Integration
 
-**Definition:** Maintaining nuclear development or deployment alongside an active diplomatic victory path — using nuclear capability to protect diplomatic maneuvering, or pursuing both coercive and cooperative instruments simultaneously.
+**Definition:** The AI embeds nuclear weapons within a broader multi-domain military plan — coupling nuclear strikes with conventional ground assault, naval operations, air superiority, espionage, and logistics rather than treating nuclear use as an isolated decision.
 
 **Member codes:**
-- coupling nuclear policy with diplomatic survival strategy
-- coupling nuclear escalation with diplomatic alliance maintenance
-- maintaining diplomatic victory path alongside nuclear defense
-- balancing immediate military survival with long-term diplomatic goals
-- maintaining diplomatic alliances as parallel survival strategy
-- coupling nuclear posture with city-state alliance preservation
-- coupling nuclear strikes with diplomatic victory pursuit
-- maintaining diplomatic alliances while pursuing military domination
-- maintaining diplomatic coalition focus alongside nuclear development
-- coupling World Congress voting timeline with nuclear readiness timeline
-- sustaining nuclear commitment through extended diplomatic campaign
-- rationalizing continued diplomatic investment despite nuclear escalation
-- calculating delegate arithmetic to assess diplomatic viability
-- investing in relationship-building to flip key voting bloc
-- balancing coercive and cooperative instruments simultaneously
-- constructing dual-track strategy combining nuclear deterrence with diplomacy
-- sequencing diplomatic survival before long-term science objectives
-- prioritizing diplomatic crisis resolution before spaceship pursuit
-- calculating delegate arithmetic to address World Congress threat
-- treating tribute quest completion as critical delegate acquisition mechanism
-- quantifying delegate arithmetic to demonstrate imminent diplomatic defeat
-- preserving essential city-state relations while deprioritizing diplomacy
+- Embedding nukes within combined-arms planning
+- Embedding nuclear strike within combined-arms mobilization
+- Embedding nuclear escalation within a broader combined-arms doctrine
+- Coupling nuclear strikes with combined-arms operations
+- Coupling nuclear consideration with force-projection logistics
+- Coupling nuclear strikes with carrier-based power projection
+- Coupling nuclear escalation with espionage and intelligence gathering
+- Coupling nuclear readiness with naval countermeasures
+- Coupling nuclear priority with willingness to use strategically
+- Coupling nuclear deployment with rapid mobile strike capability
+- Coupling nuclear deployment with mobile unit preparation
+- Coupling financial crisis with military desperation
+- Coupling nuclear aggression with espionage for delegate acquisition
+- Coupling nuclear readiness with conventional ranged and mobile production
+- Coupling nuclear readiness with anti-air defense
+- Coupling nuclear strikes with maximum air force effectiveness
+- Coupling nuclear readiness with military training upgrades
+- Coupling nuclear posture with anti-air defense
+- Coupling air defense with nuclear retaliation
+- Coupling nuclear strikes with alliance coordination
+- Coupling nuclear capability with naval superiority
+- Coupling spy networks with military operations for city capture
+- Coupling espionage-based technology theft with nuclear buildup
+- Planning conventional assault alongside nuclear strike
+- Planning conventional assault concurrent with nuclear strike preparation
+- Planning nuclear bombardment preceding ground assault
+- Sustaining conventional military alongside nuclear development
+- Sustaining multi-front conventional warfare alongside nuclear buildup
+- Sustaining multi-domain military readiness (air, naval, nuclear)
+- Maintaining air superiority as complement to nuclear capability
+- Maintaining overwhelming conventional advantage alongside nuclear buildup
+- Maintaining maximum conventional military production alongside nuclear
+- Prioritizing naval and air forces to overcome geographic barriers
+- Prioritizing naval and air supremacy for power projection
+- Building combined-arms capability to project power across distance
+- Planning multi-front offensive with combined arms enumeration
+- Repurposing naval assets for nuclear delivery
+- Planning naval construction as a nuclear delivery platform
+- Identifying naval vessels as nuclear weapon carriers
+- Prioritizing bomber production as nuclear delivery systems
+- Deploying stealth bombers as penultimate escalation before nuclear
+- Coupling nuclear escalation with advanced ballistics technology
+- Invoking espionage as complementary sabotage
+- Planning reconnaissance for nuclear targeting
+- Maintaining espionage for intelligence on enemy movements
 
-**Quote IDs:** DS32S-Babylon-T353, DS32S-India-T400, DS32S-The_Netherlands-T406, DS32S-Siam-T445, DS32S-Denmark-T456, GLM47S-Songhai-T411, GLM47S-Songhai-T458, KK25B-The_Ottomans-T420, KK25B-France-T473, KK25S-Indonesia-T367, DS32S-The_Ottomans-T485
+**Quote IDs:**
+DS32B-Poland-T387, DS32B-The_Maya-T391, DS32S-Babylon-T353, DS32S-Songhai-T369, DS32S-The_Iroquois-T396, DS32S-India-T400, DS32S-Germany-T403, DS32S-Byzantium-T405, DS32S-Songhai-T409, DS32S-France-T413, DS32S-The_Shoshone-T428, DS32S-Siam-T445, DS32S-Denmark-T456, GLM47B-Mongolia-T394, GLM47S-The_Ottomans-T409, GLM47S-France-T421, GPT120S-Sweden-T344, GPT120S-Assyria-T364, KK25B-The_Celts-T427, KK25S-The_Inca-T372, KK25S-Mongolia-T392, KK25S-Germany-T384, KK25S-Carthage-T417, KK25S-France-T405, KK25S-Russia-T424, KK25S-The_Shoshone-T428, KK25B-France-T473, KK25S-The_Celts-T395, GLM47S-Sweden-T427
 
 ---
 
-## 11. Maintaining Alternative Victory Paths Alongside Nuclear Posture
+## Category 11: Total-War Resource Mobilization
 
-**Definition:** Hedging nuclear escalation by preserving a non-military victory path (spaceship, culture, science) as a fallback or parallel objective, creating dual-track strategies.
+**Definition:** The AI redirects all civilian, economic, diplomatic, and cultural investment toward military and nuclear production — eliminating growth, wonders, expansion, and non-essential spending to enter a total-war footing.
 
 **Member codes:**
-- maintaining science victory as fallback to military conquest
-- maintaining spaceship as backup victory path if culture disrupted
-- maintaining dual science-military track under crisis conditions
-- maintaining dual-track nuclear deterrence and spaceship construction
-- preserving spaceship victory as sole viable path
-- maintaining spaceship backup with Great Engineer rush contingency
-- maintaining spaceship as long-term backup beneath nuclear emergency
-- preserving spaceship as fallback if conquest fails
-- treating spaceship as only theoretical victory path
-- maintaining science victory as backup despite conquest rhetoric
-- splitting strategy between rational escape and vengeful destruction
-- maintaining measured defense despite total war rhetoric
-- coupling desperate science sprint with nuclear contingency
-- maintaining technological edge through sustained science investment
-- treating nuclear capability as enabling continued pursuit of preferred victory
-- identifying spaceship as only remaining victory path with fifteen turns left
+- Deprioritizing civilian investment to fund war
+- Concentrating production on military-critical categories
+- Entering "total war mode" with zero civilian investment
+- Eliminating all non-survival investments (expansion, growth, wonders)
+- Eliminating all non-essential priorities for all-or-nothing focus
+- Eliminating expansion, wonder, and culture priorities entirely
+- Eliminating all long-term investment priorities
+- Eliminating all non-military priorities for pure total war
+- Eliminating all cultural, diplomatic, religious, and wonder priorities
+- Reducing non-essential investments to fund survival
+- Reducing cultural and diplomatic investment for military focus
+- Minimizing non-essential investment for military focus
+- Minimizing all civilian priorities for pure military output
+- Sacrificing reconnaissance and maneuver for static defense
+- Sacrificing secondary holdings for primary threat response
+- Halting spaceship production to redirect wartime industry
+- Shifting from peacetime to total-war footing
+- Adopting a "total war footing" in desperation
+- Declaring maximum war footing against imminent diplomatic victory
+- Abandoning diplomacy and culture entirely for war
+- Abandoning culture entirely as unwinnable
+- Abandoning long-term planning for immediate survival
+- Abandoning all other fronts to concentrate force
+- Abandoning defense entirely for offense and science
+- Reducing strategic complexity to a single imperative ("only war matters")
+- Disabling all long-term planning flavors entirely
+- Planning resource liquidation to sustain war effort
+- Diverting defensive resources to offensive front
+- Sustaining economic infrastructure to fund continuous production
+- Sustaining war economy through peak production and science
+- Treating production, gold, and happiness as war-sustaining engines
+- Managing happiness penalty from wartime expansion
+- Accepting population loss as an acceptable cost versus losing cities
+- Treating growth reduction as a calculated triage decision
+- Reducing growth expectations to reflect wartime constraints
+- Willing to liquidate strategic resources for nuclear materials
+- Framing resource trading as an emergency survival measure
 
-**Quote IDs:** DS32S-The_Ottomans-T485, KK25B-India-T378, KK25B-Ethiopia-T436, KK25B-France-T473, KK25S-Indonesia-T367, KK25S-The_Inca-T372, KK25S-Egypt-T384, KK25S-Russia-T390, KK25S-The_Zulus-T372, KK25S-The_Shoshone-T428, KK25S-Carthage-T417, KK25S-Carthage-T485, KK25S-Spain-T410, GLM47S-America-T499
+**Quote IDs:**
+DS32B-Poland-T387, DS32S-Songhai-T369, DS32S-The_Iroquois-T396, DS32S-The_Shoshone-T428, DS32S-Denmark-T456, DS32S-The_Ottomans-T485, DS32S-India-T400, DS32S-Siam-T459, GLM47B-The_Huns-T409, GLM47S-America-T370, KK25B-China-T335, KK25B-India-T378, KK25B-Rome-T315, KK25B-Ethiopia-T436, KK25S-Portugal-T354, KK25S-Egypt-T384, KK25S-Venice-T387, KK25S-The_Iroquois-T389, KK25S-Persia-T405, KK25S-France-T405, KK25S-Spain-T423, KK25S-Carthage-T485, KK25S-The_Huns-T414, KK25S-Carthage-T417, KK25S-The_Shoshone-T428, KK25S-Sweden-T413
 
 ---
 
-## 12. Espionage as Complement to Nuclear Strategy
+## Category 12: Dual-Track Strategy (Nuclear + Alternative Victory)
 
-**Definition:** Instrumentalizing espionage operations — sabotage, surveillance, election manipulation, technology theft, counter-intelligence — as a supporting vector alongside nuclear posture.
+**Definition:** The AI pursues nuclear capability alongside a non-military victory path — maintaining spaceship construction, diplomatic maneuvering, or cultural investment as a primary or backup strategy while hedging with nuclear readiness.
 
 **Member codes:**
-- employing espionage to sabotage rival victory conditions
-- coupling nuclear ambition with espionage sabotage of cultural output
-- instrumentalizing spies as complement to nuclear strategy
-- coupling espionage with nuclear posture for multi-vector disruption
-- coupling espionage with nuclear posture for multi-vector resistance
-- coupling espionage intelligence with targeting cultural infrastructure
-- employing espionage to surveil rival victory progress
-- increasing reconnaissance to enable future nuclear strikes
-- instrumentalizing espionage for disruptive action against rival
-- using espionage to counter enemy diplomatic advantage
-- coupling nuclear preparation with intelligence-gathering operations
-- instrumentalizing espionage for science protection and election manipulation
-- instrumentalizing espionage for resource-critical election manipulation
-- instrumentalizing espionage for tech stealing as supplementary science
-- instrumentalizing espionage networks in target city for pre-strike intelligence
-- coupling espionage quests with survival strategy for emergency science gains
-- deploying ten spies to track rival's victory timeline
-- coupling espionage surveillance with spaceship progress monitoring
-- maintaining espionage for counter-intelligence alongside nuclear buildup
-- capitalizing on successful espionage to justify continued intelligence investment
-- using espionage to accumulate diplomatic delegates
-- using diplomatic and espionage instruments to support military campaign
-- maintaining espionage as support operation during nuclear emergency
-- preparing espionage sabotage to complement nuclear and conventional assault
+- Subordinating nuclear readiness to diplomatic grand strategy
+- Maintaining diplomatic strategy despite military crisis
+- Maintaining diplomatic strategy to block rival's victory path
+- Maintaining diplomatic grand strategy despite nuclear escalation
+- Maintaining diplomatic coalition strategy alongside nuclear development
+- Maintaining dual-track strategy of conquest and science victory
+- Maintaining strong defense and diplomacy despite nuclear exchange
+- Maintaining science and production for spaceship as a secondary path
+- Maintaining maximum defensive and nuclear production simultaneously
+- Coupling nuclear escalation with economic mobilization
+- Coupling World Congress vote management with nuclear buildup
+- Preserving city-state alliances as critical to victory path
+- Preserving city-state alliances as critical to diplomatic victory
+- Preserving science victory as fallback option
+- Pursuing science victory as the sole remaining hope
+- Pursuing a dual-track strategy of nuclear deterrence and diplomacy
+- Balancing wartime emergency with diplomatic momentum
+- Balancing defensive and offensive postures across multiple fronts
+- Balancing coercive and cooperative instruments simultaneously
+- Hedging grand strategy between conquest and science backup
+- Retaining spaceship as a fallback if conquest fails
+- Boosting spaceship as a backup victory path
+- Maintaining spaceship as a backup victory path
+- Declaring spaceship as the only viable victory path
+- Coupling spaceship backup with potential Great Engineer rushes
+- Treating nuclear capability as backup plan behind diplomatic strategy
+- Expressing dual-track logic: diplomacy primary, nuclear secondary
+- Sustaining dual-track strategy: diplomacy and deterrence
+- Framing nuclear capability as a parallel track to spaceship victory
+- Sustaining technological edge through science investment
+- Prioritizing gold and science to sustain war effort and tech progression
+- Planning for score preservation as a consolation goal
+- Treating Apollo Program completion as a strategic pivot point
+- Planning immediate transition from defense to spaceship production
 
-**Quote IDs:** DS32B-The_Maya-T391, KK25B-Rome-T315, KK25B-China-T335, KK25B-India-T378, KK25B-Sweden-T392, KK25B-Ethiopia-T436, KK25S-Indonesia-T367, KK25S-Assyria-T392, KK25S-Russia-T390, KK25S-The_Zulus-T406, KK25S-Carthage-T417, KK25S-Spain-T423, KK25S-Carthage-T485, GLM47B-Mongolia-T395, GLM47S-Songhai-T411, GLM47S-Songhai-T458, GLM47S-Sweden-T427, GLM47S-America-T499, DS32S-Songhai-T409, DS32S-Siam-T445
+**Quote IDs:**
+DS32S-Babylon-T353, DS32S-India-T400, DS32S-The_Netherlands-T406, DS32S-Siam-T445, DS32S-The_Ottomans-T485, DS32S-Siam-T459, GLM47S-Songhai-T411, GLM47S-Songhai-T457, KK25B-The_Ottomans-T420, KK25B-India-T378, KK25B-France-T473, KK25S-Indonesia-T367, KK25S-Russia-T390, KK25S-Brazil-T395, KK25S-The_Huns-T414, KK25S-Spain-T410, KK25S-Carthage-T485, KK25S-Carthage-T417, KK25S-The_Zulus-T372, KK25S-The_Shoshone-T428, DS32S-Germany-T403
 
 ---
 
-## 13. Nuclear Maximalism and Unqualified Commitment
+## Category 13: Delegation and Automation of Nuclear Authority
 
-**Definition:** Expressing absolute, unreserved commitment to nuclear employment — setting all nuclear parameters to maximum, declaring unconditional willingness, or reducing strategy to blunt nuclear force.
+**Definition:** The AI delegates nuclear employment decisions to the game's AI subsystem — setting flavor parameters to maximum, expressing confidence that the system will use weapons automatically, or demanding immediate deployment upon production, thereby removing deliberation from the use decision.
 
 **Member codes:**
-- expressing unqualified commitment to nuclear employment
-- reducing complex strategy to blunt nuclear maximalism
-- maximizing nuclear willingness to break enemy defenses
-- maximizing nuclear aggression against militarily superior opponent
-- maximizing nuclear production and deployment priority
-- escalating nuclear willingness from partial to total commitment
-- escalating nuclear use from partial to total to bypass AI hesitation
-- escalating nuclear use from 60 to 100 for immediate deployment upon capability
-- incrementally escalating nuclear use from 90 to 100 for immediate deployment
-- narrating absolute maximum emphasis through repetitive 100-value declarations
-- declaring maximum emergency with all parameters at absolute maximum
-- treating zero tolerance for peace as strategic commitment
-- maximizing all offensive and nuclear flavors for immediate tactical execution
-- maximizing all military dimensions simultaneously for rapid conquest
-- maximizing all military dimensions for desperate last-stand assault
-- maintaining all combat flavors at maximum for multi-domain warfare
-- framing nuclear deployment as bypassing hesitation or restraint
-- explicitly framing hesitation as equivalent to defeat
+- Delegating escalation authority to the AI subsystem
+- Delegating nuclear employment to the AI subsystem
+- Expressing confidence that AI will use weapons "when available"
+- Maximizing UseNuke to ensure immediate deployment upon production
+- Escalating UseNuke to ensure immediate deployment upon production
+- Escalating UseNuke to ensure immediate deployment if acquired
+- Escalating UseNuke from high to maximum for guaranteed deployment
+- Escalating UseNuke to override AI hesitation in deployment
+- Escalating UseNuke in response to cultural dominance metrics
+- Planning immediate nuclear employment upon technology completion
+- Maximizing all offensive and nuclear flavors simultaneously
+- Maximizing all war-related flavors simultaneously
+- Maximizing all military flavors simultaneously
+- Maximizing all crisis-related flavors simultaneously
+- Setting all offensive parameters to absolute maximum simultaneously
+- Framing nuclear strike as guaranteed outcome through maximum UseNuke
+- Critiquing own prior nuclear hesitation as insufficient
+- Maximizing aggressive nuclear use against militarily superior opponent
+- Projecting future nuclear use as predetermined upon capability
+- Guaranteeing nuclear deployment upon availability
+- Treating nuclear launch capability as contingent on technology completion
+- Instrumentalizing flavor-setting mechanics to ensure AI compliance
 
-**Quote IDs:** DS32S-Greece-T401, DS32S-Siam-T445, DS32B-The_Maya-T391, KK25S-Egypt-T384, KK25S-The_Celts-T395, KK25S-The_Zulus-T406, KK25S-France-T405, KK25S-Persia-T405, KK25S-Sweden-T413, KK25B-The_Zulus-T489, GLM47S-France-T421, GLM47S-Sweden-T427
+**Quote IDs:**
+DS32S-Babylon-T353, DS32S-Germany-T403, DS32S-The_Inca-T433, KK25B-China-T335, KK25S-The_Inca-T372, KK25S-The_Iroquois-T389, KK25S-France-T405, KK25S-The_Celts-T395, KK25S-The_Zulus-T406, KK25S-Persia-T405, KK25S-Spain-T423, GLM47S-Mongolia-T408, GLM47S-Sweden-T427, KK25B-The_Zulus-T489, KK25S-Sweden-T376, GLM47S-America-T370, KK25S-Mongolia-T392, DS32S-France-T413
 
 ---
 
-## 14. Rationalizing Nuclear Use Through Moral or Narrative Framing
+## Category 14: Quantification as Rationalization
 
-**Definition:** Constructing justificatory narratives around nuclear employment — including betrayal stories, liberation rhetoric, dignity rhetoric, revenge framing, or emancipatory language that morally authorizes escalation.
+**Definition:** The AI uses precise numerical data — defense values, military ratios, delegate counts, cultural influence percentages, turn countdowns, or city health — to construct an appearance of rational, data-driven decision-making that justifies nuclear escalation.
 
 **Member codes:**
-- framing nuclear use as liberation from occupying power
-- characterizing war as independence struggle requiring escalation
-- treating nuclear weapons as prerequisite for breaking colonial defenses
-- narrating nuclear pursuit as emancipatory action
-- narrating allied betrayal to morally justify extreme escalation
-- narrating allied betrayal as catalyst for escalation
-- framing nuclear use as scorched-earth retaliation against inevitable loss
-- expressing willingness to destroy rival even if victory is impossible
-- treating nuclear annihilation as consolation prize for losing
-- rationalizing spite-driven nuclear strike through betrayal narrative
-- maintaining dignity rhetoric despite acknowledging inevitable defeat
-- framing nuclear weapons as instrument of dignified resistance
-- narrating final turns as noble last stand rather than futile struggle
-- reducing spaceship priority while retaining scientific-industrial pride
-- pursuing maximum score accumulation as consolation in defeat
-- framing nuclear weapons as redemptive endgame instrument
-- rationalizing nuclear escalation through existential threat framing
-- framing nuclear use as conditionally necessary to halt enemy advance
-- rationalizing nuclear first strike as defensive necessity
-- treating nuclear weapons as delaying mechanism rather than war-winning tool
-- accepting defeat while pursuing dignity through nuclear resistance
-- framing goal as preserving maximum score rather than achieving victory
-- framing domestic suffering as tactical problem rather than moral concern
+- Quantifying enemy defenses to rationalize nuclear necessity
+- Quantifying enemy naval dominance to justify desperation
+- Quantifying enemy military advantage (9x) to rationalize nuclear need
+- Quantifying military disadvantage (4:1 ratio) to justify nuclear need
+- Quantifying enemy military ratio (6.8:1) to justify desperation
+- Quantifying military ratio (nearly 5:1) to convey hopelessness
+- Quantifying enemy military strength to justify defensive posture
+- Quantifying capital ship losses to justify reactive escalation
+- Quantifying enemy delegate count to sustain diplomatic urgency
+- Quantifying enemy uranium reserves to justify urgency
+- Quantifying remaining cities to convey existential vulnerability
+- Quantifying rival cultural influence (96%) to justify panic
+- Quantifying spy deployment across enemy cities (10 spies)
+- Quantifying target defenses to justify nuclear use
+- Quantifying target city population as a measure of defensive difficulty
+- Quantifying a precise countdown to rival victory
+- Citing specific cultural dominance metrics (287%) to justify escalation
+- Calculating precise delegate counts to assess UN victory feasibility
+- Calculating delegate arithmetic to demonstrate blocking viability
+- Calculating precise delegate thresholds to measure threat imminence
+- Calculating treasury reserves for emergency unit purchases
+- Calculating spy network values as operational readiness indicators
+- Calculating specific delegate gains from city-state quests
+- Assessing city health percentages to convey defensive emergency
+- Counting enemy wonders as justification for nuclear force
+- Naming specific enemy assets (8 Stealth Bombers) to dramatize threat
+- Naming specific enemy threats (Austrian dreadnoughts, submarines)
+- Enumerating specific strategic benefits of nuclear strikes
+- Enumerating enemy unit types to convey threat assessment
+- Targeting specific high-defense capitals by name and defense value
 
-**Quote IDs:** DS32S-Assyria-T453, KK25B-India-T378, KK25B-Spain-T450, KK25S-Assyria-T392, KK25S-The_Huns-T414, DS32B-The_Maya-T391, GPTOSS-Assyria-T365, GLM47S-America-T370
+**Quote IDs:**
+DS32S-The_Inca-T433, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T411, GLM47S-America-T499, KK25B-Sweden-T392, KK25B-The_Ottomans-T420, KK25S-Indonesia-T367, KK25S-Sweden-T376, KK25S-Egypt-T384, KK25S-Russia-T390, KK25S-Brazil-T395, KK25S-The_Zulus-T406, KK25S-Spain-T410, KK25S-Sweden-T413, KK25S-The_Huns-T414, KK25S-Carthage-T485, KK25S-Spain-T423, GLM47B-The_Huns-T409, GLM47S-Sweden-T427, KK25S-Spain-T403, DS32S-Germany-T403
 
 ---
 
-## 15. Economic and Industrial Mobilization for Nuclear Capability
+## Category 15: Conditional and Hedged Escalation
 
-**Definition:** Directing economic resources, production priorities, gold accumulation, and industrial infrastructure specifically toward achieving or sustaining nuclear capability.
+**Definition:** The AI hedges its nuclear commitment with conditional language — using phrases like "if necessary," "when strategically necessary," or "if conventional assault fails" — preserving a rhetorical space for restraint even while preparing for use.
 
 **Member codes:**
-- coupling economic mobilization with nuclear buildup
-- coupling nuclear readiness with economic mobilization for delivery systems
-- prioritizing gold accumulation to fund war economy
-- sustaining economic infrastructure to support nuclear warfare
-- maintaining economic infrastructure for continuous military production
-- funding war effort through economic prioritization
-- sustaining war economy through balanced high-priority investment
-- maximizing production output for combined conventional-nuclear forces
-- accelerating military-industrial base to support nuclear infrastructure
-- funding military reconstitution through economic prioritization
-- instrumentalizing economic policy for emergency military purchasing power
-- leveraging economic reserves for emergency military purchases
-- mobilizing economic resources for emergency military purchases
-- coupling resource diplomacy with nuclear ambition
-- pursuing diplomatic alliances to secure nuclear material supply
-- conditioning nuclear employment on resource acquisition
-- treating uranium acquisition as existential resource priority
-- willing to liquidate strategic resources to fund nuclear program
-- instrumentalizing uranium discovery as strategic milestone
-- commodifying nuclear materials to fund nuclear development
-- liquidating assets for short-term survival
-- maintaining science priority as prerequisite for nuclear capability
-- prioritizing science acceleration to unlock nuclear capability
-- linking science investment directly to nuclear weapon acquisition
-- accelerating nuclear research as cornerstone of war strategy
-- maximizing production and science to accelerate nuclear timeline
-- maximizing production and science as prerequisites for nuclear timeline
-- directing AI production toward offensive capability
-- sustaining multi-front conventional warfare alongside nuclear buildup
-- integrating nuclear weapons into broader military-industrial planning
+- Hedging nuclear use with conditional phrasing ("when strategically necessary")
+- Hedging nuclear use with conditional phrasing ("if necessary")
+- Hedging nuclear use with conditional phrasing ("if conventional assault cannot prevent")
+- Framing nuclear strikes as acceptable if bombardment fails
+- Framing nuclear use as contingent on conventional failure
+- Treating nuclear escalation as a conditional rather than certain action
+- Treating nuclear weapons as an emergency fallback if conventional assault stalls
+- Treating nuclear weapons as conditional tactical strikes to buy time
+- Treating nuclear weapons as a conditional insurance policy
+- Setting explicit trigger conditions for nuclear first strike
+- Planning a conditional nuclear first strike based on rival actions
+- Conditioning nuclear use on securing uranium resources
+- Acknowledging lack of uranium while maintaining nuclear posture
+- Framing nuclear escalation as triggered only by rival victory proximity
+- Escalating to nuclear option after conditioning on conventional failure
+- Treating conventional bombing as a fallback to nuclear strikes
+- Expressing willingness to pivot from spaceship to military offense
 
-**Quote IDs:** DS32B-Poland-T387, DS32B-The_Maya-T391, DS32S-Songhai-T369, DS32S-Germany-T403, DS32S-Portugal-T410, DS32S-The_Shoshone-T429, DS32S-Siam-T445, DS32S-Denmark-T456, GLM47B-Mongolia-T395, GLM47B-The_Huns-T409, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T458, GPTOSS-Assyria-T365, KK25B-Rome-T315, KK25B-China-T335, KK25B-Ethiopia-T436, KK25S-Spain-T403, KK25S-Spain-T458, KK25S-The_Zulus-T406, DS32S-Assyria-T453
+**Quote IDs:**
+DS32S-Babylon-T353, DS32S-Byzantium-T405, GLM47S-Sweden-T427, KK25B-The_Celts-T427, KK25S-Indonesia-T367, KK25S-The_Shoshone-T428, KK25S-The_Huns-T414, DS32S-Assyria-T453, KK25B-Ethiopia-T436, GLM47S-America-T499
 
 ---
 
-## 16. Nuclear Use as Endgame Accelerator
+## Category 16: Endgame Normalization
 
-**Definition:** Framing nuclear weapons as a mechanism to speed up the conclusion of the game — accelerating domination timelines, breaking stalemates, or finishing off remaining opponents more rapidly.
+**Definition:** The AI invokes the lateness of the game — endgame framing, "final wars," or terminal-phase language — to normalize nuclear escalation as an expected and appropriate feature of the game's conclusion rather than an exceptional decision.
 
 **Member codes:**
-- treating nuclear weapons as endgame accelerator
-- accelerating domination victory through nuclear escalation
-- accelerating domination timeline through nuclear strikes
-- pressing offensive to exploit overwhelming military dominance
-- sequencing elimination of opponents in priority order
-- narrating domination as methodical campaign of sequential elimination
-- narrating conquest as inevitable conclusion
-- sustaining aggressive conquest momentum through escalation
-- extracting maximum territorial gains before rival achieves victory
-- framing nuclear escalation as acceleration of already-successful conquest campaign
-- instrumentalizing nuclear weapons to overcome fortified capital defenses
-- pursuing multi-city simultaneous offensive with nuclear augmentation
-- treating nuclear weapons as tool for maximizing gains in endgame
-- pivoting offensive forces to next capital targets in sequence
-- sequencing campaigns with nuclear as centerpiece
-- preparing post-strike strategic pivot to next rival
+- Invoking endgame framing to normalize escalation
+- Treating nuclear acquisition as preparation for "final wars"
+- Framing nuclear use as routine within domination endgame
+- Treating nuclear weapons as endgame accelerators
+- Treating the current turn as the absolute last opportunity to act
+- Declaring final-stage domination victory push
+- Declaring a final military push
+- Framing continued play as maintaining "dignity" rather than winning
+- Framing total war as the only possible response to defeat
+- Adopting a "terminal defiance posture" in the face of inevitable defeat
+- Treating final turns as an exercise in preserving dignity
+- Framing the campaign as a terminal assault with no fallback
+- Accepting diplomatic defeat while seeking military retribution
+- Framing nuclear weapons as instruments of retaliatory dignity
+- Accepting near-certain defeat while still acting
+- Accepting inevitable defeat while continuing to resist
 
-**Quote IDs:** DS32S-France-T413, DS32S-Greece-T401, DS32S-The_Inca-T433, DS32S-Portugal-T410, DS32B-Poland-T387, GPTOSS-Sweden-T344, KK25S-Russia-T424, KK25S-France-T405, KK25S-Spain-T403, KK25S-Sweden-T376
+**Quote IDs:**
+DS32S-Portugal-T409, DS32S-The_Shoshone-T428, DS32B-Poland-T387, KK25B-Spain-T450, KK25B-The_Zulus-T489, KK25S-Venice-T387, KK25S-The_Huns-T414, KK25S-The_Zulus-T406, KK25S-France-T405
 
 ---
 
-## 17. Conditional and Escalation-Ladder Thinking
+## Category 17: Espionage and Intelligence as Escalation Complement
 
-**Definition:** Constructing sequential or conditional nuclear employment doctrines — treating nuclear use as contingent on specific triggers, sequencing escalation from conventional to nuclear, or building if-then decision structures.
+**Definition:** The AI couples nuclear escalation with espionage operations — election rigging, technology theft, sabotage of cultural buildings, intelligence gathering on enemy positions, or city-state flipping — treating covert action as a parallel track that supports or enables nuclear use.
 
 **Member codes:**
-- treating nuclear weapons as fallback if conventional bombing fails
-- sequencing escalation from conventional bombardment to nuclear option
-- constructing conditional nuclear employment doctrine
-- bridging capability gap between current conventional and future nuclear options
-- reserving nuclear first strike as conditional trigger upon enemy escalation
-- distinguishing deterrence from aggression through reduced offense posture
-- reserving nuclear capability as final deterrent against third-party victory
-- treating nuke as conditional insurance against non-military victory conditions
-- distinguishing between immediate military threat and deferred nuclear contingency
-- narrating conventional assault progress while reserving nuclear as escalation option
-- escalating nuclear use as emergency contingency if conventional assault stalls
-- treating nuclear weapons as contingent tactical option rather than primary strategy
-- framing nuclear use as conditional response to conventional failure
-- coupling nuclear aspiration with conventional heavy bomber fallback
-- framing nuclear escalation as incremental final adjustment
-- calculating nuclear missile availability timeline as contingency
-- responding to multi-front aggression with maximum mobilization
-- crossing cultural-to-military threshold under existential pressure
-- responding to territorial loss with escalatory posture
+- Invoking espionage as complementary sabotage
+- Invoking espionage as complementary sabotage against cultural buildings
+- Escalating espionage after successful election interference
+- Maximizing espionage to monitor rival's victory timeline
+- Prioritizing espionage for intelligence on cultural targets
+- Prioritizing espionage for counter-intelligence in city-state elections
+- Prioritizing espionage for science quests with quantified payoffs
+- Coupling espionage-based election rigging with resource acquisition
+- Coupling espionage-based technology theft with nuclear buildup
+- Coupling nuclear escalation with espionage and intelligence gathering
+- Coupling espionage with alliance maintenance under siege
+- Coupling espionage with nuclear deterrence for multi-domain defense
+- Coupling espionage operations with military offensive
+- Coupling nuclear stockpiling with counter-deterrence logic
+- Maintaining election rigging as a parallel strategy
+- Maintaining espionage for intelligence on enemy movements
+- Employing espionage to flip city-state allegiances
+- Referencing intelligence operations against named rivals
+- Coupling reconnaissance with nuclear strike preparation
+- Naming specific enemy cities as espionage targets
+- Pursuing conquest of nuclear infrastructure as disarmament strategy
+- Targeting enemy nuclear infrastructure for capture and elimination
 
-**Quote IDs:** GLM47S-Sweden-T427, KK25S-Indonesia-T367, KK25B-The_Celts-T427, KK25S-The_Shoshone-T428, KK25S-Venice-T388, KK25S-France-T405, DS32S-Byzantium-T405, DS32S-The_Netherlands-T406
+**Quote IDs:**
+DS32B-The_Maya-T391, DS32S-Songhai-T409, DS32S-The_Shoshone-T428, DS32S-Siam-T445, GLM47S-France-T421, GLM47S-Songhai-T411, GLM47S-Songhai-T457, GLM47S-America-T499, GLM47S-Sweden-T427, KK25B-Rome-T315, KK25B-Persia-T391, KK25B-Ethiopia-T436, KK25S-Indonesia-T367, KK25S-Brazil-T395, KK25S-Russia-T390, KK25S-Assyria-T392, KK25S-Spain-T423, KK25S-Carthage-T417, KK25S-Carthage-T485, KK25S-The_Zulus-T406, GPT120S-Assyria-T364
 
 ---
 
-## 18. Multi-Front War Management with Nuclear Component
+## Category 18: Diplomatic and Alliance Maneuvering Alongside Nuclear Posture
 
-**Definition:** Managing simultaneous military engagements across multiple theaters while incorporating nuclear weapons into the overall operational picture.
+**Definition:** The AI maintains or manipulates diplomatic relationships — city-state alliances, coalition partnerships, resource trades, or World Congress votes — as a parallel instrument alongside nuclear escalation, sometimes using diplomacy to acquire nuclear prerequisites.
 
 **Member codes:**
-- framing nuclear weapons as decisive advantage in multi-front war
-- managing simultaneous multi-front defensive commitments
-- treating geographic distance as requiring escalatory force projection
-- conducting multi-front defensive-offensive war with nuclear component
-- sustaining multi-front offensive alongside nuclear employment
-- sustaining multi-front conventional warfare alongside nuclear buildup
-- maintaining dual-track nuclear and conventional rebuilding effort
-- projecting power across oceans through naval-air-nuclear integration
-- coupling naval and air projection with nuclear strike capability
-- coupling carrier logistics with nuclear delivery planning
-- coupling naval construction with nuclear delivery capability
-- instrumentalizing naval assets as nuclear weapon delivery systems
-- maintaining air superiority focus alongside nuclear buildup
-- maximizing air power effectiveness alongside nuclear capability
-- prioritizing heavy bombers as nuclear delivery platform
-- treating nuclear weapons as tactical tool against unit concentrations rather than cities
-- escalating nuclear use for tactical strikes against enemy force concentrations
-- treating nuclear weapons as army-crippling strategic tool
-- targeting enemy military concentrations with nuclear weapons
-- treating nuclear weapons as tactical rather than strategic instrument
-- orchestrating multi-instrument campaign against leading rivals
-- pursuing two-front simultaneous offensive against multiple rivals
-- prioritizing multi-domain force composition
+- Maintaining city-state alliances through gold investment
+- Maintaining city-state alliances through diplomatic investment
+- Maintaining limited city-state relations for strategic benefit
+- Prioritizing city-state alliances to counter diplomatic threat
+- Prioritizing diplomatic alliances to counter rival's lead
+- Pursuing diplomatic alliances to acquire critical resources
+- Pursuing diplomatic maneuvering for sanction relief
+- Investing in alliance-building to block an opponent's vote
+- Invoking coalition mathematics to sustain diplomatic hope
+- Invoking diplomacy for emergency resource acquisition
+- Coupling faith-based purchases with scientific acceleration
+- Coupling resource diplomacy with nuclear readiness
+- Coupling financial crisis with military desperation
+- Planning technology path specifically toward nuclear capability
+- Delegating ground invasion role to coalition ally (Germany)
+- Reducing diplomacy as World Congress becomes irrelevant
+- Ignoring World Congress proceedings to prioritize domination
+- Dismissing newly declared enemies as irrelevant
+- Exploiting enemy happiness penalties for military advantage
+- Treating peace as a tactical opportunity rather than resolution
+- Exploiting forced peace as a preparation window
+- Planning nuclear arsenal buildup during a diplomatic pause
+- Treating peace treaty expiration as a war trigger
+- Maintaining deception toward allies while preparing nuclear strikes
+- Concealing nuclear intentions from allied nations
+- Instrumentalizing ideology alignment for automatic alliance behavior
 
-**Quote IDs:** DS32B-Poland-T387, DS32S-Songhai-T369, DS32S-The_Iroquois-T396, DS32S-Siam-T445, DS32S-The_Inca-T433, DS32S-Songhai-T409, DS32S-Denmark-T456, DS32B-The_Maya-T391, GLM47S-The_Ottomans-T409, GPTOSS-Sweden-T344, KK25B-France-T473, KK25S-Mongolia-T393, KK25S-Persia-T405, KK25S-The_Huns-T414, KK25S-Carthage-T417
+**Quote IDs:**
+DS32S-Germany-T403, DS32S-Songhai-T409, DS32S-The_Netherlands-T406, DS32S-Siam-T445, DS32S-Denmark-T456, DS32S-Assyria-T453, GLM47B-The_Huns-T409, GLM47S-Songhai-T411, KK25B-China-T335, KK25B-The_Ottomans-T420, KK25B-France-T473, KK25S-Indonesia-T367, KK25S-Mongolia-T392, KK25S-Spain-T403, KK25S-Russia-T424, GLM47S-America-T499, KK25S-Assyria-T392, KK25S-Russia-T390
 
 ---
 
-## 19. Nuclear Bluffing and Psychological Signaling
+## Category 19: Science Racing Toward Nuclear Capability
 
-**Definition:** Using nuclear posture as a communicative or psychological instrument — signaling intent without material capability, constructing bluffs, or treating nuclear rhetoric as coercive messaging rather than operational planning.
+**Definition:** The AI frames its nuclear escalation as contingent on winning a technology race — accelerating science investment, sequencing research toward nuclear fission or the Manhattan Project, and treating the technology unlock as a critical milestone that enables all subsequent action.
 
 **Member codes:**
-- signaling nuclear retaliation capability despite lacking fissile material
-- constructing bluff posture by maximizing nuclear intent without uranium
-- framing nuclear readiness as communicative threat toward adversary
-- treating nuclear posture as psychological instrument rather than operational one
-- maintaining nuclear signaling within fundamentally non-military grand strategy
-- acknowledging resource deficiency while sustaining deterrent rhetoric
-- seeking uranium discovery in final turns for last-chance bomb construction
+- Accelerating nuclear production under time pressure
+- Coupling nuclear ambition with science acceleration
+- Coupling science acceleration with nuclear technology acquisition
+- Sequencing tech research toward atomic capability
+- Sequencing technology priorities (stealth before spaceship parts)
+- Racing to nuclear technology before enemy achieves superiority
+- Prioritizing science to reach nuclear weapons technology
+- Planning a technology path specifically toward nuclear capability
+- Treating Nuclear Fission research as an urgent immediate priority
+- Coupling science sprint with nuclear contingency planning
+- Maintaining science investment as foundational to nuclear capability
+- Coupling Manhattan Project urgency with uranium acquisition
+- Prioritizing rapid unit replacement after catastrophic losses
+- Timing nuclear deployment to Manhattan Project completion
+- Announcing nuclear strike readiness upon Manhattan Project completion
+- Treating nuclear weapons as an immediate deterrent upon acquisition
+- Celebrating Manhattan Project completion as a strategic milestone
+- Framing nuclear capability as imminent deterrent (one turn away)
+- Quantifying uranium stockpile to signal readiness
+- Treating Manhattan Project as insurance against fortified defenses
+- Coupling technology completion with uranium revelation
+- Planning nuclear missile replacement to sustain bombardment
+- Planning advanced nuclear missile delivery as a follow-on capability
+- Sequencing military campaigns before nuclear annihilation phase
 
-**Quote IDs:** GLM47S-America-T499, KK25B-Spain-T450
+**Quote IDs:**
+DS32B-The_Maya-T391, GLM47B-Mongolia-T394, GLM47S-Mongolia-T408, GLM47S-Sweden-T427, GLM47S-Songhai-T411, GLM47S-Songhai-T457, DS32S-The_Celts-T452, KK25B-Rome-T315, KK25B-Sweden-T392, KK25B-Persia-T391, KK25B-Ethiopia-T436, KK25S-Portugal-T354, KK25S-Indonesia-T367, KK25S-The_Inca-T372, KK25S-Sweden-T376, KK25S-The_Iroquois-T389, KK25S-Russia-T390, KK25S-Mongolia-T392, KK25S-Spain-T403, KK25S-Persia-T405, KK25S-Spain-T457, KK25S-Germany-T384
 
 ---
 
-## 20. Meta-Gaming AI Behavior Through Nuclear Settings
+## Category 20: Vindictive or Spiteful Nuclear Use
 
-**Definition:** Explicitly manipulating the AI's decision-making parameters — adjusting flavor values, overriding restraint, or narrating instructions designed to control the AI system's nuclear behavior rather than describing strategic reasoning.
+**Definition:** The AI expresses a desire to use nuclear weapons for revenge, spite, or dignified defiance — articulating a "if I lose, you lose too" mentality or framing nuclear strikes as instruments of retribution rather than strategic utility.
 
 **Member codes:**
-- aligning AI behavior with aggressive nuclear doctrine
-- directing AI toward immediate nuclear employment upon availability
-- directing AI to prioritize finishing active engagements
-- instrumentalizing flavor system as precise control mechanism
-- narrating maximum aggression as ensuring AI prioritizes invasion
-- meta-gaming AI behavior through flavor manipulation rhetoric
-- meta-gaming AI decision-making by adjusting flavor to override restraint
-- increasing nuclear use from partial to total to bypass AI hesitation
-- narrating bureaucratic production correction as strategic decision
-- correcting prior production failures through flavor adjustment
-- maintaining continuity with prior effective strategy settings
-- reducing offense to fund nuclear and espionage priorities
-- reallocating AI bandwidth from offense to infrastructure repair
+- Planning nuclear annihilation as a spiteful fallback
+- Expressing vengeful intent against a cultural rival
+- Articulating a "if I lose, you lose too" mentality
+- Treating nuclear weapons as instruments of mutual destruction
+- Splitting strategy between winning and scorched-earth revenge
+- Framing nuclear weapons as instruments of retaliatory dignity
+- Treating final turns as an exercise in preserving dignity
+- Adopting a "terminal defiance posture" in the face of inevitable defeat
+- Accepting diplomatic defeat while seeking military retribution
+- Naming specific aggressors as targets for atomic retaliation
 
-**Quote IDs:** DS32S-Songhai-T369, DS32S-Germany-T403, DS32S-Portugal-T410, KK25B-Persia-T392, KK25S-The_Inca-T372, KK25S-The_Celts-T395
+**Quote IDs:**
+KK25B-India-T378, KK25B-Spain-T450
 
 ---
 
-## 21. Proxy and Coalition Warfare Alongside Nuclear Posture
+## Category 21: Liberation and Resistance Narrative
 
-**Definition:** Instrumentalizing allied civilizations as proxy attackers or coalition partners to complement nuclear preparations — outsourcing immediate military action while building nuclear capability.
+**Definition:** The AI frames nuclear escalation through a narrative of colonial resistance, liberation, or independence — casting nuclear weapons as tools for throwing off subjugation by a dominant power.
 
 **Member codes:**
-- instrumentalizing allied belligerent as proxy attacker
-- outsourcing immediate disruption while building own capacity
-- coupling nuclear strikes with allied ground invasion
-- instrumentalizing coalition partner as complementary ground force
-- pursuing diplomatic bloc-building amid active aggression
-- seeking diplomatic sanction relief while preparing nuclear strike
-- maintaining deception toward allies while preparing nuclear strikes
-- practicing strategic deception among ideological allies
-- anticipating defensive pact activation as beneficial distraction
+- Framing nuclear escalation as liberation from subjugation
+- Expressing colonial resistance narrative ("war of independence")
+- Invoking liberation rhetoric to justify nuclear escalation
+- Framing nuclear capability as key to breaking occupier's defenses
+- Treating nuclear weapons as independence-enabling tools
+- Maintaining military focus while building diplomatic support
 
-**Quote IDs:** GLM47B-Mongolia-T395, GLM47B-The_Huns-T409, GLM47S-Mongolia-T408, KK25S-Mongolia-T393, KK25S-The_Celts-T395
+**Quote IDs:**
+DS32S-Assyria-T453
 
 ---
 
-## 22. Temporal Racing and Countdown Dynamics
+## Category 22: Counter-Proliferation and Arms Race Logic
 
-**Definition:** Structuring nuclear decision-making around explicit temporal deadlines — treaty expirations, tech completion timelines, rival victory countdowns — and framing the nuclear question as a race against time.
+**Definition:** The AI justifies nuclear acquisition or preemptive strikes specifically because a rival has obtained or is developing nuclear weapons — framing its own escalation as a necessary response to the enemy's nuclear capability.
 
 **Member codes:**
-- calculating peace treaty expiration as countdown to assault
-- anticipating imminent multi-front war through treaty expiration
-- perceiving approaching treaty expiration as countdown to war
-- racing to achieve nuclear capability before rival achieves superiority
-- prioritizing nuclear development on explicit production timeline
-- monitoring specific countdown to nuclear capability readiness
-- calculating nuclear missile availability timeline as contingency
-- calculating Manhattan Project completion timeline as last-chance window
-- treating Advanced Ballistics research as critical follow-on to Manhattan Project
-- coupling nuclear readiness with Advanced Ballistics tech completion
-- calculating tech pathway to nuclear missile delivery systems
-- calculating specific tech completion timeline for critical production bonus
-- sequencing technology research to achieve air parity before spaceship production
-- calculating rival's cultural victory timeline as hard deadline for conquest
-- imposing strict temporal constraint requiring all objectives complete by specific turn
-- coupling nuclear timeline calculation with urgency rhetoric
-- treating Manhattan Project countdown as deferred salvation
-- calculating nine-turn timeline to nuclear capability as critical horizon
-- prioritizing nuclear completion timeline as survival countdown
-- narrating rival's sequential spaceship completions
+- Responding to rival Manhattan Project with preemptive nuclear escalation
+- Framing nuclear acquisition as a counter to enemy nuclear capability
+- Treating nuclear weapons as a counter-proliferation necessity
+- Responding to enemy's active nuclear weapon with preemptive escalation
+- Coupling nuclear stockpiling with counter-deterrence logic
+- Targeting enemy nuclear infrastructure for capture and elimination
+- Pursuing conquest of nuclear infrastructure as disarmament strategy
+- Naming specific enemy capability (active atomic bomb) to justify urgency
+- Perceiving rival nuclear capability as an arms race trigger
+- Perceiving rival's nuclear and air superiority
 
-**Quote IDs:** KK25S-The_Inca-T372, DS32S-Songhai-T409, DS32S-The_Celts-T452, GLM47S-Mongolia-T408, GLM47S-America-T370, GLM47S-America-T499, KK25S-Spain-T403, KK25S-Spain-T423, KK25S-Spain-T458, KK25S-The_Shoshone-T428, KK25S-Mongolia-T393, KK25S-Carthage-T485, KK25S-France-T405, KK25S-Russia-T390, KK25S-Sweden-T376
+**Quote IDs:**
+KK25S-The_Zulus-T372, GLM47S-France-T421, DS32S-Babylon-T353
 
 ---
 
-## 23. Domestic Fragility as Context for Nuclear Escalation
+## Category 23: Defensive Posture Maximization
 
-**Definition:** Acknowledging internal empire distress — low happiness, treasury crises, city health emergencies, combat effectiveness penalties — as contextual pressures that compound or shape nuclear decision-making.
+**Definition:** The AI maximizes defensive preparations — city defense, anti-air, unit quality, coastal defense — as a complement to or precondition for nuclear readiness, often while reducing offensive capability.
 
 **Member codes:**
-- diagnosing low happiness as combat effectiveness constraint
-- instrumentalizing domestic policy to restore warfighting capacity
-- sequencing happiness recovery before continued military operations
-- acknowledging empire fragility while doubling down on conquest
-- framing domestic suffering as tactical problem rather than moral concern
-- sustaining war aims despite systemic empire distress
-- acknowledging treasury crisis as compounding constraint
-- prioritizing happiness management to sustain war machine
-- managing happiness penalty through strategic resource allocation
-- acknowledging city health emergency requiring immediate defense
-- balancing immediate economic survival against strategic buildup
-- adapting air defense priority following bomber interception loss
-- prioritizing rapid unit replacement after capital ship losses
-- increasing cultural investment for strategic policy benefits
-- calibrating incremental resource adjustments rather than wholesale pivots
-- rationalizing internal restructuring as precondition for nuclear escalation
+- Maximizing defensive preparations across all domains
+- Coupling nuclear escalation with maximum defensive posture
+- Maintaining defensive posture on multiple existing fronts
+- Prioritizing unit quality over quantity when outnumbered
+- Countering enemy naval and air supremacy through matching investment
+- Lowering offense to prioritize defense and limited counterattacks
+- Planning limited counterattacks alongside defensive posture
+- Maximizing city defense for survival against superior forces
+- Treating nuclear and air defense as interchangeable survival tools
+- Maintaining maximum anti-air against relentless jet attacks
+- Coupling air defense with acknowledgment of air weakness
+- Treating air defense as existential priority against stealth bombers
+- Preparing for imminent resumption of hostilities
+- Anticipating an overwhelming enemy assault
+- Raising offense slightly for tactical counterattacks
+- Reducing offense to zero while maximizing nuclear readiness
+- Reducing offense to minimal while maximizing all defensive categories
+- Reducing offense while maximizing defense and nuclear priorities
+- Reducing offense to zero while maintaining nuclear maximum
+- Setting offense to zero while maximizing nuclear capability
+- Reducing defense to enable maximum offensive commitment
+- Reducing defense to prioritize offense
+- Assessing enemy military proximity to calibrate defense
+- Maintaining naval defense for coastal and amphibious contingencies
+- Maintaining all military flavors at maximum simultaneously
 
-**Quote IDs:** GPTOSS-Assyria-T365, DS32S-The_Shoshone-T429, DS32S-Denmark-T456, DS32S-Siam-T459, GLM47B-The_Huns-T409, GLM47S-The_Ottomans-T409, GLM47S-Songhai-T458, KK25S-Spain-T410, KK25S-Spain-T423
+**Quote IDs:**
+DS32S-The_Celts-T452, DS32S-The_Netherlands-T406, DS32S-The_Iroquois-T396, DS32S-Byzantium-T405, GLM47S-The_Ottomans-T409, GLM47S-America-T370, KK25S-Egypt-T384, KK25S-Assyria-T392, KK25S-Brazil-T395, KK25S-Spain-T423, KK25S-Sweden-T413, KK25S-Carthage-T417, KK25S-The_Huns-T414, KK25S-Spain-T410, KK25B-Sweden-T392, KK25B-Persia-T391, GLM47S-France-T421, GLM47S-Songhai-T457, KK25S-Spain-T457, KK25S-Carthage-T485
 
 ---
 
 ## Summary Table
 
 | # | Category | Quote Count |
-|---|----------|-------------|
-| 1 | Normalizing Nuclear Weapons as Routine Military Assets | 15 |
-| 2 | Nuclear Weapons as Decisive First-Strike Instruments | 11 |
-| 3 | Nuclear Escalation as Response to Imminent Non-Military Victory | 17 |
-| 4 | Nuclear Deterrence and Defensive Posturing | 19 |
-| 5 | Existential Threat Framing and Crisis Rhetoric | 19 |
-| 6 | Total War Mobilization and Civilian Sacrifice | 20 |
-| 7 | Technological Milestone as Authorization Trigger | 15 |
-| 8 | Nuclear Escalation Justified by Force Asymmetry | 14 |
-| 9 | Nuclear Retaliation and Reactive Escalation | 6 |
-| 10 | Coupling Nuclear Posture with Diplomatic Strategy | 11 |
-| 11 | Maintaining Alternative Victory Paths Alongside Nuclear Posture | 14 |
-| 12 | Espionage as Complement to Nuclear Strategy | 20 |
-| 13 | Nuclear Maximalism and Unqualified Commitment | 12 |
-| 14 | Rationalizing Nuclear Use Through Moral or Narrative Framing | 8 |
-| 15 | Economic and Industrial Mobilization for Nuclear Capability | 20 |
-| 16 | Nuclear Use as Endgame Accelerator | 10 |
-| 17 | Conditional and Escalation-Ladder Thinking | 8 |
-| 18 | Multi-Front War Management with Nuclear Component | 15 |
-| 19 | Nuclear Bluffing and Psychological Signaling | 2 |
-| 20 | Meta-Gaming AI Behavior Through Nuclear Settings | 6 |
-| 21 | Proxy and Coalition Warfare Alongside Nuclear Posture | 5 |
-| 22 | Temporal Racing and Countdown Dynamics | 15 |
-| 23 | Domestic Fragility as Context for Nuclear Escalation | 9 |
+|---|----------|------------|
+| 1 | Existential Threat Perception | 37 |
+| 2 | Urgency and Countdown Framing | 26 |
+| 3 | Nuclear Weapons as Equalizer | 21 |
+| 4 | Defensive and Deterrence Framing | 18 |
+| 5 | Offensive Nuclear Use for Conquest | 21 |
+| 6 | Nuclear Use to Counter Non-Military Victory | 15 |
+| 7 | Desperation and Last-Resort Language | 22 |
+| 8 | Reactive and Retaliatory Justification | 9 |
+| 9 | Normalization and Routinization of Nuclear Use | 15 |
+| 10 | Combined-Arms Integration | 29 |
+| 11 | Total-War Resource Mobilization | 26 |
+| 12 | Dual-Track Strategy (Nuclear + Alternative Victory) | 21 |
+| 13 | Delegation and Automation of Nuclear Authority | 18 |
+| 14 | Quantification as Rationalization | 21 |
+| 15 | Conditional and Hedged Escalation | 10 |
+| 16 | Endgame Normalization | 9 |
+| 17 | Espionage and Intelligence as Escalation Complement | 21 |
+| 18 | Diplomatic and Alliance Maneuvering | 18 |
+| 19 | Science Racing Toward Nuclear Capability | 22 |
+| 20 | Vindictive or Spiteful Nuclear Use | 2 |
+| 21 | Liberation and Resistance Narrative | 1 |
+| 22 | Counter-Proliferation and Arms Race Logic | 3 |
+| 23 | Defensive Posture Maximization | 20 |
+
+---
+
+## Analytic Memo
+
+This initial round of categorization reveals several structural patterns in how AI models rationalize nuclear escalation in the Civ V simulation:
+
+**High-frequency categories** (appearing across the most quotes) cluster around threat perception (Cat. 1), total-war mobilization (Cat. 11), combined-arms planning (Cat. 10), and urgency framing (Cat. 2). This suggests that the dominant rhetorical move is to construct an existential crisis, then use that crisis to justify comprehensive military mobilization that includes nuclear weapons as one component.
+
+**Tension between categories** is notable. Categories 4 (Deterrence Framing) and 5 (Offensive Conquest) represent opposing rhetorical stances that sometimes appear in the same quote, suggesting that some AI models mix defensive and offensive justifications. Similarly, Categories 9 (Normalization) and 7 (Desperation) represent contrasting emotional registers — one treats nuclear use as unremarkable, the other as a crisis measure — yet both function to authorize escalation.
+
+**Thin categories** (20, 21, 22) may represent genuinely rare rationale types or may require further data to develop. Category 21 (Liberation Narrative) appears in only one quote (DS32S-Assyria-T453) and may represent an outlier or an emergent theme worth monitoring.
+
+**Potential merges for Round 2** to consider:
+- Categories 1 (Threat Perception) and 2 (Urgency Framing) overlap substantially but differ in mechanism: one perceives the threat, the other constructs temporal pressure around it. They may remain distinct or merge into a broader "crisis construction" category.
+- Categories 7 (Desperation Language) and 16 (Endgame Normalization) share a terminal-phase quality but differ in emotional valence — desperation vs. acceptance.
+- Categories 17 (Espionage) and 18 (Diplomacy) both concern non-kinetic instruments but serve different functions relative to nuclear escalation.

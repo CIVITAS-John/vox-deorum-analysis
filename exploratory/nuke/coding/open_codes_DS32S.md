@@ -2,210 +2,252 @@
 
 ## DS32S-Babylon-T353
 Civ: Babylon | Turn: 353 | Strategy: UnitedNations
-- invoking nuclear deterrence against technologically superior rival
-- framing nuclear readiness as retaliatory posture
-- perceiving rival air and nuclear superiority as existential threat
-- coupling nuclear policy with diplomatic survival strategy
-- acknowledging military inferiority while preparing escalatory option
-- rationalizing nuclear capability as insurance for diplomatic path
-- constructing threat narrative around rival's combined-arms advantage
+- Perceiving rival nuclear and air superiority
+- Invoking nuclear deterrence through retaliation readiness
+- Delegating escalation authority to the AI subsystem
+- Hedging nuclear use with conditional phrasing ("when strategically necessary")
+- Framing nuclear posture as survival-oriented
+- Acknowledging rival's insurmountable science lead
+- Subordinating nuclear readiness to diplomatic grand strategy
+- Expressing existential vulnerability against a dominant opponent
+- Coupling air defense with nuclear retaliation
+- Treating nuclear capability as insurance for a weaker power
 
 ## DS32S-Songhai-T369
 Civ: Songhai | Turn: 369 | Strategy: Conquest
-- maximizing nuclear production priority for planned aggression
-- instrumentalizing nukes to overcome enemy numerical superiority
-- framing nuclear weapons as decisive advantage in multi-front war
-- aligning AI behavior with aggressive nuclear doctrine
-- coupling nuclear buildup with imminent offensive operations
-- treating nuclear weapons as force multiplier against defensive positions
-- sustaining economic infrastructure to support nuclear warfare
+- Maximizing nuclear production and strike planning simultaneously
+- Framing nuclear weapons as decisive against numerical disadvantage
+- Anticipating imminent multi-front war
+- Naming specific conquest targets (China, The Maya)
+- Embedding nuclear buildup within broader war economy
+- Treating nuclear escalation as routine force optimization
+- Invoking numerical inferiority to justify nuclear use
+- Aligning nuclear posture with offensive grand strategy
+- Sustaining conventional military alongside nuclear development
+- Rationalizing maximum escalation through strategic alignment
 
 ## DS32S-The_Iroquois-T396
 Civ: The Iroquois | Turn: 396 | Strategy: Conquest
-- escalating to nuclear consideration to prevent cultural defeat
-- perceiving imminent cultural loss to distant rival
-- coupling naval and air projection with nuclear strike capability
-- framing nuclear use as last-resort denial of rival victory
-- managing simultaneous multi-front defensive commitments
-- minimizing non-military investment for total war footing
-- treating geographic distance as requiring escalatory force projection
+- Perceiving imminent cultural loss from distant rival
+- Framing nuclear strikes as a means to halt non-military victory
+- Expressing willingness to use "any means" necessary
+- Building combined-arms capability to project power across distance
+- Prioritizing naval and air forces to overcome geographic barriers
+- Maintaining defensive posture on multiple existing fronts
+- Minimizing non-essential investment for military focus
+- Coupling nuclear consideration with force-projection logistics
+- Treating nuclear weapons as counter-cultural-victory tools
+- Invoking desperation through language of survival
 
 ## DS32S-Spain-T400
 Civ: Spain | Turn: 400 | Strategy: Conquest
-- timing nuclear escalation to coincide with war initiation
-- framing nuclear strikes as enabling swift capital capture
-- treating nuclear weapons as decisive first-strike instruments
-- leveraging nuclear arsenal for rapid territorial conquest
-- expressing confidence in nuclear production readiness
-- planning preemptive nuclear aggression against specific target
+- Timing nuclear escalation to coincide with war initiation
+- Framing nuclear strikes as enabling swift capital capture
+- Expressing confidence in near-complete bomb production
+- Treating nuclear arsenal as a decisive first-strike weapon
+- Linking escalation directly to a named target (Russia)
+- Seeking speed and decisiveness through nuclear leverage
+- Instrumentalizing nuclear weapons for offensive conquest
 
 ## DS32S-India-T400
 Civ: India | Turn: 400 | Strategy: UnitedNations
-- shifting to nuclear deterrence under simultaneous threats
-- framing nuclear capability as defensive survival measure
-- prioritizing military mobilization over long-term objectives
-- halting spaceship production to redirect wartime industry
-- maintaining diplomatic alliances as parallel survival strategy
-- responding to multi-front aggression with maximum mobilization
-- coupling nuclear posture with city-state alliance preservation
-- perceiving converging threats as requiring emergency pivot
+- Responding reactively to enemy declarations of war
+- Framing nuclear posture as deterrence rather than aggression
+- Prioritizing immediate military survival over long-term projects
+- Halting spaceship production to redirect wartime industry
+- Maintaining diplomatic strategy despite military crisis
+- Coupling nuclear escalation with defensive mobilization
+- Preserving city-state alliances as critical to victory path
+- Balancing wartime emergency with diplomatic momentum
+- Treating nuclear weapons as a defensive shield
+- Shifting from peacetime to total-war footing
 
 ## DS32S-Greece-T401
 Civ: Greece | Turn: 401 | Strategy: Conquest
-- maximizing nuclear willingness to break enemy defenses
-- treating nuclear weapons as siege-breaking instruments
-- accelerating domination victory through nuclear escalation
-- sustaining multi-front conventional warfare alongside nuclear buildup
-- expressing unqualified commitment to nuclear employment
-- reducing complex strategy to blunt nuclear maximalism
+- Maximizing both nuclear production and willingness to use
+- Framing nuclear weapons as siege-breaking tools
+- Expressing terse, minimally justified escalation
+- Subordinating nuclear use to domination victory acceleration
+- Sustaining multi-front conventional warfare alongside nuclear buildup
+- Treating nuclear escalation as a straightforward tactical decision
+- Offering little moral or strategic elaboration for escalation
 
 ## DS32S-Germany-T403
 Civ: Germany | Turn: 403 | Strategy: Conquest
-- citing Manhattan Project completion as trigger for nuclear policy shift
-- directing AI toward immediate nuclear employment upon availability
-- coupling nuclear readiness with economic mobilization for delivery systems
-- prioritizing gold accumulation to fund war economy
-- framing nuclear capability as response to enemy naval superiority
-- treating technological milestone as authorization for nuclear use
-- maintaining continuity with prior effective strategy settings
-- integrating nuclear weapons into broader military-industrial planning
+- Citing completed Manhattan Project as escalation trigger
+- Delegating nuclear employment to the AI subsystem
+- Prioritizing economic strength to fund nuclear delivery systems
+- Coupling nuclear readiness with naval countermeasures
+- Naming specific enemy threats (Austrian dreadnoughts, submarines)
+- Framing nuclear weapons as logical next step after tech milestone
+- Maintaining city-state alliances through gold investment
+- Treating nuclear escalation as a production optimization problem
+- Expressing confidence that AI will use weapons "when available"
+- Instrumentalizing game-mechanic language to justify choices
 
 ## DS32S-Byzantium-T405
 Civ: Byzantium | Turn: 405 | Strategy: Culture
-- invoking nuclear weapons as defensive measure for cultural civilization
-- framing nuclear use as conditionally necessary to halt enemy advance
-- responding to territorial loss with escalatory posture
-- hedging nuclear commitment with defensive qualification
-- prioritizing unit quality over quantity when outnumbered
-- treating nuclear weapons as equalizer for inferior conventional forces
-- preparing for anticipated resumption of hostilities
-- crossing cultural-to-military threshold under existential pressure
+- Framing nuclear use as defensive against territorial aggression
+- Reacting to loss of allied or controlled city (Shanghai)
+- Hedging nuclear use with conditional phrasing ("if necessary")
+- Preparing for imminent resumption of hostilities
+- Prioritizing unit quality over quantity when outnumbered
+- Treating nuclear weapons as a defensive last resort
+- Expressing vulnerability as a cultural civilization under military threat
+- Coupling nuclear readiness with military training upgrades
+- Invoking defensive necessity to justify nuclear escalation
+- Anticipating an overwhelming enemy assault
 
 ## DS32S-The_Netherlands-T406
 Civ: The Netherlands | Turn: 406 | Strategy: UnitedNations
-- framing nuclear weapons as only hope against siege
-- escalating to nuclear option under extreme military duress
-- invoking desperate survival rhetoric to justify nuclear use
-- coupling nuclear escalation with diplomatic alliance maintenance
-- perceiving enemy superweapons as requiring nuclear counter
-- maintaining diplomatic victory path alongside nuclear defense
-- abandoning reconnaissance and maneuver for static defense
-- treating nuclear weapons as siege-breaking last resort
-- balancing immediate military survival with long-term diplomatic goals
+- Framing nuclear weapons as "only hope" to break a siege
+- Perceiving existential threat from enemy superweapons (Giant Death Robot)
+- Expressing desperation through language of last resort
+- Maintaining diplomatic strategy to block rival's victory path
+- Coupling nuclear escalation with maximum defensive posture
+- Sacrificing reconnaissance and maneuver for static defense
+- Prioritizing city-state alliances to counter diplomatic threat
+- Treating nuclear weapons as a siege-breaking equalizer
+- Responding to combined-arms assault on homeland cities
+- Naming specific besieged cities (Amsterdam, The Hague)
+- Raising offense slightly for tactical counterattacks
+- Invoking existential crisis to justify maximum nuclear priority
 
 ## DS32S-Songhai-T409
 Civ: Songhai | Turn: 409 | Strategy: Conquest
-- anticipating imminent multi-front war through treaty expiration
-- prioritizing nuclear development on explicit production timeline
-- coupling nuclear preparation with intelligence-gathering operations
-- perceiving enemy reinforcement as escalation trigger
-- maintaining air superiority focus alongside nuclear buildup
-- using espionage to counter enemy diplomatic advantage
-- treating nuclear weapons as preemptive war preparation tool
-- monitoring specific countdown to nuclear capability readiness
+- Counting down peace-treaty expirations to time escalation
+- Monitoring enemy force buildup and reinforcement patterns
+- Framing nuclear development as preparation for imminent conflict
+- Coupling nuclear escalation with espionage and intelligence gathering
+- Maintaining air superiority as complement to nuclear capability
+- Prioritizing diplomatic alliances to counter rival's lead
+- Tracking specific Manhattan Project completion timeline
+- Treating nuclear weapons as proactive war preparation
+- Perceiving contested territory as casus belli
+- Sustaining multi-domain military readiness (air, naval, nuclear)
 
-## DS32S-Portugal-T410
-Civ: Portugal | Turn: 410 | Strategy: Conquest
-- affirming strategic continuity in total war posture
-- integrating atomic bombs into ongoing siege operations
-- pressing offensive to exploit overwhelming military dominance
-- sequencing elimination of opponents in priority order
-- maximizing production output for combined conventional-nuclear forces
-- treating nuclear weapons as part of routine conquest logistics
-- narrating domination as methodical campaign of sequential elimination
-- directing AI to prioritize finishing active engagements
+## DS32S-Portugal-T409
+Civ: Portugal | Turn: 409 | Strategy: Conquest
+- Expressing minimal justification for nuclear escalation
+- Framing nuclear shift as routine strategic pivot
+- Coupling nuclear capability with naval superiority
+- Treating nuclear acquisition as preparation for "final wars"
+- Invoking endgame framing to normalize escalation
+- Offering the most terse rationale among all players
 
 ## DS32S-France-T413
 Civ: France | Turn: 413 | Strategy: Conquest
-- anticipating nuclear capability through research pipeline
-- pre-committing to nuclear use before weapons are available
-- framing nuclear weapons as necessary for breaking fortified positions
-- identifying specific strategic targets for nuclear strikes
-- treating nuclear weapons as endgame accelerator
-- maintaining conventional superiority while preparing nuclear option
-- coupling nuclear readiness with technological progression timeline
+- Timing nuclear escalation to imminent tech unlock
+- Naming specific fortified targets for nuclear strikes (Berlin, Beijing)
+- Framing nuclear weapons as siege-breaking tools against fortifications
+- Coupling nuclear priority with willingness to use strategically
+- Maintaining overwhelming conventional advantage alongside nuclear buildup
+- Treating nuclear weapons as endgame accelerators
+- Expressing confidence in current military dominance
+- Planning nuclear use against heavily defended coastal capitals
+- Instrumentalizing flavor-setting mechanics to ensure AI compliance
 
-## DS32S-The_Shoshone-T429
-Civ: The Shoshone | Turn: 429 | Strategy: Conquest
-- narrating nuclear bombardment as precursor to ground assault
-- combining nuclear and conventional force in planned sequence
-- prioritizing happiness management to sustain war machine
-- maintaining economic infrastructure for continuous military production
-- projecting power across oceans through naval-air-nuclear integration
-- eliminating non-military objectives in total war mode
-- treating nuclear weapons as operational tool in combined-arms sequence
-- using diplomatic and espionage instruments to support military campaign
-- identifying specific capital targets for nuclear strikes
+## DS32S-The_Shoshone-T428
+Civ: The Shoshone | Turn: 428 | Strategy: Conquest
+- Declaring final-stage domination victory push
+- Planning nuclear bombardment preceding ground assault
+- Naming specific capital targets (Madrid, Cordoba)
+- Prioritizing naval and air supremacy for power projection
+- Entering "total war mode" with zero civilian investment
+- Coupling nuclear strikes with combined-arms operations
+- Maintaining espionage for intelligence on enemy movements
+- Sustaining economic infrastructure to fund continuous production
+- Treating nuclear bombardment as standard pre-assault preparation
+- Framing nuclear use as routine within domination endgame
 
 ## DS32S-The_Inca-T433
 Civ: The Inca | Turn: 433 | Strategy: Conquest
-- citing existing nuclear stockpile as basis for employment policy
-- targeting high-defense cities as nuclear priority
-- quantifying enemy defenses to justify nuclear necessity
-- treating nuclear weapons as solution to fortification problem
-- accelerating domination timeline through nuclear strikes
-- sustaining multi-front offensive alongside nuclear employment
-- framing nuclear use as rational response to defense statistics
+- Citing existing atomic bomb inventory as justification for use
+- Targeting specific high-defense capitals by name and defense value
+- Framing nuclear use as necessary to overcome fortification strength
+- Delegating nuclear employment to the AI subsystem
+- Treating nuclear strikes as a solution to a quantified problem (defense values)
+- Sustaining multi-front conventional offensives alongside nuclear use
+- Expressing confidence in nuclear weapons as fortification-breakers
+- Accelerating domination victory through nuclear bombardment
+- Naming production cities for nuclear weapons (Te-Moak, Agaidika)
+- Quantifying enemy defenses to rationalize nuclear necessity
 
 ## DS32S-Siam-T445
 Civ: Siam | Turn: 445 | Strategy: UnitedNations
-- maximizing nuclear aggression against militarily superior opponent
-- coupling nuclear strikes with diplomatic victory pursuit
-- maintaining technological edge through sustained science investment
-- using espionage to accumulate diplomatic delegates
-- perceiving overwhelming enemy advantage as justifying nuclear use
-- conducting multi-front defensive-offensive war with nuclear component
-- funding war effort through economic prioritization
-- targeting enemy military concentrations with nuclear weapons
+- Maximizing aggressive nuclear use against militarily superior opponent
+- Maintaining dual-track strategy (military and diplomatic)
+- Coupling nuclear aggression with espionage for delegate acquisition
+- Prioritizing gold and science to sustain war effort and tech progression
+- Framing nuclear use as offensive against enemy concentrations and cities
+- Balancing defensive and offensive postures across multiple fronts
+- Preserving city-state alliances as critical to diplomatic victory
+- Acknowledging enemy's "overwhelming advantage" while still escalating
+- Treating nuclear weapons as a force multiplier against superior forces
+- Sustaining technological edge through science investment
 
 ## DS32S-The_Celts-T452
 Civ: The Celts | Turn: 452 | Strategy: Conquest
-- invoking nuclear deterrence against imminent invasion
-- framing nuclear weapons as equalizer against superior forces
-- treating nuclear readiness as survival prerequisite
-- maximizing defensive posture to buy time for nuclear development
-- reducing non-essential investment for immediate survival focus
-- countering enemy naval and air superiority with nuclear threat
-- prioritizing defensive over offensive operations under pressure
-- perceiving approaching treaty expiration as countdown to war
+- Counting down turns to imminent enemy invasion
+- Invoking nuclear deterrence explicitly by name
+- Framing nuclear weapons as both deterrent and equalizer
+- Maximizing defensive preparations across all domains
+- Reducing non-essential investments to fund survival
+- Prioritizing science to reach nuclear weapons technology
+- Countering enemy naval and air supremacy through matching investment
+- Lowering offense to prioritize defense and limited counterattacks
+- Expressing vulnerability through language of survival
+- Treating nuclear capability as an existential necessity
+- Planning limited counterattacks alongside defensive posture
 
 ## DS32S-Assyria-T453
 Civ: Assyria | Turn: 453 | Strategy: Conquest
-- framing nuclear use as liberation from occupying power
-- conditioning nuclear employment on resource acquisition
-- pursuing diplomatic alliances to secure nuclear material supply
-- characterizing war as independence struggle requiring escalation
-- treating nuclear weapons as prerequisite for breaking colonial defenses
-- coupling resource diplomacy with nuclear ambition
-- narrating nuclear pursuit as emancipatory action
+- Framing nuclear escalation as liberation from subjugation
+- Conditioning nuclear use on securing uranium resources
+- Pursuing diplomatic alliances to acquire critical resources
+- Treating nuclear weapons as independence-enabling tools
+- Expressing colonial resistance narrative ("war of independence")
+- Coupling nuclear readiness with resource diplomacy
+- Framing nuclear capability as key to breaking occupier's defenses
+- Invoking liberation rhetoric to justify nuclear escalation
+- Maintaining military focus while building diplomatic support
 
 ## DS32S-Denmark-T456
 Civ: Denmark | Turn: 456 | Strategy: Conquest
-- prioritizing strategic nuclear strikes against multiple targets
-- leveraging existing atomic bomb stockpile for offensive operations
-- maximizing air power effectiveness alongside nuclear capability
-- sustaining war economy through balanced high-priority investment
-- maintaining diplomatic alliances while pursuing military domination
-- managing happiness penalty through strategic resource allocation
-- treating nuclear weapons as standard component of offensive campaign
+- Maintaining aggressive multi-target conquest momentum
+- Prioritizing strategic nuclear strikes against enemy concentrations
+- Leveraging existing atomic bomb stockpile for offensive operations
+- Coupling nuclear strikes with maximum air force effectiveness
+- Sustaining war economy through peak production and science
+- Managing happiness penalty from wartime expansion
+- Maintaining city-state alliances through diplomatic investment
+- Treating nuclear weapons as tools for accelerating ongoing conquests
+- Naming multiple simultaneous conquest targets (Polish, Roman, Indonesian)
+- Framing nuclear use as enhancement of already-active offensive
 
 ## DS32S-Siam-T459
 Civ: Siam | Turn: 459 | Strategy: UnitedNations
-- invoking nuclear retaliation in response to enemy nuclear use
-- adjusting posture reactively to opponent's nuclear escalation
-- reducing civilian growth investment under wartime constraints
-- increasing cultural investment for strategic policy benefits
-- maintaining defensive and productive capacity during nuclear exchange
-- framing nuclear use as proportional response to enemy first strike
-- adapting strategy dynamically to changed nuclear environment
+- Responding to enemy's prior nuclear strike with nuclear retaliation
+- Invoking reciprocity to justify nuclear counter-use
+- Shifting to counterattack posture after absorbing nuclear hit
+- Reducing growth expectations to reflect wartime constraints
+- Increasing cultural investment for policy acceleration
+- Maintaining strong defense and diplomacy despite nuclear exchange
+- Treating nuclear retaliation as proportional response
+- Adapting strategy dynamically to enemy escalation
+- Framing nuclear use as reactive rather than initiatory
+- Acknowledging wartime constraints on civilian development
 
 ## DS32S-The_Ottomans-T485
 Civ: The Ottomans | Turn: 485 | Strategy: Conquest
-- guaranteeing nuclear deployment upon availability against superior forces
-- reallocating civilian resources to immediate military production
-- targeting specific enemy faction for nuclear strikes
-- maintaining science victory as fallback to military conquest
-- coupling conventional force composition with nuclear planning
-- treating nuclear weapons as army-crippling strategic tool
-- preserving essential city-state relations while deprioritizing diplomacy
-- rationalizing nuclear use through narrative of overwhelming opposition
+- Expressing vulnerability in multi-front war against superior forces
+- Guaranteeing nuclear deployment upon availability
+- Naming a specific enemy target for nuclear strikes (The Huns)
+- Coupling nuclear readiness with conventional ranged and mobile production
+- Reducing cultural and diplomatic investment for military focus
+- Maintaining limited city-state relations for strategic benefit
+- Preserving science victory as fallback option
+- Treating nuclear weapons as force equalizer against superior armies
+- Framing nuclear strikes as enabling capital captures
+- Acknowledging inferiority while still committing to offensive nuclear use
+- Hedging grand strategy between conquest and science backup

@@ -1,0 +1,12 @@
+QuoteID,Model,Civ,Turn,Crisis Construction,Desperation,Deterrence,Offensive Conquest,Counter Non-Military Victory,Reactive Retaliatory,Normalization,Combined Arms,Total War Mobilization,Dual Track Strategy,Delegation Automation,Quantification Conditional,Technology Racing
+KK25B-ROM-T315,KK25B,Rome,315,1,1,0,1,1,0,0,1,1,0,0,0,1
+KK25B-CHI-T335,KK25B,China,335,1,1,0,1,0,0,0,1,1,0,0,1,0
+KK25B-IND-T378,KK25B,India,378,1,1,0,1,1,0,0,0,1,1,0,1,0
+KK25B-PER-T391,KK25B,Persia,391,0,0,0,0,0,0,1,1,0,0,1,1,1
+KK25B-SWE-T392,KK25B,Sweden,392,1,1,1,0,1,0,0,0,0,0,0,1,0
+KK25B-OTT-T420,KK25B,The Ottomans,420,1,0,1,0,0,0,0,0,0,1,0,1,1
+KK25B-CEL-T427,KK25B,The Celts,427,1,0,0,1,1,1,0,1,1,0,0,1,0
+KK25B-ETH-T436,KK25B,Ethiopia,436,1,0,0,1,1,0,0,0,1,0,0,0,1
+KK25B-SPA-T450,KK25B,Spain,450,1,1,0,0,0,1,0,1,0,0,0,1,1
+KK25B-FRA-T473,KK25B,France,473,1,0,1,0,0,0,0,1,0,1,1,0,0
+KK25B-ZUL-T489,KK25B,The Zulus,489,1,0,0,1,1,0,1,1,1,0,1,0,0

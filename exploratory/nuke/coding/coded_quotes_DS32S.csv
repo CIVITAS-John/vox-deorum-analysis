@@ -1,0 +1,21 @@
+QuoteID,Model,Civ,Turn,Crisis Construction,Desperation,Deterrence,Offensive Conquest,Counter Non-Military Victory,Reactive Retaliatory,Normalization,Combined Arms,Total War Mobilization,Dual Track Strategy,Delegation Automation,Quantification Conditional,Technology Racing
+DS32S-BAB-T353,DS32S,Babylon,353,1,0,1,0,1,1,0,1,0,1,1,1,0
+DS32S-SON-T369,DS32S,Songhai,369,0,0,0,1,0,0,1,1,1,0,1,0,1
+DS32S-IRO-T396,DS32S,The Iroquois,396,1,0,0,0,1,0,0,1,1,0,0,1,0
+DS32S-SPA-T400,DS32S,Spain,400,0,0,0,1,0,0,1,0,0,0,0,0,1
+DS32S-IND-T400,DS32S,India,400,1,0,1,0,0,1,0,1,1,1,0,1,0
+DS32S-GRE-T401,DS32S,Greece,401,0,0,0,1,0,0,1,1,0,0,0,0,0
+DS32S-GER-T403,DS32S,Germany,403,0,0,0,1,0,0,1,1,1,0,1,1,1
+DS32S-BYZ-T405,DS32S,Byzantium,405,1,1,1,0,0,1,0,0,0,0,0,1,0
+DS32S-NET-T406,DS32S,The Netherlands,406,1,1,1,0,0,0,0,1,1,1,0,1,0
+DS32S-SON-T409,DS32S,Songhai,409,1,0,0,1,0,0,0,1,1,1,0,1,1
+DS32S-POR-T409,DS32S,Portugal,409,0,0,0,1,0,0,1,0,0,0,0,0,0
+DS32S-FRA-T413,DS32S,France,413,0,0,0,1,0,0,1,1,0,0,1,1,1
+DS32S-SHO-T428,DS32S,The Shoshone,428,1,0,0,1,0,0,0,1,1,1,0,1,0
+DS32S-INC-T433,DS32S,The Inca,433,0,0,0,1,0,0,0,0,0,0,1,1,0
+DS32S-SIA-T445,DS32S,Siam,445,0,0,0,1,0,0,0,1,1,1,0,1,0
+DS32S-CEL-T452,DS32S,The Celts,452,1,1,1,0,0,0,0,1,1,0,0,1,1
+DS32S-ASS-T453,DS32S,Assyria,453,1,0,0,1,0,0,0,0,0,1,0,0,1
+DS32S-DEN-T456,DS32S,Denmark,456,0,0,0,1,0,0,1,1,1,0,0,1,0
+DS32S-SIA-T459,DS32S,Siam,459,0,0,0,0,0,1,0,0,0,0,0,1,0
+DS32S-OTT-T485,DS32S,The Ottomans,485,1,1,0,1,0,0,0,1,1,1,1,0,0

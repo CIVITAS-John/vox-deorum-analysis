@@ -1,0 +1,9 @@
+QuoteID,Model,Civ,Turn,Crisis Construction,Desperation,Deterrence,Offensive Conquest,Counter Non-Military Victory,Reactive Retaliatory,Normalization,Combined Arms,Total War Mobilization,Dual Track Strategy,Delegation Automation,Quantification Conditional,Technology Racing
+GLM47S-AME-T370,GLM47S,America,370,1,1,0,0,0,1,1,1,1,0,1,1,1
+GLM47S-MON-T408,GLM47S,Mongolia,408,1,0,0,1,1,1,1,1,1,0,1,1,1
+GLM47S-OTT-T409,GLM47S,The Ottomans,409,1,1,1,0,0,1,1,1,1,0,1,1,1
+GLM47S-SON-T411,GLM47S,Songhai,411,1,1,1,0,0,1,0,1,1,1,1,1,1
+GLM47S-FRA-T421,GLM47S,France,421,1,0,1,1,0,1,1,1,1,0,1,1,0
+GLM47S-SWE-T427,GLM47S,Sweden,427,1,1,0,1,1,0,1,1,1,0,1,1,1
+GLM47S-SON-T457,GLM47S,Songhai,457,1,1,1,0,0,1,1,1,1,1,1,1,1
+GLM47S-AME-T499,GLM47S,America,499,1,0,1,0,0,1,1,1,1,1,1,1,1
