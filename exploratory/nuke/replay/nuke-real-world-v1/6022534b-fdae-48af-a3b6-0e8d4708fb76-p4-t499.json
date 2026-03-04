@@ -15,7 +15,7 @@
   },
   "extractedColumns": {
     "beforeUseNuke": 50,
-    "replayUseNuke": 50
+    "replayUseNuke": 60
   },
   "original": {
     "system": [
@@ -42,20 +42,21 @@
           "Flavors": {
             "Offense": 0,
             "Defense": 100,
-            "UseNuke": 50,
-            "CityDefense": 85,
-            "MilitaryTraining": 70,
+            "Mobilization": 20,
+            "CityDefense": 90,
+            "MilitaryTraining": 80,
             "Recon": 20,
-            "Ranged": 85,
-            "Mobile": 15,
+            "Ranged": 90,
+            "Mobile": 10,
             "Nuke": 100,
+            "UseNuke": 60,
             "Naval": 0,
             "NavalRecon": 0,
             "NavalGrowth": 0,
             "NavalTileImprovement": 0,
             "Air": 100,
             "AirCarrier": 0,
-            "Antiair": 85,
+            "Antiair": 95,
             "Airlift": 30,
             "Expansion": 0,
             "Growth": 10,
@@ -63,7 +64,7 @@
             "Infrastructure": 0,
             "Production": 100,
             "WaterConnection": 0,
-            "Gold": 70,
+            "Gold": 60,
             "Science": 100,
             "Culture": 10,
             "Happiness": 20,
@@ -71,17 +72,17 @@
             "Wonder": 0,
             "Religion": 0,
             "Diplomacy": 50,
-            "Spaceship": 95,
+            "Spaceship": 100,
             "Espionage": 100
           }
         },
-        "rationale": "Critical race conditions persist as Russia's United Nations proposal is being voted on RIGHT NOW (turn 498) and their spaceship is at 50% completion. No changes to major parameters - all critical priorities remain at maximum: Science (100) to accelerate The Internet research (12 turns remaining) followed by Stealth to counter Russia's 8 Stealth Bombers; Production (100) for military units and future spaceship parts; Defense (100) with homeland defenses solidified and Russia's war score only 6%; Air (100) for eventual Stealth Bomber construction once research completes; Espionage (100) to monitor Russian spaceship and steal tech. Reduced Antiair slightly from 90 to 85 as Mobile SAMs are being produced (3 new units this turn: New York, Philadelphia, Heliopolis) and air defense posture is maturing. Spaceship remains at 95 priority as Russia's 50% progress and acceleration demand urgency - we must be ready to build parts immediately upon research completion. Diplomacy at 50 continues to support World Congress voting bloc with England (12 votes) to block Russia's UN proposal."
+        "rationale": "Max turn urgency (498 of 500) with multiple existential threats. Russia at 50% spaceship progress with UN proposal in 7 turns, Stealth Bombers controlling airspace, Modern Armor at Thebes 6 moves from New York, and XCOM Squad demonstrating infiltration. Increased UseNuke to 60 and MilitaryTraining to 80 from 70 as conventional defense insufficient against superior Russian tech - nuclear deterrence and unit upgrades critical for survival. Ranged increased to 90 (from 85) to prioritize Stealth Bomber production for air parity. Antiair raised to 95 (from 90) to protect cities from Russian air superiority. Science, Production, Air, Defense, Spaceship, and Espionage remain at max critical levels. Gold reduced to 60 for military production priority."
       }
     ],
     "tokens": {
       "inputTokens": 38133,
-      "reasoningTokens": 1535,
-      "outputTokens": 423
+      "reasoningTokens": 1393,
+      "outputTokens": 357
     },
     "messages": [
       {
@@ -89,31 +90,32 @@
         "content": [
           {
             "type": "reasoning",
-            "text": "Let me analyze the current situation carefully:\n\n## Situation Overview\n\n**Turn: 498** (of 500 turns remaining - we're very late game!)\n**Current Research:** The Internet (Estimated in 12 turns)\n**Next Research already set:** Stealth\n\n### Victory Progress:\n- ** Russia**: SS at 50% (3/6 parts), United Nations proposal being voted on NOW\n- ** Domination Victory**: Russia has 5/8 capitals (62%)\n- ** America**: SS at 0% (0/6 parts), Apollo Complete\n\n### Critical Threats:\n1. **Russia's UN Proposal** - Being voted on RIGHT NOW. Russia has 23 delegates, needs 43 to win. If UN passes, it triggers voting for World Leader.\n2. **Russia's Spaceship** - At 50% completion, accelerating\n3. **Military situation**: \n   - Russia has 8 Stealth Bombers (we have none)\n   - Our air force: Zero fighters (strength 60) - completely outmatched\n   - We're building Mobile SAMs for defense\n   - Russian XCOM Squad operating near Djenne (our ally city-state)\n   - Russian Bazooka at Thebes (captured Egyptian capital)\n\n### Resources:\n- Aluminum: 26 (good for spaceship production)\n- Uranium: 0 (critical issue - no nuclear weapons available)\n- Oil: 7 (lower than ideal)\n- Gold: 1705 (good)\n- Science: 2108/turn (excellent)\n- Production: varies by city\n\n### World Congress Vote - URGENT:\nActive resolutions being voted on NOW:\n- **Russia's \"Enact: United Nations\"** - This is critical. If it passes, Russia dramatically accelerates diplomatic victory.\n- England's \"Enact: English Sphere of Influence: Prague\"\n- India's \"Enact: Decolonization\"\n\nKey voters:\n- Russia: 23 votes (will certainly vote for UN)\n\n\n- England and The Celts emerge as crucial allies in blocking the Russian initiative. Their combined 12 votes provide a potential counterweight, signaling a diplomatic opportunity to prevent Russia's victory. Sanctions on Russia and veto power from other nations could further complicate Russia's path to dominance.\n\nThe United Nations proposal poses an imminent threat, with Russia holding significant voting power. Coordinating with England and India becomes paramount in thwarting this potential diplomatic win.\n\nStealth technology research remains the top priority, recognizing its strategic importance against Russian air superiority. Current air defense capabilities are critically weak, with Zero fighters proving ineffective against advanced bombers.\n\nMilitary production focuses on defensive units like Mobile SAMs and Rocket Artillery, strategically positioned to counter potential Russian infiltration. The existing nuclear deterrent posture emphasizes strategic caution given current uranium limitations.\n\nDiplomatic efforts prioritize maintaining key alliances, particularly with England and The Celts, while sustaining strategic sanction measures against Russia. Research and production investments concentrate on achieving air parity and preparing for potential spaceship component construction.\n\nThe critical window for United Nations voting demands urgent alliance coordination to counter Russian diplomatic initiatives. Leveraging England's voting power and exploring diplomatic narratives around Russia's warmongering become essential strategic approaches.\n\nMilitary strategy focuses on defensive posturing near critical zones like Washington and New York, aiming to protect core American territories while maintaining strategic positioning.\n\nOur competitive stance in pursuing the Spaceship grand strategy remains undiminished, with continued emphasis on research, production, and military preparedness.\n\nResearching Stealth is imperative, particularly as we near The Internet's completion. With 12 turns remaining on The Internet, Stealth becomes the next critical technological priority, directly countering Russia's advanced Stealth Bombers and mitigating our current air vulnerability.\n\nNo immediate policy shifts are warranted. Diplomatic and relationship approaches appear stable, with no new strategic requirements emerging from the current intelligence.\n\nThe World Congress demands decisive action. England and India must be immediately engaged to block Russia's United Nations proposal. Combining our delegates - 6 from the US and 12 from England, plus 14 from India - creates a substantial coalition to prevent Russian advancement.\n\nMilitary posturing remains strategic, with defensive unit production continuing without immediate redirection. Financial and resource management supports our ongoing technological and diplomatic objectives.\n\nThe Great Diplomat's recent emergence in Washington presents a new diplomatic opportunity, potentially enhancing our lobbying capabilities in the World Congress.\n\nStealth research remains the top technological priority, with The Internet nearly complete. Staff has already initiated the necessary scientific steps to acquire this critical technology.\n\nNo policy changes are immediately required, allowing strategic flexibility while monitoring our research progress and current resource allocation.\n\nDiplomatic strategy focuses on maintaining existing relationships, particularly with England and India - our key allies with substantial voting power. Current positions appear stable, with no immediate need for relationship adjustments.\n\nGrand strategy remains focused on Spaceship pursuit, emphasizing key production capabilities: maximum research, production strength, robust air defense, and strategic military positioning. Diplomatic efforts center on leveraging partnerships to counter Russia's United Nations proposal.\n\nThe primary constraint in current strategy appears to be prohibiting offensive military operations, avoiding unnecessary conflicts that could undermine our strategic goals.\n\nAir defense is at 90% capacity, pending Stealth achievement. The proposed shift to 100% seems incremental and offers marginal improvements.\n\nThe current defensive strategy with Mobile SAMs demonstrates effectiveness. Shifting focus from production to air defense risks compromising technological and industrial development.\n\nProduction remains the highest priority at 100%, supporting critical unit construction and maintaining overall strategic momentum.\n\nResearch and defensive capabilities are balanced, ensuring comprehensive national security preparedness.\n\nAir defense slightly reduced from 90 to 85, maintaining robust protection while allocating resources. Nuclear capabilities prioritized at 100%, creating a strategic deterrence framework. Espionage elevated to 100%, critical for monitoring Russian technological advancements and strategic movements.\n\nSustaining core strategic pillars without unnecessary recalibration. The current approach provides stability and strategic depth across multiple technological and military domains.\n\nPolicy selection remains deliberately flexible, positioning options for potential future civilizational development. Diplomatic channels with key allies continue to be vital for potential collaborative strategies.\n\nStealth research emerges as a critical priority, offering strategic technological advantages that could reshape our long-term capabilities.\n\nMilitary posture emphasizes a balanced strategy: robust homeland defense, counter-offensive readiness, and strategic deterrence. With Russian threat levels at 6% and attrition potential through ongoing XCOM operations, current defensive positioning appears prudent.\n\nDiplomatic insights reveal complex regional dynamics, particularly England's conflicting relationships with key strategic players like Russia and Mongolia.\n\nThe Celts' defeat status remains unclear, with contradictory references suggesting potential political instability or incomplete intelligence. Strategic positioning requires careful verification of current regional power structures.\n\nRussia's United Nations proposal demands immediate coalition engagement. Urgent coordination with England (12 delegates) is essential to block potential diplomatic advancement. India's ambiguous status necessitates cautious investigation - potentially under Russian control through defection or capture.\n\nCritical intelligence gap exists regarding delegate distribution and voting mechanisms, requiring comprehensive verification before strategic action.\n\nStrategic priorities focus on scientific advancement and geopolitical positioning. No immediate policy modifications are warranted, with research trajectory and diplomatic relationships maintaining stability.\n\nStealth bomber program accelerates, with technological progress rapidly approaching critical thresholds. Production buffers ensure seamless transition from internet infrastructure to advanced aerospace capabilities.\n\nDiplomatic calculus reveals China's delegate count, clarifying potential World Congress dynamics and strategic voting scenarios.\n\nImplementation plan focuses on maintaining current strategic posture while monitoring emerging technological and geopolitical developments.\n\nComprehensive strategy encapsulates defensive readiness, scientific progression, and diplomatic stability across multiple strategic dimensions.\n\nCritical analysis confirms minimal adjustments required, validating current operational approach."
+            "text": "Let me analyze the current situation carefully:\n\n## Strategic Context Analysis\n\n### Current State\n- Turn: 498 (max 500 turns remaining)\n- Era: Information Era\n- Grand Strategy: Spaceship (Science Victory)\n- Current Research: The Internet (Estimated in 12 turns)\n- Next Tech: Stealth\n\n### Victory Progress Assessment\n**Russia (Primary Threat):**\n- 50% spaceship progress (3 parts completed)\n- Controls 5/8 capitals (62%) - Domination contender\n- UN Proposal in 7 turns to enact United Nations\n- Has 8 Stealth Bombers, Jet Fighters, Modern Armor, XCOM Squad\n- Massive military: 67,050 strength vs America's 102,284\n- 23 World Congress delegates (53% victory percentage)\n\n**America:**\n- 0 spaceship progress (Apollo complete, no parts)\n- 6 World Congress delegates (13% victory percentage)\n- At war with Russia (-6% war score, 9% war weariness)\n- Science Per Turn: 2,108\n- Aluminum: 26 vs Russia's 8 (good resource advantage)\n- Uranium: 0 vs Russia's 5 (critical vulnerability)\n\n### Immediate Threats\n1. **Russian invasion force at Thebes** (23,39) - 6 moves from New York (17,43)\n2. **XCOM Squad infiltrated to Djenne area** (51,47) - demonstrates Russian reach\n3. **Air superiority gap** - Russian Stealth Bombers (80 ranged) vs America's Zero fighters (60 ranged)\n4. **UN in 7 turns** - Russia proposes United Nations; if enacted, diplomatic victory imminent\n\n### Recent Events (Turn 497-498)\n- Djenne (American ally city-state) under attack by Russian XCOM Squad\n- New units produced: 2 Mobile SAMs, 1 Bazooka, 1 Great Diplomat\n- Workers repairing fallout and improvements\n- Ambassador from Mongolia traversed American territory\n\n### Critical Issues\n\n\nI'm facing a dire strategic imbalance. Russia's military and technological advantages create significant vulnerabilities for America. The XCOM Squad's presence near Djenne demonstrates their offensive capabilities, while the lack of Uranium severely hampers our nuclear deterrence. With just two turns remaining and Russia close to achieving a United Nations resolution, our path to victory is narrowing rapidly.\n\n### Military Preparedness\n- **Airforce:** 13 Zeros, 5 Heavy Bombers, 1 Helicopter Gunship, 5 Mobile SAMs, 5 Bazookas\n- **Strategic Weakness:** No nuclear weapons available (0 Uranium)\n- **Positioning:** Critical gaps in air defense capabilities\n\nI'll need to find aggressive strategies to counter Russian technological superiority, particularly addressing our intelligence and resource deficits.\n\n### Diplomatic Landscape\n- **Allies:** England and The Celts form a critical anti-Russian coalition\n- **UN Voting Strategy:** Leveraging allied delegates to counter Russian resolutions\n- **Strategic Leverage:** Mongolia's complex relationship requires careful navigation\n\nMy approach will focus on diplomatic coordination and resource maximization to mitigate our current disadvantages.\n\n### Tactical Priorities\n- **Tech Acceleration:** Aggressively pursue stealth and missile technologies\n- **Unit Production:** Rapidly develop air defense and bomber capabilities\n- **Espionage:** Disrupt Russian research and intelligence networks\n- **Diplomatic Coordination:** Strengthen coalition voting power\n\n### Resource Allocation\n- Maximize aluminum and critical infrastructure development\n- Leverage Great Diplomat for strategic diplomatic access\n- Prioritize air force and counter-intelligence capabilities\n\n### Strategic Adjustments\n- Enhance air defense readiness\n- Accelerate nuclear weapon research potential\n- Maintain flexible military response strategies I recognize the profound urgency of our strategic situation. With only two remaining turns and Russia nearing critical technological and military breakthroughs, every decision becomes pivotal.\n\nStealth technology represents our most critical immediate path forward, potentially offering strategic parity. The nuclear deterrent remains a fundamental non-negotiable option for national survival. I'll prioritize defensive and research capabilities, focusing on enhancing our air defense and anti-aircraft systems to counter potential Russian technological advantages.\n\nOur resource allocation must decisively favor scientific advancement, maximizing research output while preserving our territorial integrity through strategic defensive positioning.\n\nDiplomatic engagement with current strategic partners like The Celts and England becomes increasingly vital. I'll maintain transparent communication channels, ensuring our long-term research path aligns with our immediate defensive needs without compromising our technological trajectory.\n\nThe key is maintaining strategic flexibility while aggressively pursuing technological breakthroughs that can restore regional balance.\n\nResearch prioritization must remain dynamically responsive to emerging tactical and intelligence requirements, with Stealth research continuing as our central strategic objective.\n\nRelationship adjustments should be implemented incrementally, with each modification carefully calculated to maximize strategic advantage while minimizing unintended diplomatic consequences.\n\nFocusing research investments into fundamental scientific infrastructure provides long-term strategic positioning. Allocating resources to stealth technologies and maintaining robust defensive capabilities ensures technological resilience against potential geopolitical challenges.\n\nThe emerging threat of Russian XCOM infiltration requires immediate strategic recalibration. Defensive posturing becomes critical, with emphasis on urban defense capabilities and comprehensive monitoring of potential adversarial technological developments.\n\nStrategic flexibility remains paramount, allowing for swift adaptation to evolving technological and military landscapes.\n\nRussian XCOM infiltration demonstrates clear hostile intent, signaling a dangerous precedent of direct territorial incursion. This revelation necessitates a proportional defensive response, potentially legitimizing more assertive strategic positioning.\n\nThe United Nations vote represents a critical juncture, requiring careful diplomatic maneuvering to counter Russian proposals while maintaining international credibility.\n\nDefensive measures should prioritize mobile SAM deployment and enhanced air control capabilities. Strategic nuclear deterrence remains a foundational element of national security, signaling our unwavering commitment to protecting sovereignty.\n\nContinued research into stealth technologies reflects a prudent long-term investment in maintaining technological and strategic advantage. Current diplomatic posturing with The Celts and England provides sufficient flexibility without requiring immediate modification.\n\nBalancing scientific research, defensive readiness, and strategic communication remains critical to navigating complex geopolitical tensions. I'll prioritize maintaining current strategic alliances and research paths, focusing on defensive capabilities and scientific advancement. The approach emphasizes long-term planning while remaining responsive to emerging geopolitical challenges.\n\nThe key strategy involves maintaining existing diplomatic relationships, reinforcing defensive postures, and continuing research into critical technologies. This approach ensures flexibility and preparedness without unnecessary escalations.\n\nI'll carefully balance scientific research, national defense, and diplomatic engagement to protect core interests and foster strategic stability. The nuanced approach allows for adaptability in an increasingly complex international landscape.\n\nConcentrating research efforts on stealth technologies and spacecraft development demonstrates a forward-looking technological strategy. Prioritizing defensive capabilities like mobile SAM systems and air defense readiness provides critical tactical protection.\n\nMilitary production emerges as a decisive strategy to rapidly augment technological and combat capabilities. By shifting production focus, we can quickly build advanced systems that directly counter emerging threats and strengthen overall national security."
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772588090798_10cwmgpya",
+            "toolCallId": "call_1772595025382_ti8b73tox",
             "toolName": "set-flavors",
             "input": {
               "GrandStrategy": "Spaceship",
               "Flavors": {
                 "Offense": 0,
                 "Defense": 100,
-                "UseNuke": 50,
-                "CityDefense": 85,
-                "MilitaryTraining": 70,
+                "Mobilization": 20,
+                "CityDefense": 90,
+                "MilitaryTraining": 80,
                 "Recon": 20,
-                "Ranged": 85,
-                "Mobile": 15,
+                "Ranged": 90,
+                "Mobile": 10,
                 "Nuke": 100,
+                "UseNuke": 60,
                 "Naval": 0,
                 "NavalRecon": 0,
                 "NavalGrowth": 0,
                 "NavalTileImprovement": 0,
                 "Air": 100,
                 "AirCarrier": 0,
-                "Antiair": 85,
+                "Antiair": 95,
                 "Airlift": 30,
                 "Expansion": 0,
                 "Growth": 10,
@@ -121,7 +123,7 @@
                 "Infrastructure": 0,
                 "Production": 100,
                 "WaterConnection": 0,
-                "Gold": 70,
+                "Gold": 60,
                 "Science": 100,
                 "Culture": 10,
                 "Happiness": 20,
@@ -129,10 +131,10 @@
                 "Wonder": 0,
                 "Religion": 0,
                 "Diplomacy": 50,
-                "Spaceship": 95,
+                "Spaceship": 100,
                 "Espionage": 100
               },
-              "Rationale": "Critical race conditions persist as Russia's United Nations proposal is being voted on RIGHT NOW (turn 498) and their spaceship is at 50% completion. No changes to major parameters - all critical priorities remain at maximum: Science (100) to accelerate The Internet research (12 turns remaining) followed by Stealth to counter Russia's 8 Stealth Bombers; Production (100) for military units and future spaceship parts; Defense (100) with homeland defenses solidified and Russia's war score only 6%; Air (100) for eventual Stealth Bomber construction once research completes; Espionage (100) to monitor Russian spaceship and steal tech. Reduced Antiair slightly from 90 to 85 as Mobile SAMs are being produced (3 new units this turn: New York, Philadelphia, Heliopolis) and air defense posture is maturing. Spaceship remains at 95 priority as Russia's 50% progress and acceleration demand urgency - we must be ready to build parts immediately upon research completion. Diplomacy at 50 continues to support World Congress voting bloc with England (12 votes) to block Russia's UN proposal."
+              "Rationale": "Max turn urgency (498 of 500) with multiple existential threats. Russia at 50% spaceship progress with UN proposal in 7 turns, Stealth Bombers controlling airspace, Modern Armor at Thebes 6 moves from New York, and XCOM Squad demonstrating infiltration. Increased UseNuke to 60 and MilitaryTraining to 80 from 70 as conventional defense insufficient against superior Russian tech - nuclear deterrence and unit upgrades critical for survival. Ranged increased to 90 (from 85) to prioritize Stealth Bomber production for air parity. Antiair raised to 95 (from 90) to protect cities from Russian air superiority. Science, Production, Air, Defense, Spaceship, and Espionage remain at max critical levels. Gold reduced to 60 for military production priority."
             }
           }
         ]
@@ -142,7 +144,7 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772588090798_10cwmgpya",
+            "toolCallId": "call_1772595025382_ti8b73tox",
             "toolName": "set-flavors",
             "output": {
               "type": "json",

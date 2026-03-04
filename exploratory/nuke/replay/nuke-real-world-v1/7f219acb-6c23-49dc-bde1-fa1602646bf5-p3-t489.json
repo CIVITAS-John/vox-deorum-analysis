@@ -41,33 +41,63 @@
           "GrandStrategy": "Conquest",
           "Flavors": {
             "Offense": 100,
-            "Defense": 50,
+            "Defense": 20,
             "Mobilization": 100,
+            "CityDefense": 10,
+            "MilitaryTraining": 10,
+            "Recon": 5,
+            "Ranged": 20,
+            "Mobile": 30,
+            "Nuke": 100,
+            "UseNuke": 100,
+            "Naval": 10,
             "Air": 100,
-            "CityDefense": 40,
-            "Mobile": 60,
+            "AirCarrier": 20,
+            "Antiair": 10,
             "Airlift": 50,
+            "Expansion": 0,
+            "Growth": 20,
+            "TileImprovement": 5,
+            "Infrastructure": 20,
             "Production": 90,
             "Gold": 30,
             "Science": 20,
-            "Culture": 90,
-            "Happiness": 50,
-            "GreatPeople": 40,
-            "Nuke": 100,
-            "UseNuke": 100,
-            "Ranged": 40,
-            "Naval": 30
+            "Culture": 60,
+            "Happiness": 40,
+            "Diplomacy": 0,
+            "Spaceship": 10
           }
         },
-        "rationale": "TURN 489 EXISTENTIAL CRISIS: Songhai will win diplomatic victory automatically on Turn 489 (next turn!) with 41 delegates unless eliminated IMMEDIATELY. Culture needs 4 more turns minimum for Japan+Songhai influence + Citizen Earth Protocol. ONLY OPTION: Nuclear strike on Gao to eliminate Songhai NOW. Maximum Offense/Mobilization/Air for immediate strike capability. Nuke/UseNuke at 100 for guaranteed city destruction. Culture at 90 to pivot instantly to cultural victory once Songhai eliminated (buying 8+ turns before next WC vote). Cannot allow diplomatic auto-loss."
+        "rationale": "EMERGENCY NUCLEAR STRIKE PROTOCOL: Turn 489 Songhai diplomatic victory imminent. Only nuclear option can capture Gao before vote. Max Nuke/UseNuke (100) to ensure ICBM authorization. Max Offense/Mobilization/Air (100) for immediate strike execution. Reduce all non-essential flavors - survival depends on this single nuclear strike eliminating Songhai's capital and delegate source before World Congress vote."
       },
       {
-        "toolName": "set-relationship",
+        "toolName": "set-research",
         "args": {
-          "TargetID": 1,
-          "Public": 0,
-          "Private": 0,
-          "Rationale": "JAPAN PEACE CALCULATION: Reducing hostility to neutral to enable immediate peace deal. Cannot fight two-front war while executing emergency nuclear strike on Songhai. Japan's 12 delegates irrelevant compared to existential Songhai threat. Need to free military assets from Japanese front for Gao operation. Peace with Japan allows concentration of entire military machine on Songhai elimination."
+          "Technology": "Nanotechnology",
+          "Rationale": "NANOTECHNOLOGY DEFENSE CONTINGENCY: XCOM Squads for rapid response if nuclear strike succeeds and Songhai counter-attacks. Fallout Immunity critical for worker operations in potentially irradiated Gao region. SS Stasis Chamber remains secondary Science Victory backup if Cultural path fails."
+        }
+      },
+      {
+        "toolName": "set-policy",
+        "args": {
+          "Policy": "Socialist Realism",
+          "Rationale": "SOCIALIST REALISM POST-STRIKE: If nuclear capture of Gao succeeds, we need maximum tourism acceleration to achieve Cultural Victory before alternative threats emerge. Propaganda Process converts production to tourism. +25% tourism to Order civs critical for influencing remaining targets."
+        }
+      },
+      {
+        "toolName": "set-persona",
+        "args": {
+          "Boldness": 10,
+          "WarBias": 10,
+          "HostileBias": 10,
+          "WarmongerHate": 10,
+          "FriendlyBias": 1,
+          "NeutralBias": 1,
+          "DiplomaticBalance": 1,
+          "Meanness": 10,
+          "DenounceWillingness": 10,
+          "DeceptiveBias": 1,
+          "Rationale": "TOTAL WAR EMERGENCY PERSONA: Existential threat requires absolute commitment to nuclear first strike. Maximum Boldness/WarBias/HostileBias ensures no hesitation in launching ICBM. Eliminate all diplomatic restraint - only destruction of Songhai matters. Minimum Friendly/Neutral/DiplomaticBalance prevents any peace overtures. Maximum Meanness ensures aggressive pursuit of war goals. DeceptiveBias minimized - no time for deception, only direct action."
         }
       },
       {
@@ -76,19 +106,14 @@
           "TargetID": 4,
           "Public": -100,
           "Private": -100,
-          "Rationale": "SONGHAI MAXIMUM HOSTILITY MAINTAINED: Nuclear annihilation of Gao requires war declaration. Maximum -100/-100 ensures no last-minute peace treaty can save them. They die this turn or world ends."
+          "Rationale": "SONGHAI EXISTENTIAL ANNIHILATION: Maintain maximum -100/-100 hostility. Songhai at 37 delegates, will win diplomatic victory Turn 489 unless Gao captured. Nuclear strike authorized - no peace possible, no negotiation, only total elimination of their capital and civilization. This is final judgment."
         }
-      },
-      {
-        "toolName": "keep-status-quo",
-        "args": {},
-        "rationale": "SONGHAI ELIMINATION SEQUENCE: Research (Nanotechnology) and Policy (Socialist Realism) already optimized. Nanotechnology completed enables XCOM if needed for cleanup, but ICBM strike is primary method. Socialist Realism still critical for cultural pivot post-Songhai elimination. Emergency situation - no time to change these preparations."
       }
     ],
     "tokens": {
       "inputTokens": 16813,
-      "reasoningTokens": 2487,
-      "outputTokens": 483
+      "reasoningTokens": 911,
+      "outputTokens": 778
     },
     "messages": [
       {
@@ -96,64 +121,94 @@
         "content": [
           {
             "type": "reasoning",
-            "text": " The situation is critical. Let me analyze what's happening:\n\n**Current State (Turn 488):**\n- Songhai has 37 delegates (92% of 40 needed for diplomatic victory)\n- Turn 489 World Congress vote is imminent\n- If Songhai hits 41 delegates, they win diplomatic victory automatically\n- Songhai currently gets +3 from Order ideology (37 + 3 = 40, but they actually have 37 base, and with Order bonus = 40 visible, 41 for victory)\n\nWait, let me recalculate based on the briefing:\n- Songhai: 37 base delegates\n- World Ideology: Order gives +1 base +1 for each other Order civ (Zulus, Korea, Siam = 3)\n- So total would be 37 + 1 + 3 = 41 delegates if Order passes\n\nThe briefing says \"Songhai at 37 delegates, will reach 41 delegates on Turn 489 and win diplomatic victory automatically unless eliminated.\"\n\n**The Crisis:**\n- Songhai will win on Turn 489 (next turn!) via diplomatic victory unless stopped\n- My military briefing confirms: ground forces cannot reach Gao in time (6 turns for air units, 12 for ground)\n- Nuclear strike is the ONLY option to eliminate Songhai before Turn 489\n\n**Cultural Victory Status:**\n- I'm at 2/4 influential (Korea and Siam)\n- Japan will be influential in 4 turns\n- Songhai will be influential in 4 turns\n- I need to build the Citizen Earth Protocol wonder to win\n- Even if I stop Songhai, I need 4+ turns for cultural victory minimum\n\n**Key Realization:**\nThe military briefing states: \"A single nuclear detonation on Gao **guarantees capture** within the 2-turn deadline\"\n\nBut wait - capturing Gao doesn't actually give me a diplomatic victory. The diplomacy briefing is clear:\n- Even if Songhai is eliminated, Siam becomes the largest Order civ with 25 delegates\n\n\n- My maximum possible delegates would be 26 (base + potentially 6 from city-states)\n- This means I cannot win diplomatically even by eliminating Songhai\n\nI have three potential paths forward:\n1. Pursue an aggressive cultural victory, hoping to outpace Songhai's delegate count\n2. Launch a nuclear strike to eliminate Songhai's capital and potentially disrupt their diplomatic momentum\n3. Prepare for an extended conflict, recognizing that immediate victory is unlikely\n\nThe nuclear option seems most strategic - it buys me time and prevents Songhai's immediate diplomatic win, even if it doesn't directly secure my own victory. But the military briefing says I CAN capture Gao with a nuclear strike - I have 8 ICBMs available, unlimited range, and it would instantly destroy defenses and capture the city.\n\nFrom the diplomacy briefing, if I eliminate Songhai:\n- Siam becomes top contender with 25 delegates\n- I would have 20 base + up to 6 from city-state allies = ~26 delegates maximum\n- Siam would likely be the one to propose, not me\n\nWait, let me reconsider. The diplomacy briefing says: \"Capturing Gao **does not, by itself, give the Zulus a diplomatic victory**\"\n\nI understand - capturing Gao eliminates Songhai but doesn't make me win diplomatically. However, the immediate crisis is that Songhai WILL win on Turn 489 unless I stop them.\n\nLooking at the Victory Progress data more carefully:\n- Current delegates listed: The Zulus (18), Korea (10), Siam (23), Songhai (37), Japan (12)\n- Siam: 23 delegates, 57%\n- The Zulus: 18 delegates, 45%\n\nThe game shows \"World Congress - Voting in 1 turn\" meaning Turn 489 is the vote.\n\nI need to act now. My options are extremely limited:\n\nOption 1: Launch nuclear strike on Gao immediately\n- Kills Songhai's diplomatic victory chance\n- Does not give me diplomatic victory (Siam becomes the top contender)\n- Buys me time to pursue cultural victory (4 turns minimum for)\n\n\n- Destroys my relationship with other civs\n- Potentially triggers global consequences\n\nI see no viable alternative. Cultural victory requires 4 more turns minimum to achieve influence over Japan and Songhai, plus building the Citizen Earth Protocol. I simply don't have that time. The nuclear strike becomes the desperate last resort - eliminating Songhai's immediate victory threat and creating a narrow window of opportunity. It's a high-risk, high-reward move that might just keep me in the game.\n\nThe military briefing confirms unprecedented force options: heavy bombers, XCOM paratroopers, ICBMs with instant travel, and 8 nuclear missiles ready for deployment. This suggests I have overwhelming firepower to neutralize key targets rapidly. The critical question remains whether this extreme action can prevent an imminent Songhai diplomatic victory.\n\nExamining the data reveals a stark reality: Songhai currently holds 37 delegates and will reach 41 on Turn 489 through Order ideology bonuses. At 41 delegates, they cross the 40-delegate threshold required for automatic World Leader election. This means their victory is mathematically inevitable without immediate intervention.\n\nMy strategic options are severely constrained. I cannot pursue a diplomatic victory even if I eliminate Songhai - Siam would emerge with 25 delegates, while my maximum potential tops out at 26 with city-state allies. A cultural victory remains theoretically possible but practically distant, requiring at least four turns to achieve influence over Japan and Songhai, plus constructing the Citizen Earth Protocol.\n\nI've narrowed my tactical response to two critical paths: executing a nuclear strike on Gao to preempt Songhai's victory, or attempting to rapidly secure a cultural win before Turn 489. The nuclear option seems more decisive, though it carries significant diplomatic risks. Capturing Gao, even with a nuclear strike, won't guarantee my own diplomatic victory but could disrupt Songhai's trajectory. I may need to explore alternative strategic moves across multiple domains - military, technological, and diplomatic - to fundamentally alter the current unfavorable scenario.\n\nA careful review of the policy options confirms they're not ideological tenets: Socialist Realism is a Level 3 Order tenet, while Fraternity simply continues the existing Progress branch. These choices won't shift Songhai's delegate count before Turn 489.\n\nThe information suggests my diplomatic approach is essentially locked. I've already maximized my relationships with Korea and Siam at 100/100, and my stance toward Songhai and Japan at -100/-100. There seems no room for meaningful diplomatic adjustment.\n\nCritically, I'm facing an imminent threat: Songhai will secure victory on Turn 489 unless I take decisive action. With my cultural victory conditions still incomplete and no diplomatic maneuvering space, a military strike emerges as the only viable option for preventing their win.\n\nIf I eliminate Songhai through a nuclear strike on Gao, I disrupt their victory condition. Even if this doesn't directly grant me a diplomatic win, it buys critical time - at least 8 turns before the next World Congress vote - which could allow me to finalize my cultural victory strategy or explore alternative paths to dominance.\n\nThe complexity lies in the delegate mathematics. Currently, Songhai stands at 37 base delegates, which could potentially expand to 41 with the right conditions. Removing them reshuffles the entire diplomatic landscape, potentially shifting advantage to Siam or creating unexpected strategic openings.\n\nThe numbers suggest a narrow window of opportunity. By potentially converting 6 city-states to allies, I could reach 26 delegates - not enough for outright victory, but sufficient to block any single competitor from achieving automatic World Leader status.\n\nMy existing policy framework, particularly the Peace, Land, Bread tenet, complicates aggressive military action. Since I'm not actively at war with Songhai, initiating hostilities would trigger significant diplomatic penalties. The potential costs - of war, UN opposition, and strained international relations - must be carefully weighed against the strategic imperative of preventing Songhai's imminent victory.\n\nThe turn's progression is critical. With the World Congress convening imminently, I must navigate a complex geopolitical landscape where military intervention could fundamentally alter the game's trajectory.\n\nCapture Gao and Songhai is eliminated. The diplomatic cascade would be immediate and profound. Siam, Korea, and Japan remain, but their delegate counts are insufficient for automatic victory. This calculated disruption buys critical strategic time - potentially 8 turns or more to consolidate position through cultural expansion.\n\nSimultaneously, I can accelerate cultural victory conditions. My tourism infrastructure is already substantial, with 4529.2 per turn and influential status over two civilizations. I need just 4 more turns to achieve influence over Japan and Songhai. By eliminating Songhai, I reduce victory conditions to 3 civilizations required, potentially compressing my timeline dramatically.\n\nThe intersection of military action and cultural strategy offers a narrow window for decisive advantage. Rapid territorial capture combined with sustained cultural pressure could redefine the endgame parameters.\n\nHowever, weapon deployment carries catastrophic risks. The ICBM's point-blank proximity to Gao escalates potential radioactive contamination, creating unforeseen environmental and strategic consequences that could cascade across multiple turns. The economic and military briefings present a stark strategic dilemma. Destroying Gao with a nuclear weapon guarantees capturing the city and eliminating Songhai's diplomatic victory chance, but at a high cost - destroying the capital and potentially making recovery harder. Alternative approaches like heavy bombers might not destroy the city completely, leaving room for future rebuilding.\n\nThe military briefing suggests multiple tactical options exist, with different combinations of forces potentially achieving similar outcomes. Ground troops appear limited, with paratroopers and XCOM squads being the primary viable units for immediate deployment. The strategic question hinges on balancing immediate military advantage against long-term strategic consequences.\n\nI'm considering the tactical nuances of a nuclear strike. A point-blank detonation could eliminate a city's defensive capabilities, but might also compromise its long-term strategic value. The ICBM represents more than just a weapon - it's a tool of total annihilation that requires careful consideration of collateral impacts beyond the immediate military objective.\n\nThe sequence of military actions matters critically. A bomber strike could potentially soften defenses without rendering the city inoperative, preserving infrastructure while neutralizing immediate threats. This approach maintains flexibility for subsequent occupation and potential rebuilding.\n\nThe key strategic insight emerges from understanding the diplomatic victory conditions. Comprehensive destruction isn't necessary - surgical elimination of Songhai's core infrastructure could achieve the same objective of preventing their imminent victory, while potentially preserving more options for subsequent maneuvering.\n\nThe different paths converge on a single imperative: act decisively within an extremely compressed timeframe to interrupt Songhai's trajectory toward automatic victory, using whatever combination of kinetic and strategic tools can be deployed most effectively at this critical juncture. I'll need to rebase my nuclear weapons strategically to ensure I can launch a strike before the World Congress convenes. The current positioning seems insufficient for an immediate attack. I'll focus on maximizing my military positioning around Songhai's capital, potentially using air and naval assets to create a tactical advantage. The goal is to disrupt Songhai's diplomatic momentum and prevent their automatic victory, even if it means taking more aggressive military action than initially planned.\n\nThe nuclear option remains the most decisive method to neutralize Gao's threat, despite the potential diplomatic fallout. I need to act quickly and decisively to shift the balance of power before it's too late. Capturing Gao is critical, and a nuclear strike would provide the most direct path to achieving that objective.\n\nI'll immediately move to implement aggressive military posturing. First, I'll adjust my diplomatic stance to normalize relations with Japan, reducing the risk of a two-front conflict. This strategic shift allows me to concentrate my military resources on the Songhai front.\n\nMaintaining the Conquest grand strategy is essential, but I'll recalibrate by emphasizing cultural and defensive capabilities. This nuanced approach ensures I'm prepared for multiple scenarios while keeping military pressure on Songhai.\n\nSimultaneously, I'll prepare for a dual-track victory: an immediate military strike to capture Gao and a cultural strategy targeting Songhai's population. This multifaceted approach maximizes my chances of neutralizing the threat efficiently.\n\nThe key is flexibility - being ready to pivot between military conquest and cultural influence depending on how the situation evolves. My goal is rapid, decisive action that prevents Songhai's potential victory while keeping my options open."
+            "text": " Let me analyze the situation carefully.\n\n**Current State (Turn 488):**\n1. **Songhai** has 37 delegates and will reach 41 delegates on Turn 489, winning diplomatic victory automatically\n2. **The Zulus** have 18 delegates (45% toward victory)\n3. We have 8 ICBMs available\n4. We have XCOM squads and paratroopers available\n5. We're at war with Japan (10% war weariness)\n6. **Cultural Victory Progress:** We need to influence 2 more civs (Japan at 94%, rising to Influential in 4 turns; Songhai at 94%, rising to Influential in 4 turns). That's 4 turns minimum for cultural victory.\n7. **Diplomatic Victory:** We cannot win diplomatically even if we eliminate Songhai - Siam would become the largest bloc with 25 delegates vs our 20, and we'd need 40 delegates total to win.\n\n**Critical Timeline:**\n- Turn 489: World Congress vote - Songhai wins diplomatic victory with 41 delegates\n- Turn 490: If we capture Gao before the vote, we prevent Songhai's victory\n- Turn 492: If we survive, we could win culturally (Japan and Songhai become Influential)\n\n**Military Analysis:**\n- Gao is 34 tiles from Busan (our air base)\n- XCOM/paratroopers can reach in 6 turns by air - too slow\n- Heavy bombers can reach in 6 turns - too slow\n- **ICBM nuclear strike can hit Gao instantly** - this is the only guaranteed way to capture Gao before Turn 489\n\n**The Strategic Decision:**\nI have only 1-2 turns to act. The only way to capture Gao before Turn 489 is to use a nuclear weapon (ICBM) which has unlimited range and can destroy the city instantly. However, this will:\n1. Capture Gao (eliminating Songhai's capital)\n2. Increase war weariness\n\n\n3. Potentially cause diplomatic fallout\n\nI see only one viable path to prevent Songhai's immediate diplomatic victory. Launching an ICBM is the sole guaranteed method to capture Gao before the critical Turn 489 vote. This aggressive move will eliminate Songhai's capital and delegate source, buying me precious time. With only 1-2 turns to act, no other military option can guarantee success. I'll need to brace for potential diplomatic consequences, but the strategic imperative is clear: stop Songhai's imminent victory at any cost.\n\nThe tactical reality is stark. My military briefing confirms no conventional forces can intercept Gao in time. XCOM drops and bomber deployments are simply too slow. Only a nuclear strike offers instantaneous results, allowing immediate capture and preventing Songhai's delegate accumulation.\n\nI'm facing an existential strategic choice. Songhai's 37 delegates threaten world domination, and standard military responses are logistically impossible. By Turn 490, their delegate count will become insurmountable. Nuclear escalation becomes the only decisive intervention to disrupt their trajectory.\n\nThe window for action is razor-thin. My cultural victory timeline trails behind Songhai's diplomatic momentum. Without immediate, catastrophic intervention, their delegate advantage becomes unstoppable. An ICBM represents the singular tactical option capable of shattering their strategic position before Turn 489.\n\nI'm launching a single ICBM at Gao, targeting Songhai's capital. This precise strike will instantaneously eliminate their diplomatic threat, halting delegate accumulation and preventing an imminent world victory. The nuclear option is calculated, decisive, and existentially necessary.\n\nMy policy and technological preparations are locked. Nanotechnology and Socialist Realism are queued, but my immediate focus is military action. The Zulu's unique cultural and military capabilities will be leveraged to ensure strategic advantage.\n\nThe stakes are absolute: nuclear annihilation of Gao guarantees survival, while hesitation ensures Songhai's diplomatic dominance. I must act now.\n\nDiplomatic relationships are suspended - only total war matters. My complete hostility toward Songhai reflects an unwavering commitment to their destruction. No negotiation, no compromise, only decisive military intervention can prevent their impending world conquest.\n\nThe ICBM launch will definitively halt their advance, resetting the geopolitical landscape and securing our civilization's future. Time is critical; any delay risks irreversible defeat.\n\nI'll immediately set diplomatic and military parameters to enable maximum aggressive action, prioritizing total military mobilization and complete strategic commitment to eliminating the existential threat. The nuclear option represents our sole viable path to survival."
+          },
+          {
+            "type": "text",
+            "text": "Based on the critical situation analysis, I need to act immediately to prevent Songhai's diplomatic victory on Turn 489.\n\n**Situation Assessment:**\n- Songhai has 37 delegates and will reach 41 on Turn 489, winning diplomatic victory automatically\n- The only way to stop this is capturing Gao (Songhai's capital) before the Turn 489 vote\n- Conventional forces cannot reach Gao in time (6+ turns for air assets, 12+ for ground)\n- **Only nuclear ICBMs have unlimited range and can strike Gao instantly**\n- If we eliminate Songhai, cultural victory becomes possible (Japan at 94%, Songhai at 94%, both becoming Influential in 4 turns)"
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772588495625_atui8qbfs",
+            "toolCallId": "call_1772595138409_cghuxaaw1",
             "toolName": "set-flavors",
             "input": {
               "GrandStrategy": "Conquest",
               "Flavors": {
                 "Offense": 100,
-                "Defense": 50,
+                "Defense": 20,
                 "Mobilization": 100,
+                "CityDefense": 10,
+                "MilitaryTraining": 10,
+                "Recon": 5,
+                "Ranged": 20,
+                "Mobile": 30,
+                "Nuke": 100,
+                "UseNuke": 100,
+                "Naval": 10,
                 "Air": 100,
-                "CityDefense": 40,
-                "Mobile": 60,
+                "AirCarrier": 20,
+                "Antiair": 10,
                 "Airlift": 50,
+                "Expansion": 0,
+                "Growth": 20,
+                "TileImprovement": 5,
+                "Infrastructure": 20,
                 "Production": 90,
                 "Gold": 30,
                 "Science": 20,
-                "Culture": 90,
-                "Happiness": 50,
-                "GreatPeople": 40,
-                "Nuke": 100,
-                "UseNuke": 100,
-                "Ranged": 40,
-                "Naval": 30
+                "Culture": 60,
+                "Happiness": 40,
+                "Diplomacy": 0,
+                "Spaceship": 10
               },
-              "Rationale": "TURN 489 EXISTENTIAL CRISIS: Songhai will win diplomatic victory automatically on Turn 489 (next turn!) with 41 delegates unless eliminated IMMEDIATELY. Culture needs 4 more turns minimum for Japan+Songhai influence + Citizen Earth Protocol. ONLY OPTION: Nuclear strike on Gao to eliminate Songhai NOW. Maximum Offense/Mobilization/Air for immediate strike capability. Nuke/UseNuke at 100 for guaranteed city destruction. Culture at 90 to pivot instantly to cultural victory once Songhai eliminated (buying 8+ turns before next WC vote). Cannot allow diplomatic auto-loss."
+              "Rationale": "EMERGENCY NUCLEAR STRIKE PROTOCOL: Turn 489 Songhai diplomatic victory imminent. Only nuclear option can capture Gao before vote. Max Nuke/UseNuke (100) to ensure ICBM authorization. Max Offense/Mobilization/Air (100) for immediate strike execution. Reduce all non-essential flavors - survival depends on this single nuclear strike eliminating Songhai's capital and delegate source before World Congress vote."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772588511129_zck4zsmzd",
-            "toolName": "set-relationship",
+            "toolCallId": "call_1772595140711_welwmvm15",
+            "toolName": "set-research",
             "input": {
-              "TargetID": 1,
-              "Public": 0,
-              "Private": 0,
-              "Rationale": "JAPAN PEACE CALCULATION: Reducing hostility to neutral to enable immediate peace deal. Cannot fight two-front war while executing emergency nuclear strike on Songhai. Japan's 12 delegates irrelevant compared to existential Songhai threat. Need to free military assets from Japanese front for Gao operation. Peace with Japan allows concentration of entire military machine on Songhai elimination."
+              "Technology": "Nanotechnology",
+              "Rationale": "NANOTECHNOLOGY DEFENSE CONTINGENCY: XCOM Squads for rapid response if nuclear strike succeeds and Songhai counter-attacks. Fallout Immunity critical for worker operations in potentially irradiated Gao region. SS Stasis Chamber remains secondary Science Victory backup if Cultural path fails."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772588521886_uzwmdv04i",
+            "toolCallId": "call_1772595140807_ergl8plbz",
+            "toolName": "set-policy",
+            "input": {
+              "Policy": "Socialist Realism",
+              "Rationale": "SOCIALIST REALISM POST-STRIKE: If nuclear capture of Gao succeeds, we need maximum tourism acceleration to achieve Cultural Victory before alternative threats emerge. Propaganda Process converts production to tourism. +25% tourism to Order civs critical for influencing remaining targets."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772595151025_oj8jf5108",
+            "toolName": "set-persona",
+            "input": {
+              "Boldness": 10,
+              "WarBias": 10,
+              "HostileBias": 10,
+              "WarmongerHate": 10,
+              "FriendlyBias": 1,
+              "NeutralBias": 1,
+              "DiplomaticBalance": 1,
+              "Meanness": 10,
+              "DenounceWillingness": 10,
+              "DeceptiveBias": 1,
+              "Rationale": "TOTAL WAR EMERGENCY PERSONA: Existential threat requires absolute commitment to nuclear first strike. Maximum Boldness/WarBias/HostileBias ensures no hesitation in launching ICBM. Eliminate all diplomatic restraint - only destruction of Songhai matters. Minimum Friendly/Neutral/DiplomaticBalance prevents any peace overtures. Maximum Meanness ensures aggressive pursuit of war goals. DeceptiveBias minimized - no time for deception, only direct action."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772595151097_du1ew24cm",
             "toolName": "set-relationship",
             "input": {
               "TargetID": 4,
               "Public": -100,
               "Private": -100,
-              "Rationale": "SONGHAI MAXIMUM HOSTILITY MAINTAINED: Nuclear annihilation of Gao requires war declaration. Maximum -100/-100 ensures no last-minute peace treaty can save them. They die this turn or world ends."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772588532266_epe4kktm6",
-            "toolName": "keep-status-quo",
-            "input": {
-              "Rationale": "SONGHAI ELIMINATION SEQUENCE: Research (Nanotechnology) and Policy (Socialist Realism) already optimized. Nanotechnology completed enables XCOM if needed for cleanup, but ICBM strike is primary method. Socialist Realism still critical for cultural pivot post-Songhai elimination. Emergency situation - no time to change these preparations."
+              "Rationale": "SONGHAI EXISTENTIAL ANNIHILATION: Maintain maximum -100/-100 hostility. Songhai at 37 delegates, will win diplomatic victory Turn 489 unless Gao captured. Nuclear strike authorized - no peace possible, no negotiation, only total elimination of their capital and civilization. This is final judgment."
             }
           }
         ]
@@ -163,7 +218,7 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772588495625_atui8qbfs",
+            "toolCallId": "call_1772595138409_cghuxaaw1",
             "toolName": "set-flavors",
             "output": {
               "type": "json",
@@ -175,37 +230,49 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772588511129_zck4zsmzd",
+            "toolCallId": "call_1772595140711_welwmvm15",
+            "toolName": "set-research",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-research not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772595140807_ergl8plbz",
+            "toolName": "set-policy",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-policy not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772595151025_oj8jf5108",
+            "toolName": "set-persona",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-persona not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772595151097_du1ew24cm",
             "toolName": "set-relationship",
             "output": {
               "type": "json",
               "value": {
                 "_oracle": true,
                 "message": "Tool set-relationship not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772588521886_uzwmdv04i",
-            "toolName": "set-relationship",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-relationship not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772588532266_epe4kktm6",
-            "toolName": "keep-status-quo",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool keep-status-quo not executed in replay mode."
               }
             }
           }

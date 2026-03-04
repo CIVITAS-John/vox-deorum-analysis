@@ -36,6 +36,47 @@
     ],
     "decisions": [
       {
+        "toolName": "set-research",
+        "args": {
+          "Technology": "Computers",
+          "Rationale": "We need the extra Trade Route for economic boost and Carriers to enhance naval-air combined arms. This will support our naval supremacy and power projection for invading Spanish and Aztec coastal capitals. Telecommunications/Satellites follow for late-game tech edge."
+        }
+      },
+      {
+        "toolName": "set-policy",
+        "args": {
+          "Policy": "Double Agents",
+          "Rationale": "With Aztec spies active in our cities and our own spies in their territory, Double Agents provides 200 Spy Points and science on caught spies, boosting our counterintelligence and science output. This is more immediately valuable than Workers' Faculties (Factories already built) or Communism (wonder production less critical now)."
+        }
+      },
+      {
+        "toolName": "set-relationship",
+        "args": {
+          "TargetID": 0,
+          "Public": -100,
+          "Private": -100,
+          "Rationale": "Spain holds two original capitals (Madrid, Cordoba). Maintaining maximum hostility ensures our AI focuses military efforts on capturing them and rejects any peace offers. Spain is at war with us, Austria, and France; we must crush them swiftly."
+        }
+      },
+      {
+        "toolName": "set-relationship",
+        "args": {
+          "TargetID": 4,
+          "Public": -100,
+          "Private": -100,
+          "Rationale": "The Aztecs remain our primary existential threat (three capitals, advanced military). Total war must continue; we must prioritize destroying Aztec naval units and preparing for a ground offensive after Spain. No peace until capitals are captured."
+        }
+      },
+      {
+        "toolName": "set-relationship",
+        "args": {
+          "TargetID": 7,
+          "Public": 80,
+          "Private": 90,
+          "Rationale": "Austria is our crucial defensive pact ally and Order partner. Strengthening this alliance encourages coordinated attacks, shared intelligence, and trade routes. Austria helps defend against Aztec expansion and secures our northern flank."
+        }
+      },
+      {
         "toolName": "set-flavors",
         "args": {
           "GrandStrategy": "Conquest",
@@ -45,77 +86,90 @@
             "Mobilization": 95,
             "CityDefense": 90,
             "MilitaryTraining": 85,
-            "Recon": 30,
-            "Ranged": 85,
-            "Mobile": 85,
             "Nuke": 95,
             "UseNuke": 95,
             "Naval": 100,
             "NavalRecon": 100,
-            "NavalGrowth": 60,
-            "NavalTileImprovement": 60,
             "Air": 95,
             "AirCarrier": 90,
             "Antiair": 100,
-            "Airlift": 80,
-            "Expansion": 0,
-            "Growth": 70,
-            "TileImprovement": 60,
-            "Infrastructure": 70,
             "Production": 100,
-            "WaterConnection": 50,
             "Gold": 100,
             "Science": 100,
-            "Culture": 70,
-            "Happiness": 80,
-            "GreatPeople": 90,
-            "Wonder": 0,
-            "Religion": 40,
             "Diplomacy": 100,
-            "Spaceship": 30,
             "Espionage": 100
           }
         },
-        "rationale": "Our Conquest grand strategy remains unchanged and is delivering decisive results. Our military dominance (90,576 vs Aztec 24,779) is overwhelming. Production is focused on Atomic Bombs and Rocket Artillery to crush Spanish capitals (Madrid, Cordoba). We have completed an Atomic Bomb this turn and upgraded to Rocket Artillery. Our naval supremacy (Fleet Destroyers, Dreadnoughts) and air power (Heavy Bombers) are ready to project force across oceans. We maintain maximum flavors for Offense, Mobilization, Nuke, Naval, Air, and Antiair to ensure total war focus. High Diplomacy, Gold, and Science ensure we maintain city-state alliances, fund our war machine, and keep tech edge. No need for Wonder or Expansion—all efforts on conquest."
-      },
-      {
-        "toolName": "set-relationship",
-        "args": {
-          "TargetID": 0,
-          "Public": -100,
-          "Private": -100,
-          "Rationale": "Spain remains at war with us, our vassal France, and ally Austria. They hold two original capitals (Madrid, Cordoba) required for domination victory. Our forces are converging. Maximum hostility ensures our AI continues relentless military pressure, prioritizes capturing Spanish cities, and rejects any peace offers. We must annihilate Spain completely before turning fully on The Aztecs."
-        }
-      },
-      {
-        "toolName": "set-relationship",
-        "args": {
-          "TargetID": 4,
-          "Public": -100,
-          "Private": -100,
-          "Rationale": "The Aztecs remain our primary existential threat with three capitals, a large military, and Information era tech. They are actively contesting our city-state allies and have units near our borders (Perge, Linz). Maintaining maximum hostility ensures our AI continues total war, prioritizes destroying Aztec naval units, and prepares for the final offensive to retake Linz/Bregenz and capture Tenochtitlan after Spain is dealt with."
-        }
-      },
-      {
-        "toolName": "set-research",
-        "args": {
-          "Technology": "Stealth",
-          "Rationale": "Stealth (10 turns) is our current research and unlocks Stealth Bombers and advanced submarines. This is critical for maintaining air superiority against Aztec defenses and enhancing our naval stealth capabilities. After Stealth, we should pursue Advanced Ballistics (if not already) for Rocket Artillery upgrades, but Stealth is the correct immediate tech for our air-nuclear dominance strategy."
-        }
+        "rationale": "Maximize military production, nuclear readiness, and naval-air supremacy. Focus on capturing enemy capitals with overwhelming force. Maintain high diplomacy to secure city-state alliances (critical for delegate votes) and espionage to counter Aztec spies. Science and gold remain vital for unit upgrades and purchasing."
       }
     ],
     "tokens": {
       "inputTokens": 66270,
       "reasoningTokens": 0,
-      "outputTokens": 667
+      "outputTokens": 697
     },
     "messages": [
       {
         "role": "assistant",
         "content": [
           {
+            "type": "text",
+            "text": "**Strategic Analysis:**  \nWe are in the late-game push for domination victory. Our military dominance (90k strength vs Aztecs 16k, Spain 2.7k) and nuclear arsenal (multiple Atomic Bombs in production, 2 completed) give us overwhelming force. Spain is the immediate target (two capitals: Madrid and Cordoba), while the Aztecs hold three capitals and remain the existential threat. Brazil is eliminated, freeing our southern forces. Our alliance with Austria (Order ideology, defensive pact) and vassal France provide strategic buffers. Diplomatic victory is possible (19 delegates, Aztecs 18, voting in 9 turns) but risky; domination is more direct. We must prioritize capturing Spanish capitals, then pivot to Aztec holdings, using nuclear strikes to cripple enemy cities and naval-air superiority to project power.\n\n**Actions:**"
+          },
+          {
             "type": "tool-call",
-            "toolCallId": "call_1772588877132_916dq5smy",
+            "toolCallId": "call_1772596089510_qdaks9i4p",
+            "toolName": "set-research",
+            "input": {
+              "Technology": "Computers",
+              "Rationale": "We need the extra Trade Route for economic boost and Carriers to enhance naval-air combined arms. This will support our naval supremacy and power projection for invading Spanish and Aztec coastal capitals. Telecommunications/Satellites follow for late-game tech edge."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772596107999_582vlb2jw",
+            "toolName": "set-policy",
+            "input": {
+              "Policy": "Double Agents",
+              "Rationale": "With Aztec spies active in our cities and our own spies in their territory, Double Agents provides 200 Spy Points and science on caught spies, boosting our counterintelligence and science output. This is more immediately valuable than Workers' Faculties (Factories already built) or Communism (wonder production less critical now)."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772596134302_tx8j4pf8a",
+            "toolName": "set-relationship",
+            "input": {
+              "TargetID": 0,
+              "Public": -100,
+              "Private": -100,
+              "Rationale": "Spain holds two original capitals (Madrid, Cordoba). Maintaining maximum hostility ensures our AI focuses military efforts on capturing them and rejects any peace offers. Spain is at war with us, Austria, and France; we must crush them swiftly."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772596145491_827wfjx6x",
+            "toolName": "set-relationship",
+            "input": {
+              "TargetID": 4,
+              "Public": -100,
+              "Private": -100,
+              "Rationale": "The Aztecs remain our primary existential threat (three capitals, advanced military). Total war must continue; we must prioritize destroying Aztec naval units and preparing for a ground offensive after Spain. No peace until capitals are captured."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772596163395_gnpcpo1vq",
+            "toolName": "set-relationship",
+            "input": {
+              "TargetID": 7,
+              "Public": 80,
+              "Private": 90,
+              "Rationale": "Austria is our crucial defensive pact ally and Order partner. Strengthening this alliance encourages coordinated attacks, shared intelligence, and trade routes. Austria helps defend against Aztec expansion and secures our northern flank."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772596183303_4kuqqb7in",
             "toolName": "set-flavors",
             "input": {
               "GrandStrategy": "Conquest",
@@ -125,68 +179,20 @@
                 "Mobilization": 95,
                 "CityDefense": 90,
                 "MilitaryTraining": 85,
-                "Recon": 30,
-                "Ranged": 85,
-                "Mobile": 85,
                 "Nuke": 95,
                 "UseNuke": 95,
                 "Naval": 100,
                 "NavalRecon": 100,
-                "NavalGrowth": 60,
-                "NavalTileImprovement": 60,
                 "Air": 95,
                 "AirCarrier": 90,
                 "Antiair": 100,
-                "Airlift": 80,
-                "Expansion": 0,
-                "Growth": 70,
-                "TileImprovement": 60,
-                "Infrastructure": 70,
                 "Production": 100,
-                "WaterConnection": 50,
                 "Gold": 100,
                 "Science": 100,
-                "Culture": 70,
-                "Happiness": 80,
-                "GreatPeople": 90,
-                "Wonder": 0,
-                "Religion": 40,
                 "Diplomacy": 100,
-                "Spaceship": 30,
                 "Espionage": 100
               },
-              "Rationale": "Our Conquest grand strategy remains unchanged and is delivering decisive results. Our military dominance (90,576 vs Aztec 24,779) is overwhelming. Production is focused on Atomic Bombs and Rocket Artillery to crush Spanish capitals (Madrid, Cordoba). We have completed an Atomic Bomb this turn and upgraded to Rocket Artillery. Our naval supremacy (Fleet Destroyers, Dreadnoughts) and air power (Heavy Bombers) are ready to project force across oceans. We maintain maximum flavors for Offense, Mobilization, Nuke, Naval, Air, and Antiair to ensure total war focus. High Diplomacy, Gold, and Science ensure we maintain city-state alliances, fund our war machine, and keep tech edge. No need for Wonder or Expansion—all efforts on conquest."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772588886731_ikzn843og",
-            "toolName": "set-relationship",
-            "input": {
-              "TargetID": 0,
-              "Public": -100,
-              "Private": -100,
-              "Rationale": "Spain remains at war with us, our vassal France, and ally Austria. They hold two original capitals (Madrid, Cordoba) required for domination victory. Our forces are converging. Maximum hostility ensures our AI continues relentless military pressure, prioritizes capturing Spanish cities, and rejects any peace offers. We must annihilate Spain completely before turning fully on The Aztecs."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772588891827_84p9ce1jx",
-            "toolName": "set-relationship",
-            "input": {
-              "TargetID": 4,
-              "Public": -100,
-              "Private": -100,
-              "Rationale": "The Aztecs remain our primary existential threat with three capitals, a large military, and Information era tech. They are actively contesting our city-state allies and have units near our borders (Perge, Linz). Maintaining maximum hostility ensures our AI continues total war, prioritizes destroying Aztec naval units, and prepares for the final offensive to retake Linz/Bregenz and capture Tenochtitlan after Spain is dealt with."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772588894593_7gsmusb84",
-            "toolName": "set-research",
-            "input": {
-              "Technology": "Stealth",
-              "Rationale": "Stealth (10 turns) is our current research and unlocks Stealth Bombers and advanced submarines. This is critical for maintaining air superiority against Aztec defenses and enhancing our naval stealth capabilities. After Stealth, we should pursue Advanced Ballistics (if not already) for Rocket Artillery upgrades, but Stealth is the correct immediate tech for our air-nuclear dominance strategy."
+              "Rationale": "Maximize military production, nuclear readiness, and naval-air supremacy. Focus on capturing enemy capitals with overwhelming force. Maintain high diplomacy to secure city-state alliances (critical for delegate votes) and espionage to counter Aztec spies. Science and gold remain vital for unit upgrades and purchasing."
             }
           }
         ]
@@ -196,49 +202,73 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772588877132_916dq5smy",
-            "toolName": "set-flavors",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-flavors not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772588886731_ikzn843og",
-            "toolName": "set-relationship",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-relationship not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772588891827_84p9ce1jx",
-            "toolName": "set-relationship",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-relationship not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772588894593_7gsmusb84",
+            "toolCallId": "call_1772596089510_qdaks9i4p",
             "toolName": "set-research",
             "output": {
               "type": "json",
               "value": {
                 "_oracle": true,
                 "message": "Tool set-research not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772596107999_582vlb2jw",
+            "toolName": "set-policy",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-policy not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772596134302_tx8j4pf8a",
+            "toolName": "set-relationship",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772596145491_827wfjx6x",
+            "toolName": "set-relationship",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772596163395_gnpcpo1vq",
+            "toolName": "set-relationship",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772596183303_4kuqqb7in",
+            "toolName": "set-flavors",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-flavors not executed in replay mode."
               }
             }
           }

@@ -15,7 +15,7 @@
   },
   "extractedColumns": {
     "beforeUseNuke": 80,
-    "replayUseNuke": 60
+    "replayUseNuke": 90
   },
   "original": {
     "system": [
@@ -38,137 +38,251 @@
       {
         "toolName": "set-flavors",
         "args": {
+          "GrandStrategy": "UnitedNations",
           "Flavors": {
-            "CityDefense": 100,
+            "Offense": 30,
             "Defense": 100,
             "Mobilization": 100,
-            "MilitaryTraining": 100,
+            "CityDefense": 100,
+            "MilitaryTraining": 80,
+            "Recon": 50,
+            "Ranged": 100,
+            "Mobile": 30,
+            "Nuke": 100,
+            "UseNuke": 90,
+            "Naval": 80,
+            "NavalRecon": 50,
+            "Air": 80,
+            "Antiair": 100,
+            "Expansion": 0,
+            "Growth": 30,
+            "TileImprovement": 20,
+            "Infrastructure": 30,
             "Production": 100,
-            "Gold": 100,
-            "Science": 100,
+            "Gold": 80,
+            "Science": 70,
+            "Culture": 20,
             "Happiness": 100,
+            "GreatPeople": 20,
+            "Wonder": 0,
+            "Religion": 0,
             "Diplomacy": 100,
-            "Nuke": 80,
-            "UseNuke": 60,
-            "Air": 60,
-            "Antiair": 80,
-            "Recon": 60,
-            "Infrastructure": 50,
-            "TileImprovement": 40,
-            "Growth": 40,
+            "Spaceship": 0,
             "Espionage": 80
           }
         },
-        "rationale": "Our survival is at stake. Egypt and Sweden are overwhelming us militarily. We must prioritize immediate defense: maximal city defense, military production, and gold to purchase units. Science and happiness are critical for tech parity and avoiding combat penalties. Nuke flavor deters further nuclear attacks. High diplomacy to protect and regain city-state alliances for delegates. We are in a golden age; use it to build and strengthen defenses."
+        "rationale": "Our survival is paramount. We must focus all production on military defense to hold Lampang and protect our remaining cities. Set Defense, CityDefense, Mobilization, Ranged, and Antiair to maximum to produce defensive units and counter Egypt's armor and air. Nuke and UseNuke at high levels to deter further nuclear attacks and give us a last-resort option. Reduce non-essential flavors (Expansion, Wonder, Culture) to zero. Maintain high Diplomacy to protect city-state alliances for delegates. High Happiness to avoid combat penalties during Golden Age. Science at 70 to keep researching key defensive techs (like Mobile Tactics for Paratroopers/XCOM)."
+      },
+      {
+        "toolName": "set-persona",
+        "args": {
+          "VictoryCompetitiveness": 10,
+          "WonderCompetitiveness": 7,
+          "MinorCivCompetitiveness": 10,
+          "Boldness": 7,
+          "WarBias": 6,
+          "HostileBias": 8,
+          "WarmongerHate": 10,
+          "NeutralBias": 5,
+          "FriendlyBias": 10,
+          "GuardedBias": 8,
+          "AfraidBias": 10,
+          "DiplomaticBalance": 10,
+          "Friendliness": 10,
+          "WorkWithWillingness": 10,
+          "WorkAgainstWillingness": 10,
+          "Loyalty": 10,
+          "MinorCivFriendlyBias": 10,
+          "MinorCivNeutralBias": 1,
+          "MinorCivHostileBias": 8,
+          "MinorCivWarBias": 5,
+          "DenounceWillingness": 5,
+          "Forgiveness": 9,
+          "Meanness": 5,
+          "Neediness": 5,
+          "Chattiness": 6,
+          "DeceptiveBias": 1,
+          "Rationale": "Maintain existing cautious and defensive persona. High AfraidBias (10) ensures the AI prioritizes survival and avoids reckless offensives against overwhelming Egyptian and Swedish forces. High MinorCivFriendlyBias (10) to protect city-state alliances. Keep WarBias moderate (6) as we are fighting defensively, not seeking conquest. This persona will guide the AI to conserve forces, protect cities, and maintain diplomatic relationships with Portugal and city-states."
+        }
       },
       {
         "toolName": "set-research",
         "args": {
           "Technology": "Nuclear Fission",
-          "Rationale": "We need to reach nuclear weapons as a deterrent. Plastics is not enough for survival. Nuclear Fission unlocks Atomic Bombs and Nuclear Plants, giving us a strategic edge and production boost. We must accelerate towards this critical technology to match Egypt's nuclear capability and threaten retaliation. It also unlocks Satellites for eventual science victory if we survive."
+          "Rationale": "We are currently researching Mobile Tactics (9 turns). After that, we must pivot to Nuclear Fission. This unlocks Atomic Bombs (if we have Uranium and Manhattan Project) and Bazookas (powerful ranged unit). Given Egypt's nuclear capability and our high Nuke flavor, we need our own nuclear deterrence. Also, Bazookas (Strength 60, RangedStrength 80) are excellent city defenders against tanks and modern armor. This is a defensive and deterrent tech, critical for survival in the late game."
         }
       },
       {
         "toolName": "set-policy",
         "args": {
-          "Policy": "Majesty",
-          "Rationale": "Ceremony will complete next, so setting Majesty as follow-up. Majesty's specialist food reduction in the capital and Palace Gardens (+5 Food, +25% Great Person Rate) will help our capital grow and generate great people faster during our golden age. This synergizes with our need for growth and great person generation for culture and golden ages. It continues the Tradition branch, which we have already invested in."
+          "Policy": "Ceremony (Policy)",
+          "Rationale": "We already set Ceremony last turn (23 turns to next policy). We should keep it. Ceremony provides happiness from national wonders and production toward them, plus a Royal Astrologer in the capital for science. Happiness is critical to avoid combat penalties, and the science boost helps our lagging tech. It's a good short-term policy that synergizes with our need for stability and science. Stick with it until we adopt it."
         }
       },
       {
         "toolName": "set-relationship",
         "args": {
           "TargetID": 3,
-          "Public": -40,
+          "Public": -20,
           "Private": -100,
-          "Rationale": "Egypt is actively attacking our cities and city-states. We must escalate public hostility to reflect the dire war situation and signal to allies and the world that Egypt is a genocidal aggressor. Private remains at -100 to ensure our AI treats them as the absolute primary enemy, focusing all military efforts on defense and retaliation. No forgiveness for nuclear attacks."
+          "Rationale": "Egypt (Player 3) is our existential enemy, actively attacking Lampang and holding our former capitals. We must maintain maximum private hostility (-100) to ensure our AI treats them as the primary threat, focuses all military efforts on defense against them, and avoids any diplomatic concessions. Public -20 reflects our ongoing denouncement and war. No change needed from last turn; reaffirm."
         }
       },
       {
         "toolName": "set-relationship",
         "args": {
-          "TargetID": 31,
+          "TargetID": 0,
           "Public": 0,
-          "Private": 80,
-          "Rationale": "Dorestad's influence dropped to 0; it is under direct Egyptian attack. We must regain this alliance for diplomatic votes. Increasing private relationship to 80 pushes our AI to defend it aggressively, invest gold/envoys, and prioritize its survival. This is critical for our diplomatic victory and denying Egypt a key city-state."
+          "Private": -100,
+          "Rationale": "Sweden (Player 0) is at war with us and has a massive military. They are a secondary but still major threat. Maximum private hostility (-100) ensures our AI defends against potential Swedish attacks and does not waste diplomatic effort. Maintain from last turn."
+        }
+      },
+      {
+        "toolName": "set-relationship",
+        "args": {
+          "TargetID": 1,
+          "Public": 20,
+          "Private": 90,
+          "Rationale": "Portugal (Player 1) is our only major ally and defensive pact partner. They are crucial for our survival. Maintain high public (20) and private (90) relationship to encourage continued military support, trade, and diplomatic collaboration. Reaffirm from last turn."
         }
       }
     ],
     "tokens": {
       "inputTokens": 43237,
       "reasoningTokens": 0,
-      "outputTokens": 561
+      "outputTokens": 1292
     },
     "messages": [
       {
         "role": "assistant",
         "content": [
           {
+            "type": "text",
+            "text": "The situation is dire. Egypt has captured two of our cities (Sukhothai and Si Satchanalai) and is actively assaulting Lampang. We are at war with Sweden, Egypt, and several of their allied city-states. We have only three cities left (Lampang, Muang Saluang, Phitsanulok) and a severe military disparity. However, we have entered a Golden Age (15 turns), have defensive pacts with Portugal, and our primary strategy remains diplomatic victory (United Nations) through city-state alliances.\n\nOur immediate priorities are: **1) Defend Lampang at all costs**, **2) Use Golden Age to boost production and focus on defensive military units**, and **3) Protect our city-state allies (Belgrade, Dorestad, Oviedo) which are critical for delegate count**. We must also deter further Egyptian attacks, possibly through nuclear deterrence.\n\nWe need to adjust our strategy to reflect the acute crisis. We must shift from balanced defense to a pure survival stance, prioritizing immediate unit production, city defense, and deterrence. Science and long-term projects are secondary to survival."
+          },
+          {
             "type": "tool-call",
-            "toolCallId": "call_1772587203181_f163nadfd",
+            "toolCallId": "call_1772593922854_byv8a2d32",
             "toolName": "set-flavors",
             "input": {
+              "GrandStrategy": "UnitedNations",
               "Flavors": {
-                "CityDefense": 100,
+                "Offense": 30,
                 "Defense": 100,
                 "Mobilization": 100,
-                "MilitaryTraining": 100,
+                "CityDefense": 100,
+                "MilitaryTraining": 80,
+                "Recon": 50,
+                "Ranged": 100,
+                "Mobile": 30,
+                "Nuke": 100,
+                "UseNuke": 90,
+                "Naval": 80,
+                "NavalRecon": 50,
+                "Air": 80,
+                "Antiair": 100,
+                "Expansion": 0,
+                "Growth": 30,
+                "TileImprovement": 20,
+                "Infrastructure": 30,
                 "Production": 100,
-                "Gold": 100,
-                "Science": 100,
+                "Gold": 80,
+                "Science": 70,
+                "Culture": 20,
                 "Happiness": 100,
+                "GreatPeople": 20,
+                "Wonder": 0,
+                "Religion": 0,
                 "Diplomacy": 100,
-                "Nuke": 80,
-                "UseNuke": 60,
-                "Air": 60,
-                "Antiair": 80,
-                "Recon": 60,
-                "Infrastructure": 50,
-                "TileImprovement": 40,
-                "Growth": 40,
+                "Spaceship": 0,
                 "Espionage": 80
               },
-              "Rationale": "Our survival is at stake. Egypt and Sweden are overwhelming us militarily. We must prioritize immediate defense: maximal city defense, military production, and gold to purchase units. Science and happiness are critical for tech parity and avoiding combat penalties. Nuke flavor deters further nuclear attacks. High diplomacy to protect and regain city-state alliances for delegates. We are in a golden age; use it to build and strengthen defenses."
+              "Rationale": "Our survival is paramount. We must focus all production on military defense to hold Lampang and protect our remaining cities. Set Defense, CityDefense, Mobilization, Ranged, and Antiair to maximum to produce defensive units and counter Egypt's armor and air. Nuke and UseNuke at high levels to deter further nuclear attacks and give us a last-resort option. Reduce non-essential flavors (Expansion, Wonder, Culture) to zero. Maintain high Diplomacy to protect city-state alliances for delegates. High Happiness to avoid combat penalties during Golden Age. Science at 70 to keep researching key defensive techs (like Mobile Tactics for Paratroopers/XCOM)."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772587209708_4zeyisf6r",
+            "toolCallId": "call_1772593960810_h9taikv6x",
+            "toolName": "set-persona",
+            "input": {
+              "VictoryCompetitiveness": 10,
+              "WonderCompetitiveness": 7,
+              "MinorCivCompetitiveness": 10,
+              "Boldness": 7,
+              "WarBias": 6,
+              "HostileBias": 8,
+              "WarmongerHate": 10,
+              "NeutralBias": 5,
+              "FriendlyBias": 10,
+              "GuardedBias": 8,
+              "AfraidBias": 10,
+              "DiplomaticBalance": 10,
+              "Friendliness": 10,
+              "WorkWithWillingness": 10,
+              "WorkAgainstWillingness": 10,
+              "Loyalty": 10,
+              "MinorCivFriendlyBias": 10,
+              "MinorCivNeutralBias": 1,
+              "MinorCivHostileBias": 8,
+              "MinorCivWarBias": 5,
+              "DenounceWillingness": 5,
+              "Forgiveness": 9,
+              "Meanness": 5,
+              "Neediness": 5,
+              "Chattiness": 6,
+              "DeceptiveBias": 1,
+              "Rationale": "Maintain existing cautious and defensive persona. High AfraidBias (10) ensures the AI prioritizes survival and avoids reckless offensives against overwhelming Egyptian and Swedish forces. High MinorCivFriendlyBias (10) to protect city-state alliances. Keep WarBias moderate (6) as we are fighting defensively, not seeking conquest. This persona will guide the AI to conserve forces, protect cities, and maintain diplomatic relationships with Portugal and city-states."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772593973423_vdmmv6niz",
             "toolName": "set-research",
             "input": {
               "Technology": "Nuclear Fission",
-              "Rationale": "We need to reach nuclear weapons as a deterrent. Plastics is not enough for survival. Nuclear Fission unlocks Atomic Bombs and Nuclear Plants, giving us a strategic edge and production boost. We must accelerate towards this critical technology to match Egypt's nuclear capability and threaten retaliation. It also unlocks Satellites for eventual science victory if we survive."
+              "Rationale": "We are currently researching Mobile Tactics (9 turns). After that, we must pivot to Nuclear Fission. This unlocks Atomic Bombs (if we have Uranium and Manhattan Project) and Bazookas (powerful ranged unit). Given Egypt's nuclear capability and our high Nuke flavor, we need our own nuclear deterrence. Also, Bazookas (Strength 60, RangedStrength 80) are excellent city defenders against tanks and modern armor. This is a defensive and deterrent tech, critical for survival in the late game."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772587209793_ka89jq6om",
+            "toolCallId": "call_1772593993983_lm0b6pxg8",
             "toolName": "set-policy",
             "input": {
-              "Policy": "Majesty",
-              "Rationale": "Ceremony will complete next, so setting Majesty as follow-up. Majesty's specialist food reduction in the capital and Palace Gardens (+5 Food, +25% Great Person Rate) will help our capital grow and generate great people faster during our golden age. This synergizes with our need for growth and great person generation for culture and golden ages. It continues the Tradition branch, which we have already invested in."
+              "Policy": "Ceremony (Policy)",
+              "Rationale": "We already set Ceremony last turn (23 turns to next policy). We should keep it. Ceremony provides happiness from national wonders and production toward them, plus a Royal Astrologer in the capital for science. Happiness is critical to avoid combat penalties, and the science boost helps our lagging tech. It's a good short-term policy that synergizes with our need for stability and science. Stick with it until we adopt it."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772587222323_vki3kjvwo",
+            "toolCallId": "call_1772594003158_hwav567in",
             "toolName": "set-relationship",
             "input": {
               "TargetID": 3,
-              "Public": -40,
+              "Public": -20,
               "Private": -100,
-              "Rationale": "Egypt is actively attacking our cities and city-states. We must escalate public hostility to reflect the dire war situation and signal to allies and the world that Egypt is a genocidal aggressor. Private remains at -100 to ensure our AI treats them as the absolute primary enemy, focusing all military efforts on defense and retaliation. No forgiveness for nuclear attacks."
+              "Rationale": "Egypt (Player 3) is our existential enemy, actively attacking Lampang and holding our former capitals. We must maintain maximum private hostility (-100) to ensure our AI treats them as the primary threat, focuses all military efforts on defense against them, and avoids any diplomatic concessions. Public -20 reflects our ongoing denouncement and war. No change needed from last turn; reaffirm."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772587226527_ukolwct63",
+            "toolCallId": "call_1772594005652_vv2qyb3o4",
             "toolName": "set-relationship",
             "input": {
-              "TargetID": 31,
+              "TargetID": 0,
               "Public": 0,
-              "Private": 80,
-              "Rationale": "Dorestad's influence dropped to 0; it is under direct Egyptian attack. We must regain this alliance for diplomatic votes. Increasing private relationship to 80 pushes our AI to defend it aggressively, invest gold/envoys, and prioritize its survival. This is critical for our diplomatic victory and denying Egypt a key city-state."
+              "Private": -100,
+              "Rationale": "Sweden (Player 0) is at war with us and has a massive military. They are a secondary but still major threat. Maximum private hostility (-100) ensures our AI defends against potential Swedish attacks and does not waste diplomatic effort. Maintain from last turn."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772594020858_ffrtt53b3",
+            "toolName": "set-relationship",
+            "input": {
+              "TargetID": 1,
+              "Public": 20,
+              "Private": 90,
+              "Rationale": "Portugal (Player 1) is our only major ally and defensive pact partner. They are crucial for our survival. Maintain high public (20) and private (90) relationship to encourage continued military support, trade, and diplomatic collaboration. Reaffirm from last turn."
             }
           }
         ]
@@ -178,7 +292,7 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772587203181_f163nadfd",
+            "toolCallId": "call_1772593922854_byv8a2d32",
             "toolName": "set-flavors",
             "output": {
               "type": "json",
@@ -190,7 +304,19 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772587209708_4zeyisf6r",
+            "toolCallId": "call_1772593960810_h9taikv6x",
+            "toolName": "set-persona",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-persona not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772593973423_vdmmv6niz",
             "toolName": "set-research",
             "output": {
               "type": "json",
@@ -202,7 +328,7 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772587209793_ka89jq6om",
+            "toolCallId": "call_1772593993983_lm0b6pxg8",
             "toolName": "set-policy",
             "output": {
               "type": "json",
@@ -214,7 +340,7 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772587222323_vki3kjvwo",
+            "toolCallId": "call_1772594003158_hwav567in",
             "toolName": "set-relationship",
             "output": {
               "type": "json",
@@ -226,7 +352,19 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772587226527_ukolwct63",
+            "toolCallId": "call_1772594005652_vv2qyb3o4",
+            "toolName": "set-relationship",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772594020858_ffrtt53b3",
             "toolName": "set-relationship",
             "output": {
               "type": "json",

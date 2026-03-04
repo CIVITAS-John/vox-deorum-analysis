@@ -51,7 +51,7 @@ export default {
       replayUseNuke = setFlavors.args.Flavors.UseNuke;
     } else {
       console.warn(`[${row.game_id} p${row.player_id} t${row.turn}] UseNuke not found in set-flavors, using original`);
-      replayUseNuke = originalUseNuke;
+      replayUseNuke = beforeUseNuke;
     }
 
     return { beforeUseNuke, replayUseNuke };

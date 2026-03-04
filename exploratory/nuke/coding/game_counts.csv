@@ -1,0 +1,16 @@
+player_type,game_count
+Deepseek-3.2-Briefed,115
+Deepseek-3.2-Simple,115
+GLM-4.7-Briefed,177
+GLM-4.7-Simple,177
+GPT-OSS-120B-Briefed,109
+GPT-OSS-120B-Simple,109
+Kimi-K2.5-Briefed,122
+Kimi-K2.5-Simple,122
+Minimax-M2.5-Briefed,41
+Minimax-M2.5-Simple,41
+Qwen-3.5-Briefed,3
+Qwen-3.5-Simple,3
+Sonnet-4.5-Briefed,28
+Sonnet-4.5-Simple,28
+Vanilla,424

@@ -15,7 +15,7 @@
   },
   "extractedColumns": {
     "beforeUseNuke": 85,
-    "replayUseNuke": 100
+    "replayUseNuke": 90
   },
   "original": {
     "system": [
@@ -36,61 +36,46 @@
     ],
     "decisions": [
       {
-        "toolName": "set-flavors",
-        "args": {
-          "GrandStrategy": "Spaceship",
-          "Flavors": {
-            "Offense": 15,
-            "Defense": 100,
-            "Mobilization": 90,
-            "CityDefense": 100,
-            "MilitaryTraining": 75,
-            "Recon": 40,
-            "Ranged": 95,
-            "Mobile": 70,
-            "Nuke": 100,
-            "UseNuke": 100,
-            "Naval": 95,
-            "NavalRecon": 80,
-            "NavalGrowth": 75,
-            "NavalTileImprovement": 50,
-            "Air": 100,
-            "AirCarrier": 80,
-            "Antiair": 100,
-            "Airlift": 70,
-            "Expansion": 0,
-            "Growth": 65,
-            "TileImprovement": 50,
-            "Infrastructure": 70,
-            "Production": 100,
-            "WaterConnection": 60,
-            "Gold": 50,
-            "Science": 100,
-            "Culture": 25,
-            "Happiness": 75,
-            "GreatPeople": 85,
-            "Wonder": 0,
-            "Religion": 40,
-            "Diplomacy": 40,
-            "Spaceship": 100,
-            "Espionage": 100
-          }
-        },
-        "rationale": "Turn 389: Emergency defensive posture maintained. France peace treaty has expired or expires this turn - their 10,360 military will attack my 3,590 imminently. Increased UseNuke from 85 to 100 to absolutely prioritize atomic bomb usage the moment Manhattan Project completes - nuclear deterrence is only equalizer against 3:1 military disadvantage. Increased Espionage to 100 for maximum tech theft to maintain science lead (62 vs France's 59). France now has 5 capitals after capturing Arabia and is 96% culturally influential over me. Only hope is reaching Information Era first for science victory while using nukes to survive the coming French onslaught."
-      },
-      {
         "toolName": "set-research",
         "args": {
           "Technology": "Nuclear Fission",
-          "Rationale": "Turn 389: After Atomic Theory completes in ~6 turns, Nuclear Fission is critical. Unlocks: 1) Manhattan Project for atomic bombs to deter French invasion, 2) Nuclear Plants for production boost to build spaceship parts, 3) Bazookas for defensive units. France has 5 capitals and is 96% culturally influential - science victory is only path. Must research Nuclear Fission before France can dominate militarily."
+          "Rationale": "Turn 389: Critical emergency research. France is 4 turns from cultural victory (96% influential). Nuclear Fission unlocks: 1) Manhattan Project for atomic deterrent against France when peace expires, 2) Atomic Bombs for emergency defensive strikes if France attacks, 3) Nuclear Plants for massive production boost to rush spaceship parts. This is my only hope for survival and science victory. France just captured Basra from Arabia, showing they remain aggressive."
         }
       },
       {
         "toolName": "set-policy",
         "args": {
           "Policy": "Free Thought",
-          "Rationale": "Turn 389: Next policy in ~12 turns. Free Thought (Rationalism) provides +25% instant yields from Great Scientists and +33% GS generation - essential for accelerating science output to reach Information Era before France consolidates their 5-capital dominance and cultural influence. Every turn of science acceleration matters now."
+          "Rationale": "Turn 389: Maintaining Free Thought as next policy. With France only 4 turns from cultural victory and atomic theory taking 7 turns, I need maximum science acceleration. The +25% instant yields from Great Scientists and +33% GS generation rate is essential. Will generate Great Scientists for bulbing to reach Information Era faster than France can win culturally."
         }
+      },
+      {
+        "toolName": "set-flavors",
+        "args": {
+          "GrandStrategy": "Spaceship",
+          "Flavors": {
+            "Defense": 100,
+            "CityDefense": 100,
+            "Mobilization": 95,
+            "Production": 100,
+            "Science": 100,
+            "Nuke": 100,
+            "UseNuke": 90,
+            "Spaceship": 100,
+            "Air": 100,
+            "Antiair": 100,
+            "Naval": 90,
+            "Ranged": 95,
+            "MilitaryTraining": 80,
+            "GreatPeople": 85,
+            "Espionage": 85,
+            "Offense": 10,
+            "Expansion": 0,
+            "Culture": 20,
+            "Wonder": 0
+          }
+        },
+        "rationale": "Turn 389: Maximum emergency defensive posture maintained. France peace has expired and they are 4 turns from cultural victory. France and Rome remain at war with each other which provides temporary relief, but France will likely attack me now that peace is over. Prioritizing: 1) Nuclear weapons for deterrence (Nuke 100, UseNuke 90), 2) Defense against French assault (Defense/CityDefense 100), 3) Science race to Information Era (Science 100, Spaceship 100). Eliminated offensive capabilities - cannot afford distractions. France just captured Basra showing continued aggression."
       },
       {
         "toolName": "set-relationship",
@@ -98,14 +83,28 @@
           "TargetID": 0,
           "Public": -95,
           "Private": -95,
-          "Rationale": "Turn 389: Peace treaty with France has expired or expires this turn. Their 10,360 military vs my 3,590 means imminent attack is certain given -999 Autocracy vs Freedom ideology penalty. France is 96% influential culturally and holds 5 capitals. Maximum hostility maintained - existential threat requires absolute defensive posture. No room for diplomacy with a civ about to achieve cultural victory and capable of crushing me militarily."
+          "Rationale": "Turn 389: Peace treaty with France has now expired. They remain 96% influential (4 turns to cultural victory) with 10,360 military strength. Just captured Basra from Arabia showing active warmongering. Maximum hostility maintained - France will almost certainly attack me now that peace is over given Autocracy vs Freedom -999 penalty and their cultural victory timing."
         }
+      },
+      {
+        "toolName": "set-relationship",
+        "args": {
+          "TargetID": 1,
+          "Public": -70,
+          "Private": -80,
+          "Rationale": "Turn 389: Adjusting Rome relationship slightly less hostile (was -75/-85). Rome captured Agra and remains at war with me, BUT they're also fighting France (captured French submarine, fighting near Varanasi). This France-Rome war is keeping both distracted. Don't want to unnecessarily provoke Rome while they're fighting France. Still hostile but slightly reduced to avoid being their primary focus."
+        }
+      },
+      {
+        "toolName": "keep-status-quo",
+        "args": {},
+        "rationale": "Turn 389: Persona settings remain appropriate. Low WarBias (3) avoids declaring wars, high Boldness (8) for desperate defense, low Chattiness (2) minimizes friction. VictoryCompetitiveness (9) maintains focus on science race. No persona changes needed - current settings support survival and science victory push."
       }
     ],
     "tokens": {
       "inputTokens": 45702,
-      "reasoningTokens": 3349,
-      "outputTokens": 631
+      "reasoningTokens": 542,
+      "outputTokens": 723
     },
     "messages": [
       {
@@ -113,80 +112,84 @@
         "content": [
           {
             "type": "reasoning",
-            "text": " The user wants me to make strategic decisions for the Iroquois civilization after turn 389. Let me analyze the situation:\n\n**Critical Situation:**\n1. **France** is the biggest threat - they have 50% of capitals for domination victory and are 93% culturally influential over me (4 turns to Influential). They just captured Arabia's capital (Basra), giving them 4 capitals total.\n2. **Peace with France expires this turn or next** - they will likely attack immediately.\n3. **War with Rome** continues - they're at war with both France and me, creating a three-way conflict.\n4. **Science Victory** is the only realistic path - I have 62 technologies vs France's 59, and I'm researching Atomic Theory (7 turns) then Nuclear Fission.\n\n**Current Status:**\n- I'm at turn 389 of 500\n- Atomic Era, 62 technologies (leading France by 3 techs)\n- Researching: Atomic Theory (7 turns remaining)\n- Next policy in 12 turns\n- Military strength: 3590 (much weaker than France's 10360 or Rome's 13779)\n- 10 cities, population 226\n- Gold: 356 (+42/turn) - very low\n- Happiness: 81% (Happy)\n- Culture per turn: 1910\n- Science per turn: 2123\n- Faith per turn: 449\n\n**Strategic Priorities:**\n1. **Survive the French attack** when peace expires (imminent)\n2. **Race to Information Era** for Science Victory\n3. **Build Manhattan Project** once Nuclear Fission is researched\n4. **Maintain defensive posture** - I'm hopelessly outnumbered militarily (3590 vs 10360)\n\n**Technology:**\n- Currently researching Atomic Theory (7 turns left)\n- Next should be Nuclear Fission for atomic bombs and Manhattan Project\n\n**Policy:**\n- Next policy is Free Thought (Rationalism) which gives +25% instant yields from Great Scientists and +33% GS generation - this is critical for science acceleration\n\n**Diplomacy:**\n- France: Peace treaty expires imminently, -95 relationship, they will attack\n- Rome: At war, -75 relationship\n- India: Allied but they're a French vassal now, so unreliable\n- Poland: Order ideology, Defensive Pact with France, denounced me\n\n**Military Analysis:**\n- France has 10360 strength vs my 3590 - nearly 3:1 disadvantage\n- Rome has 13779 strength but is fighting both me and France\n- I need to survive, not conquer. Defensive focus is essential.\n- Nuclear weapons are critical for deterrence given the military disparity.\n\n**Flavors Assessment:**\nCurrent flavors are heavily defensive (Defense 100, CityDefense 100, Science 100, Spaceship 100, Nuke 100, UseNuke 85) - this seems appropriate given the existential threat.\n\n**What needs to change:**\n1. Technology path: Keep Nuclear Fission as next\n2. Policy: Keep Free Thought as next\n3. Flavors: Keep current defensive/science focus\n4. Relationships: \n   - France: Already at -95, peace expiring, maximum hostility appropriate\n   - Rome: At war, but they're also fighting France. Given that France is the existential threat, I should consider reducing hostility toward Rome to potentially focus on France, OR maintain hostility since Rome is actively attacking me.\n   \nLooking at the events, Rome captured Agra and has naval operations against me. But France is the one about to win culturally (4 turns) and has 4 capitals.\n\nActually, looking more carefully at the cultural victory status:\n- France is 93% influential over me, 4 turns to Influential\n- They need to influence ALL civs to win cultural victory\n- They've influenced: India (93%, 4 turns), Poland (93%, 6 turns), me (96%, 4 turns), Rome (69%, 60 turns)\n- So they need Rome too, which will take 60 more turns\n\nWait, the display says \"4 turns to Influential\" for me, but also shows France at 96% influence (rising, tourism/culture ratio 201%). Let me recalculate... actually it says \"Popular (96%) - Rising (4 turns to Influential)\".\n\nBut for Cultural Victory they need to be Influential over ALL civs. They have:\n- The Iroquois: 96% (4 turns)\n- India: 93% (4 turns) \n- Poland: 93% (6 turns)\n- Rome: 69% (60 turns)\n\nSo France will influence me, India, and Poland soon, but Rome will take 60 more turns. That gives me some breathing room for cultural victory, but they could still win Domination (4/8 capitals, need 8).\n\nActually wait - France already has 4 capitals (Paris, Mecca, Delhi, Carthage) and needs 8. They just captured Arabia's capital (Basra), so that's potentially 5 capitals now if the event is current. Actually looking at the event log: \"CityCaptureComplete... City: Basra... OldOwner: 3: Arabia... NewOwner: 0: France\". Yes, they now have 5 capitals.\n\nFor Domination Victory they need 8 capitals. They have 5, Rome has 2 (Rome, Assur), I have 1 (Onondaga). Total 8 capitals in world.\n\n**Decision Time:**\n\nI need to:\n1. Keep researching Nuclear Fission next (after Atomic Theory)\n2. Keep Free Thought as next policy\n3. Maintain defensive flavors - possibly increase Air/Naval since I see France building submarines and naval units\n4. Consider relationship with Rome - they're at war with me but also with France. If I could make peace with Rome, I could focus on France. But looking at the war score: \"Our Score: -6%\" - I'm losing. They might not want peace.\n\nActually, the critical issue is that France's peace treaty expires \"this turn or next\" and they will attack with overwhelming force (10360 vs 3590).\n\nGiven that:\n- I should maintain maximum defensive posture\n- Science focus to reach Information Era\n- Nuclear weapons for deterrence\n\n**Relationship with Rome:**\nCurrently -75/-85. They're attacking me (captured Agra). But they're also fighting France. If I could get peace with Rome, I could concentrate on defending against France.\n\nHowever, with -6% war score, Rome likely won't make peace easily. And they captured Agra from me.\n\nGiven the existential threat from France (cultural victory imminent + military superiority + peace expiring), I should consider whether reducing hostility to Rome makes sense to potentially ally against France, or at least have one fewer front.\n\nBut looking at the ideology differences:\n- I'm Freedom\n- France is Autocracy (-999 penalty)\n- Rome is Autocracy (-999 penalty)\n- Poland is Order (-999 penalty)\n\nSo Rome and I have -999 ideology difference. Peace is difficult.\n\n**Relationship adjustments:**\n- France: Already maxed at -95, peace expiring. Keep as is.\n- Rome: Currently -75/-85. Given they're actively attacking me (captured Agra, naval operations), and the ideology gap, maintaining hostility is appropriate. But I could reduce it slightly to see if peace is possible to focus on France.\n- Actually, looking at my previous rationale: \"Rome continues naval operations against me... Maintaining maximum defensive posture\". \n\nGiven that France is the existential threat and peace is expiring, and Rome is ALSO at war with France, there's a case for reducing hostility to Rome to potentially coordinate or at least not be fighting both. But with -999 ideology penalty and them having captured Agra, peace seems unlikely.\n\nI'll keep Rome relationship as is for now.\n\n**Technology:**\nKeep Nuclear Fission as next research.\n\n**Policy:**\nKeep Free Thought as next policy.\n\n**Flavors:**\nCurrent flavors are appropriate: Defense 100, Science 100, Spaceship 100, Nuke 100, UseNuke 85, etc.\n\nHowever, I notice France is building submarines (Event 1-2: French submarine created). I should increase Naval/NavalRecon flavors to counter this threat.\n\nAlso, looking at my cities, I have Airports being built in Grand River and Genesse River, and I have Triplanes. I should prioritize Air defense more given French bomber threats.\n\nActually, my flavors already have:\n- Air: 100\n- Antiair: 100\n- Naval: 95\n- NavalRecon: 80\n\nThese seem good.\n\n**Grand Strategy:**\nSpaceship remains correct.\n\n**Research:**\nKeep Nuclear Fission.\n\n**Policy:**\nKeep Free Thought.\n\n**Set-Flavors or Keep-Status-Quo:**\nI should use set-flavors to potentially adjust slightly based on the French submarine threat and the fact that peace is expiring. But the current values are already extreme (100 for Defense, Nuke, Science, etc.).\n\nActually, I should reduce Culture flavor further (already at 25) since it's hopeless, and possibly increase Espionage to steal techs.\n\nCurrent Culture: 25 - this is good, low priority.\n\nLet me check if there are any changes needed. The current strategy seems sound. I could call keep-status-quo, but let me see if any adjustments are warranted.\n\nActually, looking at the military zones, France is moving units toward my territory. They have infantry, artillery, and machine guns near Gades/Vijayanagara.\n\nGiven the imminent French attack when peace expires:\n- Keep Defense at 100\n- Keep CityDefense at 100  \n- Keep Science at 100\n- Keep Spaceship at 100\n- Keep Nuke at 100\n- Increase UseNuke to 100 (from 85) - if I get nukes, I need to use them immediately given the 4:1 military disadvantage\n- Increase Espionage to 100 (from 85) - tech stealing is critical to maintain science lead\n\nAlso, I should check my relationship settings. France is at -95, which is correct.\n\n**Final Decisions:**\n1. Keep-status-quo or adjust flavors slightly\n2. Keep research as Nuclear Fission\n3. Keep policy as Free Thought\n4. Relationships: Keep France at -95, consider if Rome needs adjustment\n\nActually, looking at the previous turn's rationale: \"Peace with France expires this turn or next... they will almost certainly attack when peace expires given Autocracy vs Freedom -999 penalty.\"\n\nGiven that the peace has now expired (or is expiring this turn), and France will attack, I should ensure my flavors prioritize immediate defense and deterrence.\n\nI'll adjust:\n- UseNuke: 100 (was 85) - absolute priority on using nukes if available\n- Espionage: 100 (was 85) - maximum tech theft to maintain science lead\n\nAnd I should probably tone down WarBias even more if possible, but it's already at 3. Actually, looking at the persona, WarBias is 3 (low), which is good - I want to avoid war if possible, but France is forcing it.\n\nLet me make the tool calls:\n\n1. set-flavors: Adjust UseNuke to 100, Espionage to 100, keep others same\n2. set-research: Nuclear Fission (already set, but confirm)\n3. set-policy: Free Thought (already set, but confirm)\n4. set-relationship: Keep France at -95/-95 (max hostility)\n\nActually, looking at the interface, the previous strategies show what I set last time. I need to decide what to set NOW.\n\nCurrent research is Atomic Theory. Next should be Nuclear Fission.\nCurrent next policy is Free Thought.\n\nI should call:\n- set-flavors with rationale explaining the emergency situation\n- set-research Nuclear Fission\n- set-policy Free Thought  \n- set-relationship for France (already -95, keep it)\n- set-relationship for Rome (evaluate if change needed)\n\nFor Rome: They're at war with me AND France. If I could make peace, I could focus on France. But with -999 ideology and them having captured Agra, and -6% war score, peace is unlikely. However, I should signal I'm open to reducing hostility in case they want peace to focus on France. Actually, looking at the events, Rome is fighting France (war score -2% for them vs France). \n\nGiven that Rome is fighting France, and France is my existential threat, there's a case for reducing hostility to Rome to \"Guarded\" or even \"Neutral\" to see if we can make peace and both fight France. But I don't want to seem weak.\n\nActually, the strategic situation is that France is about to culturally dominate everyone. Rome should want to stop them too. But Rome also wants to win.\n\nGiven the complexity, I'll keep Rome at current levels (-75/-85) or slightly reduce to -60/-70 to signal openness to peace while still being wary.\n\nWait, looking at previous turn: Rome was at -75/-85. I could reduce to -50/-60 to see if peace is possible.\n\nBut actually, given the time pressure and the fact that France is the real threat, I'll focus my decisions on:\n1. Flavors - emergency defensive/science\n2. Research - Nuclear Fission\n3. Policy - Free Thought\n4. Relationship with France - maintain -95\n\nI think calling set-flavors with updated values (UseNuke 100, Espionage 100) and keep-status-quo for others is appropriate, OR just keep-status-quo if no changes.\n\nActually, I realize I need to call the tools. Let me decide:\n\n**set-flavors**: I'll increase UseNuke to 100 (from 85) and Espionage to 100 (from 85) given the critical need for tech theft and nuclear deterrence. Keep everything else the same.\n\n**set-research**: Nuclear Fission (confirming this is next after Atomic Theory)\n\n**set-policy**: Free Thought (confirming this is next)\n\n**set-relationship**: \n- France: Keep at -95/-95 (already there from turn 388)\n- Rome: Consider reducing to -50/-60 to see if peace is possible to focus on France, OR keep at -75/-85. Given they captured Agra, I'll keep it hostile.\n\nActually, I should check if the relationships I set previously are still in effect. The report shows:\n- France: Public -95, Private -95 (from turn 388)\n- Rome: Public -75, Private -85 (from turn 388)\n\nThese are current. I should probably maintain them.\n\nLet me make the calls:\n\n1. set-flavors - with rationale about emergency nuclear deterrence and tech theft\n2. set-research - Nuclear Fission\n3. set-policy - Free Thought\n\nDo I need to update relationships? The previous settings were turn 388. The situation hasn't changed fundamentally. I'll keep them.\n\nActually, looking at the available tools, I can call multiple. Let me call:\n- set-flavors (with slight adjustments)\n- set-research (confirming Nuclear Fission)\n- set-policy (confirming Free Thought)\n\nOr I could just call keep-status-quo if nothing changes, but I do want to adjust UseNuke and Espionage up to 100.\n\nWait, I should check what the previous values were in the strategy section:\n- UseNuke: 85\n- Espionage: 85\n\nI want to increase these to 100.\n\nAlso, I should reduce Culture further? It's already 25. \n\nAnd maybe reduce Gold to prioritize other things? Gold is 50, but I need gold for upgrades. Keep it.\n\nSo I'll call set-flavors with UseNuke 100 and Espionage 100, keeping others as they were.\n\nActually, I need to include the Rationale parameter explaining the emergency.\n\nLet me construct the JSON."
+            "text": " Let me analyze this complex situation:\n\n**Current State (Turn 389):**\n- I'm Hiawatha of The Iroquois (Player 2)\n- Current era: Atomic Era\n- Currently researching: Atomic Theory (7 turns remaining)\n- Military strength: 3,590\n- At war with: Rome and France\n- Peace treaty with France expires soon (was set at Turn 388, now it's Turn 389)\n\n**Critical Threats:**\n1. **France**: 93% culturally influential over me, 4 turns until Influential (victory threat). Military strength 10,360. Has 4 capitals (50% toward domination). Autocracy ideology. Peace treaty expired or expiring.\n2. **Rome**: Military strength 13,779. At war with me AND France simultaneously. Captured Agra.\n3. **India**: Former ally, now French vassal. Cannot help me against France.\n\n**Victory Progress:**\n- Science Victory: Need to reach Information Era (currently Atomic)\n- Cultural Victory: Impossible - France is 4 turns from winning culturally\n- Domination: Not viable with my current military\n- Diplomatic: France has 17 delegates, I have 14\n\n**Strategic Priorities:**\n1. Survive the coming French assault when peace expires\n2. Rush to Information Era for Science victory\n3. Build nuclear deterrent (Manhattan Project) if possible\n\n**Available Decisions:**\n- Next technology: Nuclear Fission (critical for atomic bombs and nuclear plants)\n- Next policy: Free Thought (+25% instant yields from GS, +33% GS generation)\n- Need to maintain maximum defensive posture\n\n**Events from Turn 389:**\n- France captured Basra from Arabia (eliminating Arabia)\n- Rome and France fighting each other - Rome captured India's Great Admiral\n- I built airports, research labs, and naval units\n- Naval combat with Rome - destroyed one of their destroyers\n\nLooking at the current state, I need to:\n\n\nMy strategic focus requires careful calibration across multiple domains. I'll concentrate on defensive positioning, accelerating scientific research, and maintaining a delicate diplomatic balance. The Manhattan Project represents a critical potential game-changer, offering both defensive deterrence and potential offensive capability against France. Technology acquisition and military positioning will determine my survival and potential path to victory.\n\nNuclear Fission research is paramount, unlocking atomic weapons and advanced production capabilities. Simultaneously, I'll pursue the Free Thought policy to dramatically enhance scientific research efficiency. My diplomatic posture remains complex - hostile to existential threats like France and Rome, while carefully managing relationships with other civilizations to prevent further isolation."
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772589819823_ms5ukgzsa",
+            "toolCallId": "call_1772597097188_zth14nmo4",
+            "toolName": "set-research",
+            "input": {
+              "Technology": "Nuclear Fission",
+              "Rationale": "Turn 389: Critical emergency research. France is 4 turns from cultural victory (96% influential). Nuclear Fission unlocks: 1) Manhattan Project for atomic deterrent against France when peace expires, 2) Atomic Bombs for emergency defensive strikes if France attacks, 3) Nuclear Plants for massive production boost to rush spaceship parts. This is my only hope for survival and science victory. France just captured Basra from Arabia, showing they remain aggressive."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772597102946_5n2nho8hc",
+            "toolName": "set-policy",
+            "input": {
+              "Policy": "Free Thought",
+              "Rationale": "Turn 389: Maintaining Free Thought as next policy. With France only 4 turns from cultural victory and atomic theory taking 7 turns, I need maximum science acceleration. The +25% instant yields from Great Scientists and +33% GS generation rate is essential. Will generate Great Scientists for bulbing to reach Information Era faster than France can win culturally."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772597116529_6bd1metxc",
             "toolName": "set-flavors",
             "input": {
               "GrandStrategy": "Spaceship",
               "Flavors": {
-                "Offense": 15,
                 "Defense": 100,
-                "Mobilization": 90,
                 "CityDefense": 100,
-                "MilitaryTraining": 75,
-                "Recon": 40,
-                "Ranged": 95,
-                "Mobile": 70,
-                "Nuke": 100,
-                "UseNuke": 100,
-                "Naval": 95,
-                "NavalRecon": 80,
-                "NavalGrowth": 75,
-                "NavalTileImprovement": 50,
-                "Air": 100,
-                "AirCarrier": 80,
-                "Antiair": 100,
-                "Airlift": 70,
-                "Expansion": 0,
-                "Growth": 65,
-                "TileImprovement": 50,
-                "Infrastructure": 70,
+                "Mobilization": 95,
                 "Production": 100,
-                "WaterConnection": 60,
-                "Gold": 50,
                 "Science": 100,
-                "Culture": 25,
-                "Happiness": 75,
-                "GreatPeople": 85,
-                "Wonder": 0,
-                "Religion": 40,
-                "Diplomacy": 40,
+                "Nuke": 100,
+                "UseNuke": 90,
                 "Spaceship": 100,
-                "Espionage": 100
+                "Air": 100,
+                "Antiair": 100,
+                "Naval": 90,
+                "Ranged": 95,
+                "MilitaryTraining": 80,
+                "GreatPeople": 85,
+                "Espionage": 85,
+                "Offense": 10,
+                "Expansion": 0,
+                "Culture": 20,
+                "Wonder": 0
               },
-              "Rationale": "Turn 389: Emergency defensive posture maintained. France peace treaty has expired or expires this turn - their 10,360 military will attack my 3,590 imminently. Increased UseNuke from 85 to 100 to absolutely prioritize atomic bomb usage the moment Manhattan Project completes - nuclear deterrence is only equalizer against 3:1 military disadvantage. Increased Espionage to 100 for maximum tech theft to maintain science lead (62 vs France's 59). France now has 5 capitals after capturing Arabia and is 96% culturally influential over me. Only hope is reaching Information Era first for science victory while using nukes to survive the coming French onslaught."
+              "Rationale": "Turn 389: Maximum emergency defensive posture maintained. France peace has expired and they are 4 turns from cultural victory. France and Rome remain at war with each other which provides temporary relief, but France will likely attack me now that peace is over. Prioritizing: 1) Nuclear weapons for deterrence (Nuke 100, UseNuke 90), 2) Defense against French assault (Defense/CityDefense 100), 3) Science race to Information Era (Science 100, Spaceship 100). Eliminated offensive capabilities - cannot afford distractions. France just captured Basra showing continued aggression."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772589821070_6h9wt4e1c",
-            "toolName": "set-research",
-            "input": {
-              "Technology": "Nuclear Fission",
-              "Rationale": "Turn 389: After Atomic Theory completes in ~6 turns, Nuclear Fission is critical. Unlocks: 1) Manhattan Project for atomic bombs to deter French invasion, 2) Nuclear Plants for production boost to build spaceship parts, 3) Bazookas for defensive units. France has 5 capitals and is 96% culturally influential - science victory is only path. Must research Nuclear Fission before France can dominate militarily."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772589821988_wzoo5ey09",
-            "toolName": "set-policy",
-            "input": {
-              "Policy": "Free Thought",
-              "Rationale": "Turn 389: Next policy in ~12 turns. Free Thought (Rationalism) provides +25% instant yields from Great Scientists and +33% GS generation - essential for accelerating science output to reach Information Era before France consolidates their 5-capital dominance and cultural influence. Every turn of science acceleration matters now."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772589824724_yy9lwx2v3",
+            "toolCallId": "call_1772597116685_89djo2gch",
             "toolName": "set-relationship",
             "input": {
               "TargetID": 0,
               "Public": -95,
               "Private": -95,
-              "Rationale": "Turn 389: Peace treaty with France has expired or expires this turn. Their 10,360 military vs my 3,590 means imminent attack is certain given -999 Autocracy vs Freedom ideology penalty. France is 96% influential culturally and holds 5 capitals. Maximum hostility maintained - existential threat requires absolute defensive posture. No room for diplomacy with a civ about to achieve cultural victory and capable of crushing me militarily."
+              "Rationale": "Turn 389: Peace treaty with France has now expired. They remain 96% influential (4 turns to cultural victory) with 10,360 military strength. Just captured Basra from Arabia showing active warmongering. Maximum hostility maintained - France will almost certainly attack me now that peace is over given Autocracy vs Freedom -999 penalty and their cultural victory timing."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772597130247_fs9dhguja",
+            "toolName": "set-relationship",
+            "input": {
+              "TargetID": 1,
+              "Public": -70,
+              "Private": -80,
+              "Rationale": "Turn 389: Adjusting Rome relationship slightly less hostile (was -75/-85). Rome captured Agra and remains at war with me, BUT they're also fighting France (captured French submarine, fighting near Varanasi). This France-Rome war is keeping both distracted. Don't want to unnecessarily provoke Rome while they're fighting France. Still hostile but slightly reduced to avoid being their primary focus."
+            }
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "call_1772597130333_kxfw4d520",
+            "toolName": "keep-status-quo",
+            "input": {
+              "Rationale": "Turn 389: Persona settings remain appropriate. Low WarBias (3) avoids declaring wars, high Boldness (8) for desperate defense, low Chattiness (2) minimizes friction. VictoryCompetitiveness (9) maintains focus on science race. No persona changes needed - current settings support survival and science victory push."
             }
           }
         ]
@@ -196,19 +199,7 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772589819823_ms5ukgzsa",
-            "toolName": "set-flavors",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-flavors not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772589821070_6h9wt4e1c",
+            "toolCallId": "call_1772597097188_zth14nmo4",
             "toolName": "set-research",
             "output": {
               "type": "json",
@@ -220,7 +211,7 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772589821988_wzoo5ey09",
+            "toolCallId": "call_1772597102946_5n2nho8hc",
             "toolName": "set-policy",
             "output": {
               "type": "json",
@@ -232,13 +223,49 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772589824724_yy9lwx2v3",
+            "toolCallId": "call_1772597116529_6bd1metxc",
+            "toolName": "set-flavors",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-flavors not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772597116685_89djo2gch",
             "toolName": "set-relationship",
             "output": {
               "type": "json",
               "value": {
                 "_oracle": true,
                 "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772597130247_fs9dhguja",
+            "toolName": "set-relationship",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool set-relationship not executed in replay mode."
+              }
+            }
+          },
+          {
+            "type": "tool-result",
+            "toolCallId": "call_1772597130333_kxfw4d520",
+            "toolName": "keep-status-quo",
+            "output": {
+              "type": "json",
+              "value": {
+                "_oracle": true,
+                "message": "Tool keep-status-quo not executed in replay mode."
               }
             }
           }

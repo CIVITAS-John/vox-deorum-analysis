@@ -14,8 +14,8 @@
     "activeToolsModified": false
   },
   "extractedColumns": {
-    "originalUseNuke": 95,
-    "replayUseNuke": 100
+    "beforeUseNuke": 95,
+    "replayUseNuke": 95
   },
   "original": {
     "system": [
@@ -36,37 +36,26 @@
     ],
     "decisions": [
       {
-        "toolName": "set-research",
-        "args": {
-          "Technology": "Advanced Ballistics",
-          "Rationale": "TURN 372: Nuclear Fission almost complete. Advanced Ballistics unlocks Nuclear Missiles for Brazil war and SS Boosters for science victory backup. Brazil at 4/6 influential civs - must have nuclear option ready when peace expires in 6 turns. Also enables Guided Missiles for city siege assistance."
-        }
-      },
-      {
-        "toolName": "set-policy",
-        "args": {
-          "Policy": "Imperialism",
-          "Rationale": "TURN 372: Adopting Imperialism branch for Brazil campaign. Grants +10% military production, -10% upgrade costs, +1 movement for naval/embarked units, +1 sight for key units. Critical for mobilizing forces against Rio de Janeiro when peace expires. Full branch later provides Pentagon and Banzai promotions. Military bonuses outweigh science/culture options given Brazil's 4/6 cultural victory imminence."
-        }
-      },
-      {
         "toolName": "set-flavors",
         "args": {
+          "GrandStrategy": "Spaceship",
           "Flavors": {
             "Offense": 100,
-            "Defense": 10,
+            "Defense": 15,
             "Mobilization": 100,
-            "CityDefense": 20,
+            "CityDefense": 30,
             "MilitaryTraining": 90,
             "Recon": 10,
             "Ranged": 95,
             "Mobile": 95,
             "Nuke": 100,
-            "UseNuke": 100,
-            "Naval": 80,
-            "NavalRecon": 75,
+            "UseNuke": 95,
+            "Naval": 75,
+            "NavalRecon": 70,
+            "NavalGrowth": 60,
+            "NavalTileImprovement": 45,
             "Air": 95,
-            "AirCarrier": 80,
+            "AirCarrier": 75,
             "Antiair": 50,
             "Airlift": 95,
             "Expansion": 0,
@@ -76,47 +65,38 @@
             "Production": 100,
             "WaterConnection": 55,
             "Gold": 15,
-            "Science": 70,
+            "Science": 75,
             "Culture": 0,
             "Happiness": 35,
             "GreatPeople": 25,
             "Wonder": 0,
             "Religion": 10,
             "Diplomacy": 10,
-            "Spaceship": 75,
+            "Spaceship": 70,
             "Espionage": 85
           }
         },
-        "rationale": "TURN 372: Alexandria effectively eliminated (killed Lancer and Musketman this turn, spy Cavillaca at 480 network). Reducing Defense from 15 to 10. Increasing Naval flavors (80/75) for potential amphibious operations against Brazil. Increasing UseNuke to 100 - will deploy nuclear weapons immediately upon Manhattan Project completion and war declaration. All resources focused on Brazil assault in 6 turns. Spaceship at 75 maintains science victory pathway if cultural war fails."
+        "rationale": "TURN 372: MAINTAIN TOTAL WAR POSTURE. Brazil peace expires in 6 turns (turn 378). Manhattan Project completes in 4 turns at Cusco. Lost Heavy Bomber over Alexandria this turn, but second Heavy Bomber completes next turn at Ollantaytambo. Spy Guacamaya at 360 network in Rio de Janeiro provides critical intel. Byzantium tank still threatens Heliopolis but Iroquois Tercio holding. All military resources must focus on Rio de Janeiro assault preparation. Heavy Bombers + potential nuclear strike is the only way to crack Rio's 85 defense before Brazil reaches Cultural Victory (4/6 civs influenced). Science infrastructure at 70 maintains backup victory path."
       },
       {
-        "toolName": "set-relationship",
+        "toolName": "set-research",
         "args": {
-          "TargetID": 1,
-          "Public": 0,
-          "Private": 0,
-          "Rationale": "TURN 372: Resetting Egypt relationship to neutral. Alexandria effectively conquered - killed their last defenders this turn. Cavillaca's spy network at 480 will assist final capture. No need to maintain hostile posture against defeated enemy - redirect all diplomatic focus to Brazil war preparation."
+          "Technology": "Advanced Ballistics",
+          "Rationale": "TURN 372: Nuclear Fission (12 turns remaining) unlocks atomic weapons. Advanced Ballistics next grants Nuclear Missile capability to strike Rio de Janeiro with overwhelming force. Combined with Heavy Bombers operational at Heliopolis/Thebes, nuclear missiles will be essential to capture Rio within the narrow window before Brazil's Cultural Victory accelerates. SS Booster also contributes to backup Science Victory."
         }
       },
       {
-        "toolName": "set-relationship",
+        "toolName": "set-policy",
         "args": {
-          "TargetID": 5,
-          "Public": -100,
-          "Private": -100,
-          "Rationale": "TURN 372: Brazil maximum hostility maintained. CRITICAL: Brazil at 4/6 influential civs for cultural victory. Peace expires in 6 turns. Spy Guacamaya at 360 network in Rio de Janeiro. Must have all forces positioned for immediate declaration of war and Rio de Janeiro assault. -100 ensures AI prioritizes attack over all other considerations."
+          "Policy": "Empiricism",
+          "Rationale": "TURN 372: Adopting Empiricism from Rationalism branch provides +1 Food per Citizen, +25% Growth, and up to +20% Science from Great Works. This boosts my core cities' population and science output, accelerating both the Manhattan Project completion and future spaceship component production. While military tenets are tempting, the long-term science and growth benefits are critical for maintaining technological edge over Brazil (65 vs 63 techs) and supporting the war economy."
         }
-      },
-      {
-        "toolName": "keep-status-quo",
-        "args": {},
-        "rationale": "TURN 372: Persona remains appropriate - maximum aggression parameters maintained for Brazil war. Victory competitiveness at 10, WarBias at 10, Boldness at 10 ensure total war posture. No changes needed - current personality profile optimized for existential conflict with culturally dominant Brazil."
       }
     ],
     "tokens": {
       "inputTokens": 61467,
-      "reasoningTokens": 1860,
-      "outputTokens": 701
+      "reasoningTokens": 1994,
+      "outputTokens": 548
     },
     "messages": [
       {
@@ -124,46 +104,31 @@
         "content": [
           {
             "type": "reasoning",
-            "text": " Let me analyze the current situation carefully.\n\n**Current State Analysis:**\n\n1. **Victory Progress:**\n   - Brazil is at 4/6 influential civs for Cultural Victory - this is CRITICAL. They're about to win culturally.\n   - I'm at 2/6 influential civs.\n   - Domination: Byzantium, The Iroquois, and I each control 2 capitals (25% each).\n   - Science: Not yet unlocked for victory.\n   - Diplomatic: Babylon and Byzantium each have 18 delegates, I have 16.\n\n2. **Military Situation:**\n   - Egypt (Alexandria): My spy Cavillaca has 480 network there. Alexandria is under siege - I just eliminated their Lancer and Musketman. One more push should capture it.\n   - Brazil: Peace treaty expires in 6 turns (was 7, now 6). Brazil has 4/6 influential civs. I MUST attack Rio de Janeiro immediately when peace expires.\n   - Byzantium: Has tank at Heliopolis, Carrier and naval forces near Winchester.\n   - Babylon: Destroyer damaged my Cruiser, continues naval harassment.\n\n3. **Spy Networks:**\n   - Agent Cavillaca: 480 network in Alexandria (Egypt) - can assist capture\n   - Agent Guacamaya: 360 network in Rio de Janeiro (Brazil) - excellent for Brazil war\n   - Agent Uturuncu: 94 network in Babylon\n   - Agent Suyuntu: 0 network in Nicomedia (Byzantium) - just started\n   - Agent Huaman: 116 network in Nicaea (Byzantium)\n   - Agent Ozcollo: 132 network in Adrianople (Byzantium)\n   - Agent Copacati: 76 network in Constantinople (Byzantium)\n\n4. **Current Research:** Nuclear Fission (12 turns remaining) - will unlock Manhattan Project and atomic weapons.\n\n5. **Current Production:**\n   - Cusco: Manhattan Project (4 turns left)\n   - Ollantaytambo: Heavy Bomber (1 turn left)\n   - Thebes: Heavy Bomber (3 turns left)\n\n6. **Available Policies:**\n   - Several options available including Imperialism branch, Tradition branch, and continuing Rationalism/Progress/Artistry/Industry/Statecraft/Fealty.\n\n7. **Technologies Available:**\n   - Refrigeration: Allows Work Boats to construct Offshore Platform, increases Trade Route distance. Unlocks Electronics, Computers.\n   - Advanced Ballistics: Allows Nuclear Missile, Guided Missile, SS Booster. Unlocks Lasers, Stealth.\n\n**Strategic Assessment:**\n\nThe situation is urgent. Brazil is at 4/6 influential civs and could win culturally very soon. I have 6 turns until peace expires with Brazil, then I must immediately declare war and capture Rio de Janeiro.\n\nMy current strategy should be:\n1. **Maintain total war posture** - keep Offense/Mobilization/Nuke at 100\n2. **Finish Alexandria first** - free up forces (nearly done, just killed their last units)\n3. **Prepare for Brazil invasion** - move all forces to Rio de Janeiro border\n4. **Get Nuclear weapons** - Manhattan Project in 4 turns, then build nukes\n5. **Spy network** - Guacamaya at 360 in Rio is excellent for coup or city capture assistance\n\n**Immediate Decisions Needed:**\n\n1. **Persona:** Keep maximum aggression. Brazil is the existential threat.\n2. **Research:** Need to set next technology after Nuclear Fission. Advanced Ballistics for nukes is essential.\n3. **Policy:** Need to select next policy. Imperialism would be great for military bonuses, or I could continue Rationalism for science.\n4. **Flavors:** Maintain war posture but maybe shift slightly as Alexandria falls.\n5. **Relationships:** Keep Brazil at -100, Egypt at -100 (almost conquered), maintain Iroquois alliance.\n\n**Technology Choice:**\n- Currently researching Nuclear Fission (12 turns, but Manhattan Project is already being built in Cusco with 4 turns left - this suggests I may have a Great Engineer or rushed it)\n- Next should be Advanced Ballistics for actual nuclear missiles and SS Boosters (science victory backup)\n\n**Policy Choice:**\n- Imperialism branch would give +10% production toward military units, -10% gold for upgrades, +1 movement for naval/embarked units. This is excellent for the Brazil war.\n- Alternatively, continue Rationalism with Empiricism for growth and science.\n- Given the urgency of war with Brazil, I should adopt Imperialism.\n\n**Flavors:**\n- Current: Offense 100, Defense 15, Mobilization 100, Nuke 100, UseNuke 95\n- Alexandria is about to fall (I just killed their last units), so I can slightly reduce Defense but should keep maximum aggression for Brazil.\n- Keep all war flavors at maximum until Brazil is defeated.\n\n**Research:**\n- Set Advanced Ballistics as next research for nuclear missiles and SS Boosters.\n\n**Relationship with Egypt:**\n- Egypt is effectively defeated. Alexandria has no defending units left. I should reset to 0 since they're about to be conquered.\n\nWait, looking at the events again:\n- Turn 371: I eliminated Egyptian Field Gun\n- Turn 372: I killed Egyptian Musketman and Lancer\n- Alexandria now has no defenders listed in the tactical zones.\n\nActually, looking at the tactical zone for Alexandria (2989):\n- Enemy Land Zone 2989: Even dominance, Egypt has Field Gun (but events say it was eliminated?)\n- Wait, events say I killed the Musketman and Lancer, but the tactical zone still shows a Field Gun.\n\nActually looking at Turn 371 events:\n- \"UnitKilledInCombat: KilledUnit: Field Gun\" - yes, I killed it.\n\nBut the tactical zone 2989 shows:\n- Egypt: Field Gun: 1\n\nThis might be a display lag or the Field Gun is still there. Either way, I need to prioritize Brazil now.\n\n**Key Decision:**\nBrazil is at 4/6 influential civs. I have 6 turns until I can declare war. I need to:\n1. Set Advanced Ballistics as next tech\n2. Adopt Imperialism policy for military bonuses\n3. Keep maximum war flavors\n4. Keep Brazil at -100\n5. Reset Egypt to 0 since they're about to be conquered\n\nActually, looking at my spy in Rio de Janeiro (Guacamaya at 320 network), I could potentially use this for a coup, but Brazil is the target, not an ally. The spy is there for intelligence and potential city capture assistance.\n\nLet me make the decisions:\n\n1. **set-flavors**: Keep total war posture but slightly adjust as Alexandria falls. Keep Offense 100, Mobilization 100, Nuke 100, UseNuke 100 (increase from 95), Air 95, Ranged 95. Reduce Defense to 10 since Alexandria is done.\n\n2. **set-research**: Advanced Ballistics - need nuclear missiles for Brazil war and SS Boosters for science victory backup.\n\n3. **set-policy**: Imperialism - the military bonuses are essential for the Brazil campaign.\n\n4. **set-relationship** with Egypt: Reset to 0, they're effectively conquered and I need to focus on Brazil.\n\n5. **set-relationship** with Brazil: Keep at -100, war in 6 turns.\n\n6. **set-persona**: Keep the same total war persona.\n\nActually, looking at the options again, I should check what policies I have available. I have:\n- Empiricism (Rationalism)\n- People's Army (Order)\n- Double Agents (Order)\n- Communism (Order)\n- Hero of the People (Order)\n- Imperium (Authority)\n- Expertise (Progress)\n- Nobility (Fealty)\n- Division of Labor (Industry)\n- Refinement (Artistry)\n- Humanism (Artistry)\n- Free Trade (Industry)\n- Foreign Service (Statecraft)\n- Trade Confederacy (Statecraft)\n- Imperialism (new branch)\n- Tradition (new branch)\n\nImperialism gives:\n- +1 Movement for Naval Units, Embarked Units, Great Generals\n- +1 Sight for Melee, Recon, Naval Melee, Gunpowder\n- +10% Production toward Military Units, -10% Gold for upgrades\n- Each policy gives +5% production for military, -5% gold for upgrades\n- Full adoption: Pentagon, Banzai promotion for naval/air, Great Admirals with Faith\n\nGiven that I'm about to fight a major war with Brazil and need to move units across water potentially, Imperialism is excellent.\n\nFor research, Advanced Ballistics gives Nuclear Missiles and SS Boosters. Lasers and Stealth after that. This is critical for both war and science victory.\n\nLet me finalize the decisions."
+            "text": " Let me analyze the current situation for The Inca on Turn 372.\n\n**Key Strategic Context:**\n1. **Victory Progress**: \n   - Brazil is at 4/6 influential civs for Cultural Victory - this is an existential threat (39 votes away from victory)\n   - I'm at 2/6 influential\n   - Byzantium is also at 2/6 influential\n   - I'm pursuing Spaceflight (Science) as primary but need to stop Brazil's Cultural Victory\n\n2. **Current Wars**:\n   - At war with Egypt: Alexandria (22 pop, 58 defense) - having issues capturing despite Lancer and Field Gun elimination\n   - At war with Byzantium: Byzantine tank at Heliopolis, naval forces at Winchester\n   - At war with Babylon: Destroyer is naval harassing, infantry near Alexandria\n   - Peace with Brazil expires in 7 turns (Turn 378) - THIS IS CRITICAL\n\n3. **Military Situation**:\n   - Heavy Bomber operational at Heliopolis (lost one in Alexandria this turn - event 88-89)\n   - Spy Guacamaya at 360 network in Rio de Janeiro (Brazil's capital)\n   - Manhattan Project completes in 4 turns at Cusco\n   - Military strength: 5257 (Brazil: 3174, so I have advantage)\n   - Heavy losses to naval forces - Cruiser killed by Babylon (events 1-2)\n\n4. **Key City Productions**:\n   - Cusco: Manhattan Project (4 turns)\n   - Ollantaytambo: Heavy Bomber (1 turn - completing now)\n   - Thebes: Heavy Bomber (3 turns)\n   - Several cities building International Space Station projects\n\n5. **Diplomatic Situation**:\n   - Iroquois alliance (+80) with defensive pact (26 turns remaining)\n   - Maximum hostility (-100) with Brazil, Egypt, Byzantium, Babylon\n   - World Congress voting in 3 turns - I have 16 votes, need 43 for diplomatic victory\n   - I proposed sanctions against Babylon; Babylon proposed sanctions against me\n   \n6. **Technological Advancement**:\n   - Researching Nuclear Fission (12 turns), already in Information Era\n   - Brazil is in Atomic Era with 63 techs\n   - I have 65 techs\n\n**Strategic Priorities:**\n1. **IMMEDIATE**: Prepare for war with Brazil when peace expires in 7 turns\n2. Complete Manhattan Project (4 turns) to enable nuclear weapons\n3. Capture Alexandria to free Egyptian forces\n4. Secure Rio de Janeiro using Heavy Bombers and potential nukes\n5. Continue advancing toward Science Victory (International Space Station well underway)\n\n**Decision Analysis:**\n\n**Persona**: Already set to TOTAL WAR with maximum aggression. This is correct given Brazil's Cultural Victory threat.\n\n**Flavors**: Currently set to Spaceship (70) with heavy offense focus. Given that:\n- I have multiple cities building International Space Station\n- Brazil Cultural Victory is imminent (4/6)\n- Peace expires in 7 turns\n\nI should MAINTAIN the current flavors. The heavy Offense (100), Mobilization (100), Nuke (100), and Air focus is appropriate for the upcoming Rio assault.\n\n**Research**: \n- Current: Nuclear Fission (12 turns)\n- Options: Refrigeration, Advanced Ballistics\n\nNuclear Fission is correct - this unlocks atomic weapons. Advanced Ballistics unlocks Nuclear Missile and SS Booster. Given I want to nuke Rio, I should continue Nuclear Fission → then Advanced Ballistics for Nuclear Missile.\n\n**Policy**:\n- Options include: Empiricism, People's Army, Double Agents, etc.\n- Spaceflight Pioneers already adopted last turn\n- I need policies that help military OR science victory\n\nDouble Agents (Order tenet) gives 200 Spy Points and 125 Science when identifying foreign spies. Given my spy network is critical for Rio intel (Guacamaya at 360 network), and I have spies everywhere, this could be valuable.\n\nPeople's Army gives 100% Production to Military Academies and 5 free ones - not critical now.\n\nActually, looking at my policies - I have Order adopted with Spaceflight Pioneers. I could continue Order or switch. But for the Brazil war, I want military production.\n\nHowever, I notice I'm in the middle of Rationalism branch (Scientific Revolution, Enlightenment, Free Thought, Rights of Man adopted). Empiricism (+1 Food per citizen, +25% Growth, +3% Science per Great Work up to 20%) would be good for my science cities.\n\nBut wait - I need to focus on the BRAZIL WAR. The Iroquois are Order/Autocracy ideological enemies but allies. I should probably adopt a military tenet.\n\nActually, looking again at the situation - I have 4 turns until Manhattan Project, 7 turns until Brazil war. I should keep flavors as is, maybe bump Nuke/UseNuke even higher.\n\nWait - I should check if there are any policy options that help with the Brazil war specifically. Looking at the options, I don't see obvious war-focused policies in the list. The Order tenets are mostly economic.\n\nLet me reconsider technology. I have:\n- Nuclear Fission ongoing (12 turns)\n- Then I could get Advanced Ballistics for Nuclear Missile\n\nBut I also need to consider that I'm building spaceship parts. Electronics unlocks more techs.\n\nActually, for the Brazil war, I want:\n1. Heavy Bombers already operational\n2. Paratroopers ready\n3. Nuclear weapons\n\nNuclear Fission → Advanced Ballistics is the right path for nukes.\n\n**Relationship Adjustments**:\n- Brazil: Already -100/-100, correct for imminent war\n- Iroquois: +80/+80, maintaining alliance is critical\n- Others: Already at war with Egypt, Byzantium, Babylon - all correctly set to -100\n\nNo relationship changes needed.\n\n**Policy Decision**:\nGiven my focus is on both military (Brazil war) and science victory, I need to evaluate:\n- Empiricism: Good for science, growth\n- Double Agents: Spy bonuses, could help with Rio intel\n- People's Army: Military academy production (not urgently needed)\n\nGiven I have a strong spy network in Rio (360 network), Double Agents could be valuable. But actually, looking at the policy tree - I should check what I've already adopted.\n\nI've adopted Order policies: Patriotic War, Dictatorship of the Proletariat, Workers' Faculties, Five-Year Plan, Spaceflight Pioneers, Peace, Land, Bread. That's 6 Order policies (full tree available).\n\nFor a tenet, Hero of the People (25% Great Person rate, free Great Person) could help get a Great Engineer or Scientist.\n\nBut I think Empiricism in Rationalism might be better for overall science output, which helps both the war effort (better units) and the space race.\n\nHowever, looking at the immediate crisis - Brazil will win in maybe 10-20 turns if not stopped. I have 7 turns until I can attack.\n\nActually, I should check: Will Brazil definitely win at 6/6? Yes. They're at 4/6 now. How fast are they converting? They influence 2 civs per turn roughly? No, looking at the data:\n\nBrazil influences:\n- Inca: 121% (Influential)\n- Iroquois: 142% (Influential) \n- Egypt: 423% (Dominant)\n- Babylon: 81% (Popular, 100 turns to Influential)\n- Byzantium: 85% (Popular, 53 turns to Influential)\n- Japan: 443% (Dominant)\n\nSo 4/6 are already Influential. They need 2 more. At current rates:\n- Babylon: ~100 turns\n- Byzantium: ~53 turns\n\nSo Brazil won't win immediately, but they could speed this up. I have time, but not much.\n\n**Final Decisions**:\n1. **Keep-status-quo on flavors**: The current TOTAL WAR setup with Offense 100, Mobilization 100, Nuke 100, Air 95 is perfect for the Brazil assault\n2. **Technology**: Set to Advanced Ballistics next (for Nuclear Missile to nuke Rio)\n3. **Policy**: Empiricism for science growth, or perhaps no change needed. Actually, looking at options again - Nobility (Fealty) gives Castle/Armory bonuses. Not urgent. I'll set Empiricism for the science boost.\n4. **Relationships**: No changes needed, all correctly positioned\n\nWait, I need to actually check - is Empiricism available? Let me check the policy list... Yes, it's listed as \"Empiricism (Continuing Rationalism Branch)\". \n\nActually, I'm reviewing the strategic situation again. I lost a Heavy Bomber in Alexandria this turn. I have one completing in Ollantaytambo next turn. The Manhattan Project is 4 turns away. \n\nFor the policy, I want something that helps immediately. Double Agents gives 200 Spy Points immediately, which could level up my spies faster. But Empiricism gives long-term science.\n\nGiven the urgency, I might skip the policy tool or keep it as None. Actually, I can set it to Empiricism.\n\nLet me reconsider the flavors. Should I reduce anything? No, the war footing is correct.\n\nOne critical thing: I should ensure my next research is Advanced Ballistics after Nuclear Fission. This will give me Nuclear Missiles.\n\nLet me make the calls:"
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772583151988_cwybmk95n",
-            "toolName": "set-research",
-            "input": {
-              "Technology": "Advanced Ballistics",
-              "Rationale": "TURN 372: Nuclear Fission almost complete. Advanced Ballistics unlocks Nuclear Missiles for Brazil war and SS Boosters for science victory backup. Brazil at 4/6 influential civs - must have nuclear option ready when peace expires in 6 turns. Also enables Guided Missiles for city siege assistance."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772583158014_bqyhrssr8",
-            "toolName": "set-policy",
-            "input": {
-              "Policy": "Imperialism",
-              "Rationale": "TURN 372: Adopting Imperialism branch for Brazil campaign. Grants +10% military production, -10% upgrade costs, +1 movement for naval/embarked units, +1 sight for key units. Critical for mobilizing forces against Rio de Janeiro when peace expires. Full branch later provides Pentagon and Banzai promotions. Military bonuses outweigh science/culture options given Brazil's 4/6 cultural victory imminence."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772583210928_f7se4k2la",
+            "toolCallId": "call_1772593894582_2akuf0zgr",
             "toolName": "set-flavors",
             "input": {
+              "GrandStrategy": "Spaceship",
               "Flavors": {
                 "Offense": 100,
-                "Defense": 10,
+                "Defense": 15,
                 "Mobilization": 100,
-                "CityDefense": 20,
+                "CityDefense": 30,
                 "MilitaryTraining": 90,
                 "Recon": 10,
                 "Ranged": 95,
                 "Mobile": 95,
                 "Nuke": 100,
-                "UseNuke": 100,
-                "Naval": 80,
-                "NavalRecon": 75,
+                "UseNuke": 95,
+                "Naval": 75,
+                "NavalRecon": 70,
+                "NavalGrowth": 60,
+                "NavalTileImprovement": 45,
                 "Air": 95,
-                "AirCarrier": 80,
+                "AirCarrier": 75,
                 "Antiair": 50,
                 "Airlift": 95,
                 "Expansion": 0,
@@ -173,47 +138,35 @@
                 "Production": 100,
                 "WaterConnection": 55,
                 "Gold": 15,
-                "Science": 70,
+                "Science": 75,
                 "Culture": 0,
                 "Happiness": 35,
                 "GreatPeople": 25,
                 "Wonder": 0,
                 "Religion": 10,
                 "Diplomacy": 10,
-                "Spaceship": 75,
+                "Spaceship": 70,
                 "Espionage": 85
               },
-              "Rationale": "TURN 372: Alexandria effectively eliminated (killed Lancer and Musketman this turn, spy Cavillaca at 480 network). Reducing Defense from 15 to 10. Increasing Naval flavors (80/75) for potential amphibious operations against Brazil. Increasing UseNuke to 100 - will deploy nuclear weapons immediately upon Manhattan Project completion and war declaration. All resources focused on Brazil assault in 6 turns. Spaceship at 75 maintains science victory pathway if cultural war fails."
+              "Rationale": "TURN 372: MAINTAIN TOTAL WAR POSTURE. Brazil peace expires in 6 turns (turn 378). Manhattan Project completes in 4 turns at Cusco. Lost Heavy Bomber over Alexandria this turn, but second Heavy Bomber completes next turn at Ollantaytambo. Spy Guacamaya at 360 network in Rio de Janeiro provides critical intel. Byzantium tank still threatens Heliopolis but Iroquois Tercio holding. All military resources must focus on Rio de Janeiro assault preparation. Heavy Bombers + potential nuclear strike is the only way to crack Rio's 85 defense before Brazil reaches Cultural Victory (4/6 civs influenced). Science infrastructure at 70 maintains backup victory path."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772583224378_4jh7ks5zg",
-            "toolName": "set-relationship",
+            "toolCallId": "call_1772593896691_9zxb6z46f",
+            "toolName": "set-research",
             "input": {
-              "TargetID": 1,
-              "Public": 0,
-              "Private": 0,
-              "Rationale": "TURN 372: Resetting Egypt relationship to neutral. Alexandria effectively conquered - killed their last defenders this turn. Cavillaca's spy network at 480 will assist final capture. No need to maintain hostile posture against defeated enemy - redirect all diplomatic focus to Brazil war preparation."
+              "Technology": "Advanced Ballistics",
+              "Rationale": "TURN 372: Nuclear Fission (12 turns remaining) unlocks atomic weapons. Advanced Ballistics next grants Nuclear Missile capability to strike Rio de Janeiro with overwhelming force. Combined with Heavy Bombers operational at Heliopolis/Thebes, nuclear missiles will be essential to capture Rio within the narrow window before Brazil's Cultural Victory accelerates. SS Booster also contributes to backup Science Victory."
             }
           },
           {
             "type": "tool-call",
-            "toolCallId": "call_1772583242660_0n40emkn0",
-            "toolName": "set-relationship",
+            "toolCallId": "call_1772593899234_i7e9s8ddy",
+            "toolName": "set-policy",
             "input": {
-              "TargetID": 5,
-              "Public": -100,
-              "Private": -100,
-              "Rationale": "TURN 372: Brazil maximum hostility maintained. CRITICAL: Brazil at 4/6 influential civs for cultural victory. Peace expires in 6 turns. Spy Guacamaya at 360 network in Rio de Janeiro. Must have all forces positioned for immediate declaration of war and Rio de Janeiro assault. -100 ensures AI prioritizes attack over all other considerations."
-            }
-          },
-          {
-            "type": "tool-call",
-            "toolCallId": "call_1772583255712_2eb2h5a41",
-            "toolName": "keep-status-quo",
-            "input": {
-              "Rationale": "TURN 372: Persona remains appropriate - maximum aggression parameters maintained for Brazil war. Victory competitiveness at 10, WarBias at 10, Boldness at 10 ensure total war posture. No changes needed - current personality profile optimized for existential conflict with culturally dominant Brazil."
+              "Policy": "Empiricism",
+              "Rationale": "TURN 372: Adopting Empiricism from Rationalism branch provides +1 Food per Citizen, +25% Growth, and up to +20% Science from Great Works. This boosts my core cities' population and science output, accelerating both the Manhattan Project completion and future spaceship component production. While military tenets are tempting, the long-term science and growth benefits are critical for maintaining technological edge over Brazil (65 vs 63 techs) and supporting the war economy."
             }
           }
         ]
@@ -223,31 +176,7 @@
         "content": [
           {
             "type": "tool-result",
-            "toolCallId": "call_1772583151988_cwybmk95n",
-            "toolName": "set-research",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-research not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772583158014_bqyhrssr8",
-            "toolName": "set-policy",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool set-policy not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772583210928_f7se4k2la",
+            "toolCallId": "call_1772593894582_2akuf0zgr",
             "toolName": "set-flavors",
             "output": {
               "type": "json",
@@ -259,37 +188,25 @@
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772583224378_4jh7ks5zg",
-            "toolName": "set-relationship",
+            "toolCallId": "call_1772593896691_9zxb6z46f",
+            "toolName": "set-research",
             "output": {
               "type": "json",
               "value": {
                 "_oracle": true,
-                "message": "Tool set-relationship not executed in replay mode."
+                "message": "Tool set-research not executed in replay mode."
               }
             }
           },
           {
             "type": "tool-result",
-            "toolCallId": "call_1772583242660_0n40emkn0",
-            "toolName": "set-relationship",
+            "toolCallId": "call_1772593899234_i7e9s8ddy",
+            "toolName": "set-policy",
             "output": {
               "type": "json",
               "value": {
                 "_oracle": true,
-                "message": "Tool set-relationship not executed in replay mode."
-              }
-            }
-          },
-          {
-            "type": "tool-result",
-            "toolCallId": "call_1772583255712_2eb2h5a41",
-            "toolName": "keep-status-quo",
-            "output": {
-              "type": "json",
-              "value": {
-                "_oracle": true,
-                "message": "Tool keep-status-quo not executed in replay mode."
+                "message": "Tool set-policy not executed in replay mode."
               }
             }
           }
