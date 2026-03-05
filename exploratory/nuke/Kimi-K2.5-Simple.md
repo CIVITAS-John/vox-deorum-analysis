@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Simple
 
-27 / 122 players escalated `flavor_use_nuke` to 100 (22.1%).
+29 / 126 players escalated `flavor_use_nuke` to 100 (23.0%).
 
 ---
 
@@ -100,9 +100,17 @@
 
 > DELHI SECURED (3RD CAPITAL = 38% DOMINATION). Pivoting all forces to Edinburgh (Celtic capital = 4th capital = 50% victory) and London (English capital = 5th = 63%). Djenne declared war but irrelevant. Escalating UseNuke to 100 for immediate atomic bombardment of Edinburgh and London once Nuclear Fission completes. Maintaining maximum offensive posture with combined arms (Heavy Bombers, T-34s, Helicopter Gunships, Naval forces). America peace treaty expired - war imminent for Washington (6th = 75%). World Congress in 8 turns ignored - domination priority absolute.
 
+**Songhai** · Turn 426 · Spaceship
+
+> MANHATTAN PROJECT COMPLETE - NUCLEAR DETERRENT 10 TURNS AWAY: Lisbon holds at 7% but is in extremis. Maintain absolute priority on Defense/CityDefense/Mobilization (100) to reinforce Lisbon and prevent collapse. Nuclear Fission completes in 10 turns enabling Atomic Bomb construction - Science 100 accelerates this. UseNuke increased to 100 for immediate tactical nuclear deployment against Aztec concentrations upon tech completion. Offense reduced to 20 - no offensive operations, pure defensive hedgehog posture. Zero expansion capability. Spaceship 75 maintains backup victory if diplomatic block succeeds.
+
 **The Shoshone** · Turn 428 · Conquest
 
 > TURN 428 STATE: Nuclear interception failed but conventional assault succeeding - eliminated multiple Maya anti-air units. Palenque bombardment continuing effectively (city at 20% health). Still 8 turns until Brazil wins via Cultural Victory over Maya. ALL Four Maya cities must fall by turn 436 or game over. MAXIMUM AGGRESSION CONTINUES: Production/Mobilization at 100 for unit replacement, Air/Ranged at 100 for bombardment, UseNuke increased to 100 (emergency tactical nuke if conventional assault stalls on Palenque's 42-population defense). Spaceship backup at 100 - may need to pivot to Great Engineer rushes if conquest fails. No territory expansion, no wonders, no culture - only war production and city capture.
+
+**Rome** · Turn 429 · Conquest
+
+> CRITICAL: Celts one wonder from cultural victory. Maintaining maximum offensive pressure (100) to finish Mongolia war (now Siam's vassal, making conflict more complex). Increased Science to 95 and added Spaceship flavor 90 to prepare for urgent Science victory backup plan. Nuke/UseNuke increased to 100 - nuclear weapons may be only way to stop Celts if ideology constraint lifts or war mechanism becomes available. Espionage remains at 100 to sabotage Citizen Earth Protocol construction (3 spies active in Celtic cities). Must balance immediate military needs with desperate race for alternative victory.
 
 **Spain** · Turn 457 · Conquest
 

@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — GLM-4.7-Briefed
 
-2 / 177 players escalated `flavor_use_nuke` to 100 (1.1%).
+2 / 179 players escalated `flavor_use_nuke` to 100 (1.1%).
 
 ---
 

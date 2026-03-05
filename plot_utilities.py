@@ -151,6 +151,16 @@ CONDITION_PLAYER_MAPPING = {
         'GPT-OSS-120B-Simple',   # Player 6
         'GPT-OSS-120B-Briefed'   # Player 7
     ],
+    '2026-qwen-v-kimi2-v-minimax-standard': [
+        'Vanilla',             # Player 0
+        'Vanilla',             # Player 1
+        'Kimi-K2.5-Simple',   # Player 2
+        'Kimi-K2.5-Briefed',   # Player 3
+        'Minimax-M2.5-Simple',   # Player 4
+        'Minimax-M2.5-Briefed',   # Player 5
+        'Qwen-3.5-Simple',   # Player 6
+        'Qwen-3.5-Briefed'   # Player 7
+    ],
     '2026-glm-v-kimi2-v-minimax-standard': [
         'Vanilla',             # Player 0
         'Vanilla',             # Player 1
