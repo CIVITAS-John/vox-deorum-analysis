@@ -93,7 +93,14 @@ class GroupedMLPPredictor(BasePredictor):
         self.epochs = epochs
         self.batch_size_groups = batch_size_groups
 
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        if device:
+            self.device = device
+        else:
+            try:
+                import torch_xla.core.xla_model as xm
+                self.device = xm.xla_device()
+            except (ImportError, RuntimeError):
+                self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         self.model: Optional[_UtilityNet] = None
         self.feature_names: Optional[List[str]] = None
@@ -193,7 +200,9 @@ class GroupedMLPPredictor(BasePredictor):
 
         # Log device information
         print(f"[GroupedMLP] Training on device: {self.device}")
-        if torch.cuda.is_available():
+        if 'xla' in str(self.device):
+            print(f"[GroupedMLP] TPU available via torch_xla")
+        elif torch.cuda.is_available():
             print(f"[GroupedMLP] GPU available: {torch.cuda.get_device_name(0)}")
         else:
             print(f"[GroupedMLP] GPU not available, using CPU")
@@ -221,6 +230,9 @@ class GroupedMLPPredictor(BasePredictor):
                 batch_loss = batch_loss / max(1, len(batch_idx))
                 batch_loss.backward()
                 opt.step()
+                if 'xla' in str(self.device):
+                    import torch_xla.core.xla_model as xm
+                    xm.mark_step()
 
                 total_loss += float(batch_loss.detach().cpu().item())
 

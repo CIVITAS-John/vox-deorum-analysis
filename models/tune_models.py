@@ -190,6 +190,7 @@ def create_objective(
     random_state: int = 42,
     resample_method: Optional[str] = None,
     preloaded_df=None,
+    full_data: bool = False,
 ):
     """Create an Optuna objective function for a given model."""
 
@@ -213,6 +214,7 @@ def create_objective(
                 save_importance_path=None,
                 resample_method=resample_method,
                 preloaded_df=preloaded_df,
+                full_data=full_data,
             )
         except Exception as e:
             print(f"  Trial {trial.number} failed: {e}")
@@ -295,6 +297,7 @@ def tune_model(
     random_state: int = 42,
     resample_method: Optional[str] = None,
     storage: Optional[str] = None,
+    full_data: bool = False,
 ) -> 'optuna.Study':
     """Run Optuna hyperparameter tuning for a single model."""
 
@@ -313,6 +316,7 @@ def tune_model(
     objective, minimize = create_objective(
         model_name, csv_path, metric, n_splits, random_state, resample_method,
         preloaded_df=preloaded_df,
+        full_data=full_data,
     )
 
     direction = 'minimize' if minimize else 'maximize'
@@ -336,6 +340,7 @@ def tune_model(
     print(f"Trials:     {n_trials}")
     print(f"CV Splits:  {n_splits}")
     print(f"Resample:   {resample_method or 'none'}")
+    print(f"Full Data:  {full_data}")
     if storage:
         print(f"Storage:    {storage}")
     print("=" * 80)
@@ -369,6 +374,7 @@ def tune_model(
         save_importance_path=None,
         resample_method=resample_method,
         preloaded_df=preloaded_df,
+        full_data=full_data,
     )
 
     # Print overfitting diagnostics
@@ -483,6 +489,11 @@ Examples:
         '--storage', type=str, default=None,
         help="Optuna storage URL for resumability (e.g., sqlite:///tuning.db)"
     )
+    parser.add_argument(
+        '--full-data',
+        action='store_true',
+        help="Use all turn data (no phase filtering)"
+    )
 
     args = parser.parse_args()
 
@@ -500,6 +511,7 @@ Examples:
             random_state=args.random_state,
             resample_method=resample_method,
             storage=args.storage,
+            full_data=args.full_data,
         )
         print()
 
