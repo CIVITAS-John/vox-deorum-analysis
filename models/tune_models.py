@@ -29,6 +29,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from utils.model_evaluator import run_kfold_evaluation
 from utils.model_registry import MODEL_REGISTRY
+from utils.data_utils import load_and_prepare_base_data
 
 
 # ============================================================================
@@ -188,6 +189,7 @@ def create_objective(
     n_splits: int = 5,
     random_state: int = 42,
     resample_method: Optional[str] = None,
+    preloaded_df=None,
 ):
     """Create an Optuna objective function for a given model."""
 
@@ -210,6 +212,7 @@ def create_objective(
                 verbose=False,
                 save_importance_path=None,
                 resample_method=resample_method,
+                preloaded_df=preloaded_df,
             )
         except Exception as e:
             print(f"  Trial {trial.number} failed: {e}")
@@ -304,8 +307,12 @@ def tune_model(
               f"Available: {', '.join(SEARCH_SPACES.keys())}", file=sys.stderr)
         sys.exit(1)
 
+    # Preload data once - shared across all trials and re-evaluation
+    preloaded_df = load_and_prepare_base_data(csv_path)
+
     objective, minimize = create_objective(
-        model_name, csv_path, metric, n_splits, random_state, resample_method
+        model_name, csv_path, metric, n_splits, random_state, resample_method,
+        preloaded_df=preloaded_df,
     )
 
     direction = 'minimize' if minimize else 'maximize'
@@ -361,6 +368,7 @@ def tune_model(
         verbose=False,
         save_importance_path=None,
         resample_method=resample_method,
+        preloaded_df=preloaded_df,
     )
 
     # Print overfitting diagnostics

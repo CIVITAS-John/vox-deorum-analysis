@@ -23,7 +23,7 @@ except ImportError:
 # Add parent directory for imports
 sys.path.append(str(Path(__file__).parent.parent))
 from models.base_predictor import BasePredictor
-from utils.data_utils import load_and_prepare_data, apply_resampling
+from utils.data_utils import load_and_prepare_data, load_and_prepare_base_data, apply_resampling
 
 
 def _strip_id_columns_if_not_needed(X: pd.DataFrame, model: BasePredictor) -> pd.DataFrame:
@@ -275,7 +275,8 @@ def run_kfold_evaluation(
     verbose: bool = True,
     save_importance_path: Optional[str] = None,
     resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
-    full_data: bool = False
+    full_data: bool = False,
+    preloaded_df: Optional[pd.DataFrame] = None
 ) -> Tuple[Dict, Optional[pd.DataFrame], List[BasePredictor]]:
     """
     Run full k-fold cross-validation evaluation for any BasePredictor model.
@@ -292,6 +293,8 @@ def run_kfold_evaluation(
         save_importance_path: Path to save feature importance CSV (if None, auto-saves)
         resample_method: Resampling method ('oversample', 'undersample', 'combined', or None)
         full_data: If True, use all turn data (no phase filtering)
+        preloaded_df: Pre-processed DataFrame from load_and_prepare_base_data.
+                      When provided, skips CSV loading and feature engineering.
 
     Returns:
         Tuple of (metrics_summary, feature_importance, fitted_models)
@@ -326,7 +329,8 @@ def run_kfold_evaluation(
         phase_filter = (1, [0.8])
 
     df, X, y, cv_splits = load_and_prepare_data(
-        csv_path, filter_experiments, n_splits, random_state, phase_filter
+        csv_path, filter_experiments, n_splits, random_state, phase_filter,
+        preloaded_df=preloaded_df
     )
 
     # Store results

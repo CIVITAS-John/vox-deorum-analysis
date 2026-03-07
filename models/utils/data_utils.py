@@ -505,13 +505,37 @@ def get_kfold_splits(
     return splits
 
 
+def load_and_prepare_base_data(
+    csv_path: str = "../turn_data.csv",
+    filter_experiments: Optional[List[str]] = None,
+    filter_zero_score: bool = True
+) -> pd.DataFrame:
+    """
+    Load CSV and run all feature engineering (no phase filter, no CV splits).
+
+    This is the expensive part of data preparation. Call once and pass the result
+    to load_and_prepare_data via preloaded_df to avoid redundant work.
+
+    Returns:
+        Processed DataFrame with all engineered features
+    """
+    df = load_turn_data(csv_path, filter_experiments, phase_filter=None,
+                        filter_zero_score=filter_zero_score)
+    df = apply_city_adjustments(df)
+    df = add_relative_features(df)
+    df = add_competitive_features(df)
+    df = drop_transformed_columns(df)
+    return df
+
+
 def load_and_prepare_data(
     csv_path: str = "../turn_data.csv",
     filter_experiments: Optional[List[str]] = None,
     n_splits: int = 5,
     random_state: int = 42,
     phase_filter: Optional[Tuple[int, List[float]]] = None,
-    filter_zero_score: bool = True
+    filter_zero_score: bool = True,
+    preloaded_df: Optional[pd.DataFrame] = None
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, List[Tuple[np.ndarray, np.ndarray]]]:
     """
     Full pipeline: load, adjust, engineer features, and create CV splits.
@@ -524,20 +548,29 @@ def load_and_prepare_data(
         random_state: Random seed
         phase_filter: Tuple of (phase_index, phase_boundaries) for phase filtering (None = all data)
         filter_zero_score: If True, filters out records where score = 0 (eliminated players)
+        preloaded_df: Pre-processed DataFrame from load_and_prepare_base_data.
+                      When provided, skips CSV loading and feature engineering.
 
     Returns:
         Tuple of (df_processed, X, y, cv_splits)
     """
-    # Load data
-    df = load_turn_data(csv_path, filter_experiments, phase_filter, filter_zero_score)
+    if preloaded_df is not None:
+        # Use preloaded data - just apply phase filter
+        df = preloaded_df
+        if phase_filter is not None:
+            phase_index, phase_boundaries = phase_filter
+            df = get_phase_data(df, phase_index, phase_boundaries)
+    else:
+        # Load data
+        df = load_turn_data(csv_path, filter_experiments, phase_filter, filter_zero_score)
 
-    # Apply transformations
-    df = apply_city_adjustments(df)
-    df = add_relative_features(df)
-    df = add_competitive_features(df)
+        # Apply transformations
+        df = apply_city_adjustments(df)
+        df = add_relative_features(df)
+        df = add_competitive_features(df)
 
-    # Drop original/intermediate columns superseded by transformations
-    df = drop_transformed_columns(df)
+        # Drop original/intermediate columns superseded by transformations
+        df = drop_transformed_columns(df)
 
     # Prepare features
     X, y = prepare_features(df)

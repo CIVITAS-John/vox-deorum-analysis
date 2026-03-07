@@ -23,6 +23,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from utils.model_registry import list_models, MODEL_REGISTRY
 from utils.model_evaluator import run_kfold_evaluation
+from utils.data_utils import load_and_prepare_base_data
 
 
 def parse_comma_separated(value: Optional[str]) -> Optional[List[str]]:
@@ -137,6 +138,11 @@ def main():
     print(f"Output Dir:  {output_path}")
     print("=" * 80 + "\n")
 
+    # Preload data once - shared across all model evaluations
+    preloaded_df = load_and_prepare_base_data(
+        args.data, filter_experiments=filter_experiments
+    )
+
     # Run evaluations
     results = []
 
@@ -156,7 +162,8 @@ def main():
                 random_state=args.random_state,
                 verbose=True,
                 resample_method=resample_method,
-                full_data=args.full_data
+                full_data=args.full_data,
+                preloaded_df=preloaded_df,
             )
 
             # Extract key metrics
