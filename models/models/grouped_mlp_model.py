@@ -33,17 +33,18 @@ class _TrainGroup:
 
 class _UtilityNet(nn.Module):
     """Simple MLP that maps features -> scalar utility."""
-    def __init__(self, d_in: int, hidden: int = 64, dropout: float = 0.0):
+    def __init__(self, d_in: int, layer_sizes: Tuple[int, ...] = (64,), dropout: float = 0.0):
         super().__init__()
-        if hidden <= 0:
+        if len(layer_sizes) == 0:
             self.net = nn.Linear(d_in, 1)
         else:
-            self.net = nn.Sequential(
-                nn.Linear(d_in, hidden),
-                nn.ReLU(),
-                nn.Dropout(dropout),
-                nn.Linear(hidden, 1),
-            )
+            layers: list[nn.Module] = []
+            prev = d_in
+            for size in layer_sizes:
+                layers.extend([nn.Linear(prev, size), nn.ReLU(), nn.Dropout(dropout)])
+                prev = size
+            layers.append(nn.Linear(prev, 1))
+            self.net = nn.Sequential(*layers)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: (n_players, d_in) -> (n_players,)
@@ -73,7 +74,7 @@ class GroupedMLPPredictor(BasePredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        hidden: int = 118,
+        layer_sizes: Tuple[int, ...] = (118,),
         dropout: float = 0.46,
         lr: float = 0.00032,
         weight_decay: float = 0.0024,
@@ -85,7 +86,7 @@ class GroupedMLPPredictor(BasePredictor):
         self.group_cols = group_cols
         self.id_cols = id_cols
 
-        self.hidden = hidden
+        self.layer_sizes = layer_sizes
         self.dropout = dropout
         self.lr = lr
         self.weight_decay = weight_decay
@@ -186,7 +187,7 @@ class GroupedMLPPredictor(BasePredictor):
 
         # 4) Create model
         d = len(self.selected_features_)
-        self.model = _UtilityNet(d_in=d, hidden=self.hidden, dropout=self.dropout).to(self.device)
+        self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
 
         opt = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
 
@@ -296,7 +297,7 @@ class GroupedMLPPredictor(BasePredictor):
             "group_cols": self.group_cols,
             "n_features": len(self.feature_names or []),
             "feature_names": self.feature_names,
-            "hidden": self.hidden,
+            "layer_sizes": self.layer_sizes,
             "dropout": self.dropout,
             "lr": self.lr,
             "epochs": self.epochs,
@@ -307,8 +308,8 @@ class GroupedMLPPredictor(BasePredictor):
         """
         Get feature importance based on input layer weights.
 
-        For linear utility (hidden=0): Uses weights from single Linear layer
-        For MLP utility (hidden>0): Averages absolute weights from first Linear layer
+        For linear utility (layer_sizes=()): Uses weights from single Linear layer
+        For MLP utility (layer_sizes non-empty): Averages absolute weights from first Linear layer
 
         Returns:
             DataFrame with columns ['feature', 'coefficient', 'abs_coefficient']
@@ -318,13 +319,13 @@ class GroupedMLPPredictor(BasePredictor):
             raise ValueError("Model must be fitted before getting feature importance")
 
         # Extract input layer weights based on architecture
-        if self.hidden <= 0:
+        if len(self.layer_sizes) == 0:
             # Linear utility: self.model.net is nn.Linear(d_in, 1)
             weights = self.model.net.weight.detach().cpu().numpy()  # shape: (1, d_in)
             importances = np.abs(weights).flatten()  # shape: (d_in,)
         else:
             # MLP utility: self.model.net[0] is first nn.Linear layer
-            weights = self.model.net[0].weight.detach().cpu().numpy()  # shape: (hidden, d_in)
+            weights = self.model.net[0].weight.detach().cpu().numpy()  # shape: (layer_sizes[0], d_in)
             # Average absolute weight across hidden units
             importances = np.abs(weights).mean(axis=0)  # shape: (d_in,)
 

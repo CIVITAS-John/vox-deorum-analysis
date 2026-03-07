@@ -143,14 +143,26 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
 
 def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     """Define grouped MLP hyperparameter search space."""
+    n_layers = trial.suggest_int('n_layers', 0, 3)
+    layer_size = trial.suggest_int('layer_size', 8, 256)
+
+    if n_layers == 0:
+        layer_sizes = ()
+    elif n_layers == 1:
+        layer_sizes = (layer_size,)
+    elif n_layers == 2:
+        layer_sizes = (layer_size, max(8, layer_size // 2))
+    else:
+        layer_sizes = (layer_size, max(8, layer_size // 2), max(8, layer_size // 4))
+
     params = {
-        'hidden': trial.suggest_int('hidden', 0, 256),
+        'layer_sizes': layer_sizes,
         'dropout': trial.suggest_float('dropout', 0.0, 0.5),
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 3, 20),
         'batch_size_groups': trial.suggest_categorical(
-            'batch_size_groups', [32, 64, 128, 256, 512]
+            'batch_size_groups', [128, 256, 512, 1024]
         ),
     }
 
