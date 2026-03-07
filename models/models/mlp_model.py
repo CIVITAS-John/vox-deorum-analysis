@@ -33,7 +33,7 @@ class MLPPredictor(BasePredictor):
     def __init__(
         self,
         include_features: Optional[List[str]] = None,
-        exclude_features: Optional[List[str]] = ['turn_progress'],
+        exclude_features: Optional[List[str]] = [],
         random_state: int = 42,
         hidden_layer_sizes: tuple = (73),
         activation: str = 'relu',

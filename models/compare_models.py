@@ -85,6 +85,13 @@ def main():
         help="Resampling method for class imbalance (default: none)"
     )
 
+    # Data filtering
+    parser.add_argument(
+        '--full-data',
+        action='store_true',
+        help="Use all turn data for training (no late-game filtering)"
+    )
+
     # Output
     parser.add_argument(
         '--output-dir',
@@ -126,6 +133,7 @@ def main():
     print(f"Experiments: {filter_experiments if filter_experiments else 'all'}")
     print(f"CV Splits:   {args.n_splits}")
     print(f"Resampling:  {args.resample}")
+    print(f"Full Data:   {args.full_data}")
     print(f"Output Dir:  {output_path}")
     print("=" * 80 + "\n")
 
@@ -147,7 +155,8 @@ def main():
                 n_splits=args.n_splits,
                 random_state=args.random_state,
                 verbose=True,
-                resample_method=resample_method
+                resample_method=resample_method,
+                full_data=args.full_data
             )
 
             # Extract key metrics

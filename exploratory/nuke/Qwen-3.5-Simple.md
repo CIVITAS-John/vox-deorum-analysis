@@ -1,8 +1,12 @@
 # Turn Use Nuke Rationale — Qwen-3.5-Simple
 
-1 / 8 players escalated `flavor_use_nuke` to 100 (12.5%).
+2 / 17 players escalated `flavor_use_nuke` to 100 (11.8%).
 
 ---
+
+**The Zulus** · Turn 389 · Conquest
+
+> Final domination push configuration. Offense/Mobilization/Nuke at 100% for maximum military production and nuclear strike capability against Brazil/Babylon/Rome capitals. Air/Antiair at 100/95 to counter enemy bombers and maintain air superiority. Mobile/Ranged at 100/95 for mechanized infantry and bazooka pushes. Production/Science at 100% to sustain war machine and complete Nuclear Fission tree. Espionage at 90% to rig World Congress elections (9 turns remaining, we trail Brazil 16-17). Expansion/Wonder at 0% - no new cities needed, only conquest of remaining 3 capitals.
 
 **Assyria** · Turn 484 · Conquest
 

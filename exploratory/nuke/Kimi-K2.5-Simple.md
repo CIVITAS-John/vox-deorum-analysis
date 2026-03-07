@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Simple
 
-29 / 126 players escalated `flavor_use_nuke` to 100 (23.0%).
+31 / 130 players escalated `flavor_use_nuke` to 100 (23.8%).
 
 ---
 
@@ -24,13 +24,17 @@
 
 > Turn 376: Manhattan Project complete - Atomic Bomb ready for immediate deployment against Madrid. UseNuke increased to 100 to guarantee nuclear strike on Madrid (pop 37, defense 55). Spain at 61% diplomatic victory must be eliminated NOW. All combat flavors remain at maximum. Slight increase in Spaceship flavor (45) to prepare infrastructure for post-Spain pivot to race Ethiopia. Gold and Science prioritized to sustain war economy and tech progression toward Satellites after Nuclear Fission completes.
 
-**Egypt** · Turn 384 · Spaceship
-
-> TURN 384: Pi-Ramesses has fallen to Austria. We are down to 3 cities (Heliopolis, Alexandria, Giza) facing overwhelming force. Ottomans remain at 100% cultural victory progress and will win imminently. Maximum defensive priority continues. Increased UseNuke to 100 (from 50) - we are in desperation mode and must be willing to use nuclear weapons immediately upon acquisition. Reduced Offense to 10 (from 30) - we cannot afford any offensive operations with only 3 cities. Spaceship remains our only theoretical victory path if Ottomans somehow fail to complete Citizen Earth Protocol. Austria continues major offensive (70% war score), we must hold the remaining three cities at all costs.
-
 **Germany** · Turn 384 · Conquest
 
 > Maximum offensive posture for existential cultural war. UseNuke 100 and Nuke 100 authorize nuclear strikes on Dutch cultural centers (Amsterdam/Rotterdam/Utrecht) to destroy tourism buildings before Netherlands influences Austria in 6 turns. Mobile 100 and Air 100 enable rapid strikes. Production 100 and Mobilization 100 ensure nuclear missile replacement. Netherlands at 97% with Austria - only 6 turns left. Must destroy their tourism NOW or lose cultural victory.
+
+**Sweden** · Turn 384 · Conquest
+
+> 6-turn existential countdown to Dutch cultural victory. Maximum commitment to offensive warfare required. Increased UseNuke to 100 to guarantee tactical nuclear strikes if conventional assault on Amsterdam stalls. Tanks from Combined Arms will provide the 5-movement breakthrough capability needed to reach Amsterdam before turn 388.
+
+**Egypt** · Turn 384 · Spaceship
+
+> TURN 384: Pi-Ramesses has fallen to Austria. We are down to 3 cities (Heliopolis, Alexandria, Giza) facing overwhelming force. Ottomans remain at 100% cultural victory progress and will win imminently. Maximum defensive priority continues. Increased UseNuke to 100 (from 50) - we are in desperation mode and must be willing to use nuclear weapons immediately upon acquisition. Reduced Offense to 10 (from 30) - we cannot afford any offensive operations with only 3 cities. Spaceship remains our only theoretical victory path if Ottomans somehow fail to complete Citizen Earth Protocol. Austria continues major offensive (70% war score), we must hold the remaining three cities at all costs.
 
 **Venice** · Turn 387 · Conquest
 
@@ -44,21 +48,21 @@
 
 > Emergency defensive posture with nuclear deterrent imminent. Greece's 3:1 military superiority and diplomatic victory attempt in 6 turns creates existential crisis. Nuclear Fission completes in 1 turn with 14 uranium ready. Maximize UseNuke (100) for immediate atomic deployment. Maintain Defense/CityDefense/Mobilization at 100 to survive until deterrent operational. Reduce Naval from 95 to 85 as American destroyer threat is severe but manageable. Boost Espionage to 100 to protect science cities and maintain election rigging in Enns. Increase Spaceship to 95 as backup victory path if culture is disrupted. Diplomacy raised to 80 to counter Greece's 34 delegates in upcoming World Congress vote on United Nations proposal.
 
-**Assyria** · Turn 392 · Conquest
-
-> SURVIVAL MODE - GERMAN BETRAYAL RESPONSE: Germany's invasion is catastrophic. Reduced Offense to 40 (cannot attack superior forces), maintained Defense/CityDefense/Antiair at 100 to survive siege. Science 100 and Nuke/UseNuke 100 are existential priorities - atomic weapons only hope against 13k German military. Production 100 for emergency unit production. Espionage 100 to maintain Florence alliance and protect Kyzyl. Reduced Diplomacy to 90 (lost Lisbon/Sokoto/Buenos Aires to German coups). Naval reduced to 70 (coastal cities threatened by Germany). Focus: Hold cities, survive until nuclear deterrent operational.
-
 **Mongolia** · Turn 392 · Conquest
 
 > Manhattan Project COMPLETED in Karakorum - nuclear weapons now available! With peace treaties expired and Patriotic War policy active, immediately shifting to total war footing. UseNuke increased to 100 to ensure immediate atomic weapon employment once Nuclear Fission completes (12 turns). Offense and Mobile at 95/90 for twin assaults on Persepolis (Persia) and Washington (America). Air 100 prioritizes Heavy Bombers for atomic bomb delivery via Radar technology. Will fight two-front war against Autocracy powers while maintaining deception toward Order allies, particularly Korea. Science 100 critical for Advanced Ballistics nuclear missile delivery systems.
 
-**Brazil** · Turn 395 · Culture
+**Assyria** · Turn 392 · Conquest
 
-> Critical survival mode: Austrian military strength increased to 25,518 (6.8:1 ratio) with peace treaty expired. Reduced Offense to 0 to stop wasting resources on Polynesian war - need immediate consolidation. Maintained Defense/Mobilization/Nuke at maximum for existential defense. Increased Spaceship to 70 as backup victory path. Espionage at 100 to steal technologies from Austria. We have 7 turns to achieve Influential with Babylon for Cultural Victory while surviving Austrian onslaught. Nuclear deterrence is our only hope.
+> SURVIVAL MODE - GERMAN BETRAYAL RESPONSE: Germany's invasion is catastrophic. Reduced Offense to 40 (cannot attack superior forces), maintained Defense/CityDefense/Antiair at 100 to survive siege. Science 100 and Nuke/UseNuke 100 are existential priorities - atomic weapons only hope against 13k German military. Production 100 for emergency unit production. Espionage 100 to maintain Florence alliance and protect Kyzyl. Reduced Diplomacy to 90 (lost Lisbon/Sokoto/Buenos Aires to German coups). Naval reduced to 70 (coastal cities threatened by Germany). Focus: Hold cities, survive until nuclear deterrent operational.
 
 **The Celts** · Turn 395 · Conquest
 
 > Brazil's cultural victory timer ticks down to 22 turns - EXISTENTIAL CRISIS. While our military flavors are optimal, UseNuke at 50 is insufficient. Increasing to 100 ensures immediate nuclear deployment upon completing Nuclear Fission, bypassing AI hesitation. Brazil's 11,878 military strength vs our 8,014 means conventional victory is uncertain. Nuclear weapons are our only guaranteed method to: 1) Break Brazil's capital defenses, 2) Destroy their cultural infrastructure, 3) Trigger war weariness to slow their victory progress. Every turn of delay brings Brazil closer to cultural dominance. When we complete Nuclear Fission after Advanced Ballistics, we must strike Brasilia and Rio de Janeiro immediately. Current flavors already prioritize offense (100), mobilization (100), and nuclear arsenal buildup (Nuke: 100) - this completes the strategic triad by ensuring actual deployment. Denmark's defensive pact will trigger when we attack, providing crucial distraction while we focus on Brazil's core cities. This is civilization's final hour - hesitation means defeat.
+
+**Brazil** · Turn 395 · Culture
+
+> Critical survival mode: Austrian military strength increased to 25,518 (6.8:1 ratio) with peace treaty expired. Reduced Offense to 0 to stop wasting resources on Polynesian war - need immediate consolidation. Maintained Defense/Mobilization/Nuke at maximum for existential defense. Increased Spaceship to 70 as backup victory path. Espionage at 100 to steal technologies from Austria. We have 7 turns to achieve Influential with Babylon for Cultural Victory while surviving Austrian onslaught. Nuclear deterrence is our only hope.
 
 **Spain** · Turn 403 · Conquest
 
@@ -111,6 +115,10 @@
 **Rome** · Turn 429 · Conquest
 
 > CRITICAL: Celts one wonder from cultural victory. Maintaining maximum offensive pressure (100) to finish Mongolia war (now Siam's vassal, making conflict more complex). Increased Science to 95 and added Spaceship flavor 90 to prepare for urgent Science victory backup plan. Nuke/UseNuke increased to 100 - nuclear weapons may be only way to stop Celts if ideology constraint lifts or war mechanism becomes available. Espionage remains at 100 to sabotage Citizen Earth Protocol construction (3 spies active in Celtic cities). Must balance immediate military needs with desperate race for alternative victory.
+
+**Babylon** · Turn 435 · Spaceship
+
+> TURN 435 CATASTROPHE - Sippar captured by Zulus! Existential crisis deepens. Zulus have 43/42 delegates needed for diplomatic victory with vote in 9 turns. Lasers completes in 6 turns, Spaceflight Pioneers in ~10. Maintaining absolute maximum Defense/CityDefense/Science/Production/Spaceship priorities. Increased UseNuke to 100 - if Zulus push further with their 74k military vs my 32k, nuclear deterrent may be only option to buy time. Lost Mechanized Infantry, Rocket Artillery, Mobile SAM, Special Forces, and Modern Armor in the fall of Sippar. Must hold remaining 5 cities while completing tech/policy for spaceship rush. Rome remains critical ally at 100/100.
 
 **Spain** · Turn 457 · Conquest
 

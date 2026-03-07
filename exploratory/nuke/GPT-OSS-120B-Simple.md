@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — GPT-OSS-120B-Simple
 
-2 / 125 players escalated `flavor_use_nuke` to 100 (1.6%).
+2 / 130 players escalated `flavor_use_nuke` to 100 (1.5%).
 
 ---
 

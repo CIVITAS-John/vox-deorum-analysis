@@ -274,7 +274,8 @@ def run_kfold_evaluation(
     phases: Optional[Dict[str, Tuple[float, float]]] = None,
     verbose: bool = True,
     save_importance_path: Optional[str] = None,
-    resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None
+    resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
+    full_data: bool = False
 ) -> Tuple[Dict, Optional[pd.DataFrame], List[BasePredictor]]:
     """
     Run full k-fold cross-validation evaluation for any BasePredictor model.
@@ -290,6 +291,7 @@ def run_kfold_evaluation(
         verbose: Print progress and results
         save_importance_path: Path to save feature importance CSV (if None, auto-saves)
         resample_method: Resampling method ('oversample', 'undersample', 'combined', or None)
+        full_data: If True, use all turn data (no phase filtering)
 
     Returns:
         Tuple of (metrics_summary, feature_importance, fitted_models)
@@ -314,7 +316,9 @@ def run_kfold_evaluation(
     )
 
     # Load and prepare data with appropriate phase filtering
-    if needs_full_data:
+    if full_data:
+        phase_filter = None
+    elif needs_full_data:
         # Filter after mid-game (50%+)
         phase_filter = (1, [0.5])
     else:
@@ -525,7 +529,8 @@ def run_full_prediction(
     random_state: int = 42,
     verbose: bool = True,
     save_predictions_path: Optional[str] = None,
-    resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None
+    resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
+    full_data: bool = False
 ) -> Tuple[BasePredictor, pd.DataFrame]:
     """
     Train model on full dataset and generate predictions for all turns.
@@ -542,6 +547,7 @@ def run_full_prediction(
         verbose: Print progress and results
         save_predictions_path: Path to save predictions CSV (if None, auto-generates)
         resample_method: Resampling method (typically None for full predictions)
+        full_data: If True, use all turn data (no phase filtering)
 
     Returns:
         Tuple of (fitted_model, predictions_df)
@@ -572,7 +578,9 @@ def run_full_prediction(
 
     # Load data with appropriate phase filtering
     # Always filter out score=0 for training
-    if needs_full_data:
+    if full_data:
+        df_train = load_turn_data(csv_path, filter_experiments, phase_filter=None, filter_zero_score=True)
+    elif needs_full_data:
         # Use all data for phase-aware models
         df_train = load_turn_data(csv_path, filter_experiments, phase_filter=None, filter_zero_score=True)
     else:

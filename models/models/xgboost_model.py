@@ -39,7 +39,7 @@ class XGBoostPredictor(BasePredictor):
     def __init__(
         self,
         include_features: Optional[List[str]] = None,
-        exclude_features: Optional[List[str]] = ['turn_progress'],
+        exclude_features: Optional[List[str]] = [],
         random_state: int = 42,
         n_estimators: int = 50,
         max_depth: int = 2,

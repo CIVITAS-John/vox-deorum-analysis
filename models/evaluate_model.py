@@ -116,6 +116,13 @@ Examples:
         help="Resampling method for class imbalance (default: none)"
     )
 
+    # Data filtering
+    parser.add_argument(
+        '--full-data',
+        action='store_true',
+        help="Use all turn data for training (no late-game filtering)"
+    )
+
     # Output arguments
     parser.add_argument(
         '--output-dir',
@@ -172,6 +179,7 @@ Examples:
         print(f"CV Splits:        {args.n_splits}")
         print(f"Random State:     {args.random_state}")
         print(f"Resampling:       {args.resample}")
+        print(f"Full Data:        {args.full_data}")
         print(f"Include Features: {include_features if include_features else 'all (default)'}")
         print(f"Exclude Features: {exclude_features if exclude_features else 'none'}")
         print(f"Output Directory: {output_path}")
@@ -199,7 +207,8 @@ Examples:
                 random_state=args.random_state,
                 verbose=not args.quiet,
                 save_predictions_path=predictions_save_path,
-                resample_method=resample_method
+                resample_method=resample_method,
+                full_data=args.full_data
             )
         except Exception as e:
             print(f"\nError during prediction: {e}", file=sys.stderr)
@@ -241,7 +250,8 @@ Examples:
                 random_state=args.random_state,
                 verbose=not args.quiet,
                 save_importance_path=importance_save_path,
-                resample_method=resample_method
+                resample_method=resample_method,
+                full_data=args.full_data
             )
         except Exception as e:
             print(f"\nError during evaluation: {e}", file=sys.stderr)
