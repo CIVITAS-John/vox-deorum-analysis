@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Briefed
 
-12 / 130 players escalated `flavor_use_nuke` to 100 (9.2%).
+12 / 131 players escalated `flavor_use_nuke` to 100 (9.2%).
 
 ---
 
