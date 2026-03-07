@@ -19,16 +19,19 @@ import pandas as pd
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torch.optim as optim
 
 from .base_predictor import BasePredictor
 
 
 @dataclass
-class _TrainGroup:
-    # One training example: all players at a (game_id, turn)
-    X: np.ndarray          # shape (n_players, n_features)
-    y_index: int           # winner index within this group
+class _BatchedGroups:
+    """Pre-padded tensors for vectorized training/inference."""
+    X: np.ndarray          # (n_groups, max_players, n_features)
+    y_indices: np.ndarray  # (n_groups,) winner index per group
+    mask: np.ndarray       # (n_groups, max_players) True for real players
+    n_groups: int
 
 
 class _UtilityNet(nn.Module):
@@ -120,17 +123,15 @@ class GroupedMLPPredictor(BasePredictor):
             return X
         return (X - self._mu) / self._sigma
 
-    def _build_groups(self, df: pd.DataFrame, y: pd.Series) -> List[_TrainGroup]:
+    def _build_groups(self, df: pd.DataFrame, y: pd.Series) -> _BatchedGroups:
         """
-        Convert row-wise data into grouped training samples.
+        Convert row-wise data into padded, batched tensors for vectorized training.
 
-        We assume y is row-wise is_winner (0/1). Winner for a game is fixed.
-        For each (game_id, turn), y_index is the index of the winner player in that group.
+        Returns _BatchedGroups with pre-padded arrays ready for GPU.
         """
         g_game, g_turn = self.group_cols
 
         # winner per game (player_id)
-        # We use y==1 rows to determine winner player_id for each game_id
         winner_map = (
             df.loc[y == 1, ["game_id", "player_id"]]
             .drop_duplicates()
@@ -138,7 +139,10 @@ class GroupedMLPPredictor(BasePredictor):
             .to_dict()
         )
 
-        groups: List[_TrainGroup] = []
+        # First pass: collect group data and determine max_players
+        group_data: List[Tuple[np.ndarray, int]] = []  # (X_group, winner_idx)
+        max_players = 0
+
         for (game_id, turn), gdf in df.groupby([g_game, g_turn], sort=False):
             if game_id not in winner_map:
                 continue
@@ -149,9 +153,24 @@ class GroupedMLPPredictor(BasePredictor):
 
             y_index = players.index(winner_pid)
             Xg = gdf[self.selected_features_].to_numpy(dtype=np.float32)
-            groups.append(_TrainGroup(X=Xg, y_index=y_index))
+            group_data.append((Xg, y_index))
+            max_players = max(max_players, len(players))
 
-        return groups
+        n_groups = len(group_data)
+        n_features = len(self.selected_features_)
+
+        # Second pass: pad into dense arrays
+        X_padded = np.zeros((n_groups, max_players, n_features), dtype=np.float32)
+        y_indices = np.zeros(n_groups, dtype=np.int64)
+        mask = np.zeros((n_groups, max_players), dtype=bool)
+
+        for i, (Xg, y_idx) in enumerate(group_data):
+            n_p = Xg.shape[0]
+            X_padded[i, :n_p, :] = Xg
+            y_indices[i] = y_idx
+            mask[i, :n_p] = True
+
+        return _BatchedGroups(X=X_padded, y_indices=y_indices, mask=mask, n_groups=n_groups)
 
     def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> "GroupedMLPPredictor":
         """
@@ -187,9 +206,9 @@ class GroupedMLPPredictor(BasePredictor):
         X_std = pd.DataFrame(Xmat, columns=self.selected_features_, index=X.index)
         X_std = pd.concat([X[["game_id", "turn", "player_id"]], X_std], axis=1)
 
-        # 3) Build grouped samples
-        train_groups = self._build_groups(X_std, y)
-        if len(train_groups) == 0:
+        # 3) Build grouped samples (padded tensors)
+        batched = self._build_groups(X_std, y)
+        if batched.n_groups == 0:
             raise ValueError("No valid (game_id, turn) groups constructed. Check your data.")
 
         # 4) Create model
@@ -207,37 +226,49 @@ class GroupedMLPPredictor(BasePredictor):
         else:
             print(f"[GroupedMLP] GPU not available, using CPU")
 
-        # 5) Train loop over groups (mini-batches of groups)
+        # Move padded data to device as tensors
+        X_all = torch.tensor(batched.X, dtype=torch.float32, device=self.device)     # (N, P, D)
+        y_all = torch.tensor(batched.y_indices, dtype=torch.long, device=self.device) # (N,)
+        mask_all = torch.tensor(batched.mask, device=self.device)                     # (N, P)
+        max_players = X_all.shape[1]
+
+        # 5) Vectorized train loop
         self.model.train()
         rng = np.random.default_rng(self.random_state)
+        n_batches = max(1, (batched.n_groups + self.batch_size_groups - 1) // self.batch_size_groups)
 
         for epoch in range(self.epochs):
-            idx = rng.permutation(len(train_groups))
+            idx = rng.permutation(batched.n_groups)
             total_loss = 0.0
 
-            for start in range(0, len(train_groups), self.batch_size_groups):
+            for start in range(0, batched.n_groups, self.batch_size_groups):
                 batch_idx = idx[start:start + self.batch_size_groups]
+                B = len(batch_idx)
+                batch_idx_t = torch.tensor(batch_idx, dtype=torch.long, device=self.device)
+
+                X_batch = X_all[batch_idx_t]     # (B, P, D)
+                y_batch = y_all[batch_idx_t]     # (B,)
+                mask_batch = mask_all[batch_idx_t]  # (B, P)
+
+                # Single forward pass: flatten players, then reshape
+                flat = X_batch.reshape(B * max_players, d)  # (B*P, D)
+                logits = self.model(flat).reshape(B, max_players)  # (B, P)
+
+                # Mask padded positions with -inf before cross-entropy
+                logits = logits.masked_fill(~mask_batch, float('-inf'))
+
                 opt.zero_grad()
-
-                batch_loss = 0.0
-                for k in batch_idx:
-                    g = train_groups[k]
-                    Xg = torch.tensor(g.X, dtype=torch.float32, device=self.device)
-                    logits = self.model(Xg)  # (n_players,)
-                    logp = logits - torch.logsumexp(logits, dim=0)
-                    batch_loss = batch_loss + (-logp[g.y_index])
-
-                batch_loss = batch_loss / max(1, len(batch_idx))
-                batch_loss.backward()
+                loss = F.cross_entropy(logits, y_batch)
+                loss.backward()
                 opt.step()
                 if 'xla' in str(self.device):
                     import torch_xla.core.xla_model as xm
                     xm.mark_step()
 
-                total_loss += float(batch_loss.detach().cpu().item())
+                total_loss += loss.detach().item()
 
-            total_loss /= max(1, len(range(0, len(train_groups), self.batch_size_groups)))
-            print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={len(train_groups)}")
+            total_loss /= n_batches
+            print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
 
         return self
 
@@ -264,16 +295,40 @@ class GroupedMLPPredictor(BasePredictor):
 
         probs = np.zeros(len(X), dtype=np.float32)
 
-        # group-wise softmax
-        # NOTE: assumes X has one row per player at the same (game_id, turn)
+        # Collect groups and their original indices
         gb = X.groupby(list(self.group_cols), sort=False)
+        group_indices: List[np.ndarray] = []
+        max_players = 0
+        for _, idx in gb.indices.items():
+            idx_arr = np.array(idx, dtype=np.int64)
+            group_indices.append(idx_arr)
+            max_players = max(max_players, len(idx_arr))
+
+        n_groups = len(group_indices)
+        n_features = Xmat.shape[1]
+
+        # Pad into batched arrays
+        X_padded = np.zeros((n_groups, max_players, n_features), dtype=np.float32)
+        mask = np.zeros((n_groups, max_players), dtype=bool)
+        for i, idx_arr in enumerate(group_indices):
+            n_p = len(idx_arr)
+            X_padded[i, :n_p, :] = Xmat[idx_arr]
+            mask[i, :n_p] = True
+
+        # Single batched forward pass
+        X_t = torch.tensor(X_padded, dtype=torch.float32, device=self.device)
+        mask_t = torch.tensor(mask, device=self.device)
+
         with torch.no_grad():
-            for _, idx in gb.indices.items():
-                idx = np.array(idx, dtype=np.int64)
-                Xg = torch.tensor(Xmat[idx], dtype=torch.float32, device=self.device)
-                logits = self.model(Xg)  # (n_players,)
-                pg = torch.softmax(logits, dim=0).detach().cpu().numpy()
-                probs[idx] = pg.astype(np.float32)
+            flat = X_t.reshape(n_groups * max_players, n_features)
+            logits = self.model(flat).reshape(n_groups, max_players)
+            logits = logits.masked_fill(~mask_t, float('-inf'))
+            pg = torch.softmax(logits, dim=1).cpu().numpy()  # (n_groups, max_players)
+
+        # Scatter probabilities back to original row positions
+        for i, idx_arr in enumerate(group_indices):
+            n_p = len(idx_arr)
+            probs[idx_arr] = pg[i, :n_p].astype(np.float32)
 
         return pd.Series(probs, index=X.index, name="p_win_group")
 
