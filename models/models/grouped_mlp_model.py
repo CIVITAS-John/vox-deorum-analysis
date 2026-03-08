@@ -350,10 +350,14 @@ class GroupedMLPPredictor(BasePredictor):
         p = self.predict_group_winrate(X)
         preds = np.zeros(len(X), dtype=np.int64)
 
-        for _, gdf in X.assign(_p=p.values).groupby(list(self.group_cols), sort=False):
-            idx = gdf.index.to_numpy()
-            winner_idx = gdf["_p"].values.argmax()
-            preds[np.where(X.index.values == idx[winner_idx])[0][0]] = 1
+        # Vectorized: find argmax within each group
+        winner_indices = p.groupby(
+            [X[c] for c in self.group_cols], sort=False
+        ).idxmax()
+
+        # Use index-based lookup for O(n) assignment
+        idx_to_pos = pd.Series(np.arange(len(X)), index=X.index)
+        preds[idx_to_pos[winner_indices].values] = 1
 
         return preds
 
