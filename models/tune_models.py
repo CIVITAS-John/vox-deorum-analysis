@@ -29,7 +29,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from utils.model_evaluator import run_kfold_evaluation
 from utils.model_registry import MODEL_REGISTRY
-from utils.data_utils import load_and_prepare_base_data
+from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data
 
 
 # ============================================================================
@@ -191,6 +191,7 @@ def create_objective(
     resample_method: Optional[str] = None,
     preloaded_df=None,
     full_data: bool = False,
+    precomputed_data=None,
 ):
     """Create an Optuna objective function for a given model."""
 
@@ -215,6 +216,7 @@ def create_objective(
                 resample_method=resample_method,
                 preloaded_df=preloaded_df,
                 full_data=full_data,
+                precomputed_data=precomputed_data,
             )
         except Exception as e:
             print(f"  Trial {trial.number} failed: {e}")
@@ -298,6 +300,7 @@ def tune_model(
     resample_method: Optional[str] = None,
     storage: Optional[str] = None,
     full_data: bool = False,
+    n_jobs: int = 1,
 ) -> 'optuna.Study':
     """Run Optuna hyperparameter tuning for a single model."""
 
@@ -310,13 +313,32 @@ def tune_model(
               f"Available: {', '.join(SEARCH_SPACES.keys())}", file=sys.stderr)
         sys.exit(1)
 
-    # Preload data once - shared across all trials and re-evaluation
+    # Preload data and precompute k-fold splits once - shared across all trials
     preloaded_df = load_and_prepare_base_data(csv_path)
+
+    model_class = MODEL_REGISTRY[model_name]
+    needs_full_data = (
+        (callable(model_class) and not isinstance(model_class, type)) or
+        model_class.__name__ == 'PhaseEnsemblePredictor' or
+        (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
+    )
+    if full_data:
+        phase_filter = None
+    elif needs_full_data:
+        phase_filter = (1, [0.5])
+    else:
+        phase_filter = (1, [0.8])
+
+    precomputed_data = load_and_prepare_data(
+        csv_path, n_splits=n_splits, random_state=random_state,
+        phase_filter=phase_filter, preloaded_df=preloaded_df,
+    )
 
     objective, minimize = create_objective(
         model_name, csv_path, metric, n_splits, random_state, resample_method,
         preloaded_df=preloaded_df,
         full_data=full_data,
+        precomputed_data=precomputed_data,
     )
 
     direction = 'minimize' if minimize else 'maximize'
@@ -345,7 +367,7 @@ def tune_model(
         print(f"Storage:    {storage}")
     print("=" * 80)
 
-    study.optimize(objective, n_jobs=2, n_trials=n_trials, show_progress_bar=True)
+    study.optimize(objective, n_jobs=n_jobs, n_trials=n_trials, show_progress_bar=True)
 
     # Re-evaluate best trial to get full metrics including train performance
     print("\n" + "=" * 80)
@@ -359,9 +381,6 @@ def tune_model(
         else:
             print(f"  {k}: {v}")
 
-    # Get model class from registry for re-evaluation
-    model_class = MODEL_REGISTRY[model_name]
-
     # Get full evaluation on best params to extract train metrics and overfitting gaps
     print(f"\nRe-evaluating best params to extract train metrics...")
     best_summary, _, _ = run_kfold_evaluation(
@@ -373,8 +392,7 @@ def tune_model(
         verbose=False,
         save_importance_path=None,
         resample_method=resample_method,
-        preloaded_df=preloaded_df,
-        full_data=full_data,
+        precomputed_data=precomputed_data,
     )
 
     # Print overfitting diagnostics
@@ -494,6 +512,10 @@ Examples:
         action='store_true',
         help="Use all turn data (no phase filtering)"
     )
+    parser.add_argument(
+        '--n-jobs', type=int, default=1,
+        help="Number of parallel Optuna jobs (default: 1)"
+    )
 
     args = parser.parse_args()
 
@@ -512,6 +534,7 @@ Examples:
             resample_method=resample_method,
             storage=args.storage,
             full_data=args.full_data,
+            n_jobs=args.n_jobs,
         )
         print()
 

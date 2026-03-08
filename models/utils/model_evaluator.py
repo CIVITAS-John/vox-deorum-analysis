@@ -276,7 +276,8 @@ def run_kfold_evaluation(
     save_importance_path: Optional[str] = None,
     resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
     full_data: bool = False,
-    preloaded_df: Optional[pd.DataFrame] = None
+    preloaded_df: Optional[pd.DataFrame] = None,
+    precomputed_data: Optional[Tuple[pd.DataFrame, pd.DataFrame, pd.Series, list]] = None
 ) -> Tuple[Dict, Optional[pd.DataFrame], List[BasePredictor]]:
     """
     Run full k-fold cross-validation evaluation for any BasePredictor model.
@@ -295,6 +296,8 @@ def run_kfold_evaluation(
         full_data: If True, use all turn data (no phase filtering)
         preloaded_df: Pre-processed DataFrame from load_and_prepare_base_data.
                       When provided, skips CSV loading and feature engineering.
+        precomputed_data: Tuple of (df, X, y, cv_splits) from a prior load_and_prepare_data call.
+                          When provided, skips all data loading and split generation entirely.
 
     Returns:
         Tuple of (metrics_summary, feature_importance, fitted_models)
@@ -311,27 +314,30 @@ def run_kfold_evaluation(
         else:
             print("Resampling Method: None (using original class distribution)")
 
-    # Check if model needs full game data
-    needs_full_data = (
-        (callable(model_class) and not isinstance(model_class, type)) or  # It's a factory function
-        model_class.__name__ == 'PhaseEnsemblePredictor' or
-        (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
-    )
-
-    # Load and prepare data with appropriate phase filtering
-    if full_data:
-        phase_filter = None
-    elif needs_full_data:
-        # Filter after mid-game (50%+)
-        phase_filter = (1, [0.5])
+    if precomputed_data is not None:
+        df, X, y, cv_splits = precomputed_data
     else:
-        # For non-phased models, filter to late game (80%+)
-        phase_filter = (1, [0.8])
+        # Check if model needs full game data
+        needs_full_data = (
+            (callable(model_class) and not isinstance(model_class, type)) or  # It's a factory function
+            model_class.__name__ == 'PhaseEnsemblePredictor' or
+            (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
+        )
 
-    df, X, y, cv_splits = load_and_prepare_data(
-        csv_path, filter_experiments, n_splits, random_state, phase_filter,
-        preloaded_df=preloaded_df
-    )
+        # Load and prepare data with appropriate phase filtering
+        if full_data:
+            phase_filter = None
+        elif needs_full_data:
+            # Filter after mid-game (50%+)
+            phase_filter = (1, [0.5])
+        else:
+            # For non-phased models, filter to late game (80%+)
+            phase_filter = (1, [0.8])
+
+        df, X, y, cv_splits = load_and_prepare_data(
+            csv_path, filter_experiments, n_splits, random_state, phase_filter,
+            preloaded_df=preloaded_df
+        )
 
     # Store results
     fold_metrics = []
