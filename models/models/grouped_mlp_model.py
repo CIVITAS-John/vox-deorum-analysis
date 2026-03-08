@@ -77,12 +77,12 @@ class GroupedMLPPredictor(BasePredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        layer_sizes: Tuple[int, ...] = (118,),
-        dropout: float = 0.46,
-        lr: float = 0.00032,
-        weight_decay: float = 0.0024,
-        epochs: int = 5,
-        batch_size_groups: int = 128,
+        layer_sizes: Tuple[int, ...] = (204,),
+        dropout: float = 0.237563,
+        lr: float = 0.0026367,
+        weight_decay: float = 1.68821e-05,
+        epochs: int = 3,
+        batch_size_groups: int = 1024,
         device: Optional[str] = None,
     ):
         super().__init__(include_features, exclude_features, random_state)

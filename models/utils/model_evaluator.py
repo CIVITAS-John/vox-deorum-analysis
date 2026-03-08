@@ -497,7 +497,7 @@ def run_kfold_evaluation(
         if save_importance_path is None:
             # Auto-generate filename based on model class name
             model_name = model_class.__name__.lower().replace('predictor', '').replace('victory', '')
-            save_importance_path = f"{model_name}_feature_importance.csv"
+            save_importance_path = f"output/{model_name}_feature_importance.csv"
 
         feature_importance.to_csv(save_importance_path, index=False)
         if verbose:

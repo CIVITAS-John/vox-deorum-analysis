@@ -178,6 +178,41 @@ SEARCH_SPACES = {
 }
 
 
+def convert_best_params(model_name: str, best_params: Dict) -> Dict:
+    """Convert raw Optuna best_params to model kwargs.
+
+    Optuna stores intermediate trial parameters (e.g. n_layers, layer_size)
+    that the suggest functions convert into derived parameters (e.g. layer_sizes).
+    This function applies the same conversion so best_params can be passed
+    directly to model constructors.
+    """
+    params = dict(best_params)
+
+    if model_name in ('mlp', 'grouped_mlp'):
+        n_layers = params.pop('n_layers', None)
+        layer_size = params.pop('layer_size', None)
+
+        if n_layers is not None and layer_size is not None:
+            if n_layers == 0:
+                sizes = ()
+            elif n_layers == 1:
+                sizes = (layer_size,)
+            elif n_layers == 2:
+                sizes = (layer_size, max(8, layer_size // 2))
+            else:
+                sizes = (layer_size, max(8, layer_size // 2), max(8, layer_size // 4))
+
+            if model_name == 'mlp':
+                params['hidden_layer_sizes'] = sizes
+            else:
+                params['layer_sizes'] = sizes
+
+    if model_name == 'mlp' and params.get('solver') == 'lbfgs':
+        params['early_stopping'] = False
+
+    return params
+
+
 # ============================================================================
 # Objective function
 # ============================================================================
@@ -383,9 +418,10 @@ def tune_model(
 
     # Get full evaluation on best params to extract train metrics and overfitting gaps
     print(f"\nRe-evaluating best params to extract train metrics...")
+    best_model_kwargs = convert_best_params(model_name, study.best_params)
     best_summary, _, _ = run_kfold_evaluation(
         model_class=model_class,
-        model_kwargs=study.best_params,
+        model_kwargs=best_model_kwargs,
         csv_path=csv_path,
         n_splits=n_splits,
         random_state=random_state,
