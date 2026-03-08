@@ -35,23 +35,53 @@ class _BatchedGroups:
 
 
 class _UtilityNet(nn.Module):
-    """Simple MLP that maps features -> scalar utility."""
+    """Residual MLP that maps features -> scalar utility.
+
+    Architecture by depth:
+    - 0 layers: Linear(d_in, 1) — pure linear scoring
+    - 1 layer:  Linear → GELU → Dropout → Linear — single hidden layer
+    - 2+ layers: Linear projection → N residual blocks → LayerNorm → Linear
+                 Each block: LayerNorm → Linear → GELU → Dropout + skip connection
+    """
     def __init__(self, d_in: int, layer_sizes: Tuple[int, ...] = (64,), dropout: float = 0.0):
         super().__init__()
         if len(layer_sizes) == 0:
+            # Linear: features → scalar directly
             self.net = nn.Linear(d_in, 1)
+        elif len(layer_sizes) == 1:
+            # Single hidden layer (no skip connection needed)
+            self.net = nn.Sequential(
+                nn.Linear(d_in, layer_sizes[0]),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Linear(layer_sizes[0], 1),
+            )
         else:
-            layers: list[nn.Module] = []
-            prev = d_in
-            for size in layer_sizes:
-                layers.extend([nn.Linear(prev, size), nn.ReLU(), nn.Dropout(dropout)])
-                prev = size
-            layers.append(nn.Linear(prev, 1))
-            self.net = nn.Sequential(*layers)
+            # Deep residual: project → N residual blocks → output
+            hidden = layer_sizes[0]  # constant width
+            self.proj = nn.Linear(d_in, hidden)
+            self.blocks = nn.ModuleList()
+            for _ in layer_sizes:
+                self.blocks.append(nn.Sequential(
+                    nn.LayerNorm(hidden),
+                    nn.Linear(hidden, hidden),
+                    nn.GELU(),
+                    nn.Dropout(dropout),
+                ))
+            self.norm_out = nn.LayerNorm(hidden)
+            self.head = nn.Linear(hidden, 1)
+            self.net = None  # flag for forward()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: (n_players, d_in) -> (n_players,)
-        return self.net(x).squeeze(-1)
+        if self.net is not None:
+            return self.net(x).squeeze(-1)
+        # Residual path
+        x = self.proj(x)
+        for block in self.blocks:
+            x = x + block(x)
+        x = self.norm_out(x)
+        return self.head(x).squeeze(-1)
 
 
 class GroupedMLPPredictor(BasePredictor):
@@ -395,10 +425,13 @@ class GroupedMLPPredictor(BasePredictor):
             # Linear utility: self.model.net is nn.Linear(d_in, 1)
             weights = self.model.net.weight.detach().cpu().numpy()  # shape: (1, d_in)
             importances = np.abs(weights).flatten()  # shape: (d_in,)
-        else:
-            # MLP utility: self.model.net[0] is first nn.Linear layer
+        elif len(self.layer_sizes) == 1:
+            # Single hidden layer: self.model.net[0] is first nn.Linear layer
             weights = self.model.net[0].weight.detach().cpu().numpy()  # shape: (layer_sizes[0], d_in)
-            # Average absolute weight across hidden units
+            importances = np.abs(weights).mean(axis=0)  # shape: (d_in,)
+        else:
+            # Deep residual: self.model.proj is the input projection layer
+            weights = self.model.proj.weight.detach().cpu().numpy()  # shape: (hidden, d_in)
             importances = np.abs(weights).mean(axis=0)  # shape: (d_in,)
 
         # Create DataFrame matching expected format
