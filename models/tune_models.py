@@ -163,7 +163,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 3, 20),
         'batch_size_groups': trial.suggest_categorical(
-            'batch_size_groups', [128, 256, 512, 1024]
+            'batch_size_groups', [512, 1024, 2048, 4096]
         ),
     }
 

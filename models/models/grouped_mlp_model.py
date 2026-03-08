@@ -242,17 +242,18 @@ class GroupedMLPPredictor(BasePredictor):
 
         # 5) Vectorized train loop
         self.model.train()
-        rng = np.random.default_rng(self.random_state)
+        gen = torch.Generator(device='cpu')
+        gen.manual_seed(self.random_state)
         n_batches = max(1, (batched.n_groups + self.batch_size_groups - 1) // self.batch_size_groups)
+        is_xla = 'xla' in str(self.device)
 
         for epoch in range(self.epochs):
-            idx = rng.permutation(batched.n_groups)
-            total_loss = 0.0
+            idx = torch.randperm(batched.n_groups, generator=gen, device=self.device)
+            total_loss_t = torch.zeros(1, device=self.device)
 
             for start in range(0, batched.n_groups, self.batch_size_groups):
-                batch_idx = idx[start:start + self.batch_size_groups]
-                B = len(batch_idx)
-                batch_idx_t = torch.tensor(batch_idx, dtype=torch.long, device=self.device)
+                batch_idx_t = idx[start:start + self.batch_size_groups]
+                B = batch_idx_t.shape[0]
 
                 X_batch = X_all[batch_idx_t]     # (B, P, D)
                 y_batch = y_all[batch_idx_t]     # (B,)
@@ -269,13 +270,13 @@ class GroupedMLPPredictor(BasePredictor):
                 loss = F.cross_entropy(logits, y_batch)
                 loss.backward()
                 opt.step()
-                if 'xla' in str(self.device):
+                if is_xla:
                     import torch_xla.core.xla_model as xm
                     xm.mark_step()
 
-                total_loss += loss.detach().item()
+                total_loss_t += loss.detach()
 
-            total_loss /= n_batches
+            total_loss = (total_loss_t.item()) / n_batches
             print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
 
         return self
