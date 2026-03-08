@@ -127,48 +127,56 @@ class GroupedMLPPredictor(BasePredictor):
         """
         Convert row-wise data into padded, batched tensors for vectorized training.
 
+        Uses vectorized pandas/numpy ops instead of Python for-loops.
         Returns _BatchedGroups with pre-padded arrays ready for GPU.
         """
         g_game, g_turn = self.group_cols
 
-        # winner per game (player_id)
+        # Vectorized winner mapping
         winner_map = (
             df.loc[y == 1, ["game_id", "player_id"]]
             .drop_duplicates()
             .set_index("game_id")["player_id"]
-            .to_dict()
         )
+        df = df.copy()
+        df["_winner_pid"] = df["game_id"].map(winner_map)
 
-        # First pass: collect group data and determine max_players
-        group_data: List[Tuple[np.ndarray, int]] = []  # (X_group, winner_idx)
-        max_players = 0
+        # Drop rows where no winner is known for that game
+        df = df.dropna(subset=["_winner_pid"])
 
-        for (game_id, turn), gdf in df.groupby([g_game, g_turn], sort=False):
-            if game_id not in winner_map:
-                continue
-            winner_pid = winner_map[game_id]
-            players = gdf["player_id"].tolist()
-            if winner_pid not in players:
-                continue
+        # Group IDs and within-group position
+        grp = df.groupby([g_game, g_turn], sort=False)
+        df["_gid"] = grp.ngroup()
+        df["_pos"] = grp.cumcount()
+        df["_is_winner"] = (df["player_id"] == df["_winner_pid"]).astype(int)
 
-            y_index = players.index(winner_pid)
-            Xg = gdf[self.selected_features_].to_numpy(dtype=np.float32)
-            group_data.append((Xg, y_index))
-            max_players = max(max_players, len(players))
+        # Filter to groups that contain the winner
+        valid_gids = df.loc[df["_is_winner"] == 1, "_gid"].unique()
+        df = df[df["_gid"].isin(valid_gids)]
 
-        n_groups = len(group_data)
+        # Re-number groups contiguously after filtering
+        unique_gids = df["_gid"].unique()
+        gid_remap = pd.Series(np.arange(len(unique_gids)), index=unique_gids)
+        df["_gid"] = df["_gid"].map(gid_remap)
+
+        n_groups = len(unique_gids)
+        max_players = int(df["_pos"].max()) + 1
         n_features = len(self.selected_features_)
 
-        # Second pass: pad into dense arrays
-        X_padded = np.zeros((n_groups, max_players, n_features), dtype=np.float32)
-        y_indices = np.zeros(n_groups, dtype=np.int64)
-        mask = np.zeros((n_groups, max_players), dtype=bool)
+        # Direct array fill using fancy indexing (no Python loop)
+        gids = df["_gid"].values
+        pos = df["_pos"].values
 
-        for i, (Xg, y_idx) in enumerate(group_data):
-            n_p = Xg.shape[0]
-            X_padded[i, :n_p, :] = Xg
-            y_indices[i] = y_idx
-            mask[i, :n_p] = True
+        X_padded = np.zeros((n_groups, max_players, n_features), dtype=np.float32)
+        X_padded[gids, pos, :] = df[self.selected_features_].to_numpy(dtype=np.float32)
+
+        mask = np.zeros((n_groups, max_players), dtype=bool)
+        mask[gids, pos] = True
+
+        # Winner index per group
+        y_indices = np.zeros(n_groups, dtype=np.int64)
+        winner_df = df[df["_is_winner"] == 1]
+        y_indices[winner_df["_gid"].values] = winner_df["_pos"].values
 
         return _BatchedGroups(X=X_padded, y_indices=y_indices, mask=mask, n_groups=n_groups)
 
@@ -293,27 +301,20 @@ class GroupedMLPPredictor(BasePredictor):
         Xmat = X[self.selected_features_].to_numpy(dtype=np.float32)
         Xmat = self._standardize_apply(Xmat)
 
-        probs = np.zeros(len(X), dtype=np.float32)
-
-        # Collect groups and their original indices
-        gb = X.groupby(list(self.group_cols), sort=False)
-        group_indices: List[np.ndarray] = []
-        max_players = 0
-        for _, idx in gb.indices.items():
-            idx_arr = np.array(idx, dtype=np.int64)
-            group_indices.append(idx_arr)
-            max_players = max(max_players, len(idx_arr))
-
-        n_groups = len(group_indices)
         n_features = Xmat.shape[1]
 
-        # Pad into batched arrays
+        # Vectorized group indexing (no Python loop)
+        gb = X.groupby(list(self.group_cols), sort=False)
+        gids = gb.ngroup().values
+        pos = gb.cumcount().values
+        n_groups = gids.max() + 1
+        max_players = pos.max() + 1
+
+        # Direct array fill using fancy indexing
         X_padded = np.zeros((n_groups, max_players, n_features), dtype=np.float32)
+        X_padded[gids, pos, :] = Xmat
         mask = np.zeros((n_groups, max_players), dtype=bool)
-        for i, idx_arr in enumerate(group_indices):
-            n_p = len(idx_arr)
-            X_padded[i, :n_p, :] = Xmat[idx_arr]
-            mask[i, :n_p] = True
+        mask[gids, pos] = True
 
         # Single batched forward pass
         X_t = torch.tensor(X_padded, dtype=torch.float32, device=self.device)
@@ -325,10 +326,8 @@ class GroupedMLPPredictor(BasePredictor):
             logits = logits.masked_fill(~mask_t, float('-inf'))
             pg = torch.softmax(logits, dim=1).cpu().numpy()  # (n_groups, max_players)
 
-        # Scatter probabilities back to original row positions
-        for i, idx_arr in enumerate(group_indices):
-            n_p = len(idx_arr)
-            probs[idx_arr] = pg[i, :n_p].astype(np.float32)
+        # Scatter probabilities back using fancy indexing (no loop)
+        probs = pg[gids, pos].astype(np.float32)
 
         return pd.Series(probs, index=X.index, name="p_win_group")
 
