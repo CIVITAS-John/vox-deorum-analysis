@@ -1,252 +1,206 @@
 #!/usr/bin/env python3
 """
 Multi-Layer Perceptron (MLP) neural network for victory prediction.
-Uses sklearn's MLPClassifier with binary cross-entropy loss.
-Supports optional post-hoc probability calibration via CalibratedClassifierCV.
+Uses PyTorch with GPU support. Same _UtilityNet architecture as grouped MLP,
+but with standard per-sample binary cross-entropy loss (no grouping).
 """
+
+from __future__ import annotations
+
+from typing import Optional, List
 
 import numpy as np
 import pandas as pd
-from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.calibration import CalibratedClassifierCV
-from sklearn.pipeline import Pipeline
-from typing import Optional, List
-import sys
-from pathlib import Path
 
-# Add parent directory for imports
+import torch
+import torch.nn.functional as F
+import torch.optim as optim
+
 from .base_predictor import BasePredictor
+from .grouped_mlp_model import _UtilityNet
 
 
 class MLPPredictor(BasePredictor):
     """
-    Multi-layer perceptron neural network for victory prediction.
-    Supports optional probability calibration via CalibratedClassifierCV.
+    PyTorch MLP for victory prediction with GPU support.
+    Uses the same residual _UtilityNet architecture as GroupedMLPPredictor,
+    but trains with standard binary cross-entropy on individual samples.
     """
 
-    # All numeric features are supported
     SUPPORTED_FEATURES = None
     DEFAULT_FEATURES = None
     REQUIRED_FEATURES = None
+    DISABLE_RESAMPLING = True
 
     def __init__(
         self,
         include_features: Optional[List[str]] = None,
         exclude_features: Optional[List[str]] = [],
         random_state: int = 42,
-        hidden_layer_sizes: tuple = (73),
-        activation: str = 'relu',
-        alpha: float = 0.8368,  # L2 regularization
-        learning_rate_init: float = 0.00526,
-        max_iter: int = 1000,
-        early_stopping: bool = True,
-        validation_fraction: float = 0.1,
-        solver: str = 'adam',
-        batch_size: str = 1000,
-        calibrate: bool = False,
-        calibration_method: str = 'sigmoid'
+        layer_sizes: tuple = (37,37,37,37,37),
+        dropout: float = 0.16252,
+        lr: float = 0.0011902182870517162,
+        weight_decay: float = 0.0015973991305265407,
+        epochs: int = 8,
+        batch_size: int = 4096,
+        device: Optional[str] = None,
     ):
-        """
-        Initialize MLP predictor.
-
-        Args:
-            include_features: Explicit list of features to include (None = all)
-            exclude_features: List of features to exclude
-            random_state: Random seed for reproducibility
-            hidden_layer_sizes: Tuple of hidden layer sizes (e.g., (64, 32) = 2 layers)
-            activation: Activation function ('relu', 'tanh', 'logistic')
-            alpha: L2 regularization parameter
-            learning_rate_init: Initial learning rate
-            max_iter: Maximum number of training iterations
-            early_stopping: Whether to use early stopping
-            validation_fraction: Fraction of training data for validation (if early_stopping=True)
-            solver: Weight optimization solver ('adam', 'lbfgs', 'sgd')
-            batch_size: Size of minibatches ('auto' or int)
-            calibrate: Whether to apply post-hoc probability calibration
-            calibration_method: 'isotonic' or 'sigmoid' (Platt scaling)
-        """
         super().__init__(include_features, exclude_features, random_state)
 
-        self.hidden_layer_sizes = hidden_layer_sizes
-        self.activation = activation
-        self.alpha = alpha
-        self.learning_rate_init = learning_rate_init
-        self.max_iter = max_iter
-        self.early_stopping = early_stopping
-        self.validation_fraction = validation_fraction
-        self.solver = solver
+        self.layer_sizes = layer_sizes
+        self.dropout = dropout
+        self.lr = lr
+        self.weight_decay = weight_decay
+        self.epochs = epochs
         self.batch_size = batch_size
-        self.calibrate = calibrate
-        self.calibration_method = calibration_method
-        self.model = None
-        self.scaler = StandardScaler()
-        self.feature_names = None
+
+        if device:
+            self.device = device
+        else:
+            try:
+                import torch_xla.core.xla_model as xm
+                self.device = xm.xla_device()
+            except (ImportError, RuntimeError):
+                self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        self.model: Optional[_UtilityNet] = None
+        self.feature_names: Optional[List[str]] = None
+        self._mu: Optional[np.ndarray] = None
+        self._sigma: Optional[np.ndarray] = None
+
+    def _standardize_fit(self, X: np.ndarray) -> np.ndarray:
+        self._mu = X.mean(axis=0)
+        self._sigma = X.std(axis=0)
+        self._sigma[self._sigma == 0] = 1.0
+        return (X - self._mu) / self._sigma
+
+    def _standardize_apply(self, X: np.ndarray) -> np.ndarray:
+        if self._mu is None or self._sigma is None:
+            return X
+        return (X - self._mu) / self._sigma
 
     def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'MLPPredictor':
-        """
-        Fit MLP on training data.
-
-        Note: MLP doesn't use cluster information directly,
-        but the clusters parameter is kept for API compatibility.
-
-        Args:
-            X: Feature matrix
-            y: Target vector (is_winner)
-            clusters: Cluster IDs (not used by MLP)
-
-        Returns:
-            Self for chaining
-        """
-        # Apply feature filtering
+        # Filter features
         X_filtered = self._filter_features(X)
         self.feature_names = list(X_filtered.columns)
 
-        # Standardize features (critical for neural networks)
-        X_scaled = self.scaler.fit_transform(X_filtered)
+        # Standardize
+        Xmat = X_filtered.to_numpy(dtype=np.float32)
+        Xmat = self._standardize_fit(Xmat)
+        ymat = y.to_numpy(dtype=np.float32)
 
-        # Initialize base MLP model
-        # Note: MLPClassifier does NOT have a class_weight parameter.
-        # For class imbalance handling, use resampling or post-hoc calibration.
-        base_model = MLPClassifier(
-            hidden_layer_sizes=self.hidden_layer_sizes,
-            activation=self.activation,
-            alpha=self.alpha,
-            learning_rate_init=self.learning_rate_init,
-            max_iter=self.max_iter,
-            early_stopping=self.early_stopping,
-            validation_fraction=self.validation_fraction,
-            solver=self.solver,
-            batch_size=self.batch_size,
-            random_state=self.random_state,
-        )
+        d = Xmat.shape[1]
+        n = Xmat.shape[0]
 
-        # Apply calibration if requested
-        if self.calibrate:
-            self.model = CalibratedClassifierCV(
-                base_model,
-                method=self.calibration_method,
-                cv=5,
-                n_jobs=-1
-            )
+        # Create model
+        self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        opt = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+
+        # Log device
+        print(f"[MLP] Training on device: {self.device}")
+        if 'xla' in str(self.device):
+            print(f"[MLP] TPU available via torch_xla")
+        elif torch.cuda.is_available():
+            print(f"[MLP] GPU available: {torch.cuda.get_device_name(0)}")
         else:
-            self.model = base_model
+            print(f"[MLP] GPU not available, using CPU")
 
-        # Fit the model
-        self.model.fit(X_scaled, y)
+        # Move data to device
+        X_all = torch.tensor(Xmat, dtype=torch.float32, device=self.device)
+        y_all = torch.tensor(ymat, dtype=torch.float32, device=self.device)
+
+        # Train loop
+        self.model.train()
+        is_xla = 'xla' in str(self.device)
+        gen_device = 'cpu' if is_xla or not torch.cuda.is_available() else self.device
+        gen = torch.Generator(device=gen_device)
+        gen.manual_seed(self.random_state)
+        n_batches = max(1, (n + self.batch_size - 1) // self.batch_size)
+
+        for epoch in range(self.epochs):
+            idx = torch.randperm(n, generator=gen, device=self.device)
+            total_loss_t = torch.zeros(1, device=self.device)
+
+            for start in range(0, n, self.batch_size):
+                batch_idx = idx[start:start + self.batch_size]
+
+                X_batch = X_all[batch_idx]  # (B, D)
+                y_batch = y_all[batch_idx]  # (B,)
+
+                logits = self.model(X_batch)  # (B,)
+
+                opt.zero_grad()
+                loss = F.binary_cross_entropy_with_logits(logits, y_batch)
+                loss.backward()
+                opt.step()
+                if is_xla:
+                    import torch_xla.core.xla_model as xm
+                    xm.mark_step()
+
+                total_loss_t += loss.detach()
+
+            total_loss = total_loss_t.item() / n_batches
+            print(f"[MLP] epoch={epoch} loss={total_loss:.4f} samples={n}")
 
         return self
 
     def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
-        """
-        Predict victory probabilities.
-
-        Args:
-            X: Feature matrix
-
-        Returns:
-            Array of shape (n_samples, 2) with [P(loss), P(win)]
-        """
         if self.model is None:
             raise ValueError("Model must be fitted before making predictions")
-
-        # Use selected features from training
         if self.selected_features_ is None:
             raise ValueError("Model was not properly fitted (selected_features_ is None)")
 
         X_filtered = X[self.selected_features_]
-        X_scaled = self.scaler.transform(X_filtered)
+        Xmat = X_filtered.to_numpy(dtype=np.float32)
+        Xmat = self._standardize_apply(Xmat)
 
-        return self.model.predict_proba(X_scaled)
+        self.model.eval()
+        X_t = torch.tensor(Xmat, dtype=torch.float32, device=self.device)
+
+        with torch.no_grad():
+            logits = self.model(X_t)  # (N,)
+            p_win = torch.sigmoid(logits).cpu().numpy()
+
+        return np.column_stack([1.0 - p_win, p_win])
 
     def predict(self, X: pd.DataFrame) -> np.ndarray:
-        """
-        Predict binary outcomes (0 or 1).
-
-        Args:
-            X: Feature matrix
-
-        Returns:
-            Binary predictions (0 = loss, 1 = win)
-        """
-        if self.model is None:
-            raise ValueError("Model must be fitted before making predictions")
-
-        X_filtered = X[self.selected_features_]
-        X_scaled = self.scaler.transform(X_filtered)
-        return self.model.predict(X_scaled)
+        proba = self.predict_proba(X)
+        return (proba[:, 1] >= 0.5).astype(np.int64)
 
     def get_feature_importance(self) -> Optional[pd.DataFrame]:
-        """
-        Get feature importance based on input layer weights.
-
-        Returns average absolute weight from input to first hidden layer.
-        This is a rough approximation - neural networks don't have clear feature importance.
-
-        Returns:
-            DataFrame with features ranked by importance (approximate)
-        """
         if self.model is None:
             raise ValueError("Model must be fitted before getting feature importance")
 
-        if self.calibrate:
-            # CalibratedClassifierCV has multiple base estimators (one per CV fold)
-            # Average importance across all folds
-            importances_list = []
-            for calibrated_classifier in self.model.calibrated_classifiers_:
-                base_estimator = calibrated_classifier.estimator
-                input_weights = base_estimator.coefs_[0]
-                importances_list.append(np.abs(input_weights).mean(axis=1))
-            importances = np.mean(importances_list, axis=0)
+        if len(self.layer_sizes) == 0:
+            weights = self.model.net.weight.detach().cpu().numpy()
+            importances = np.abs(weights).flatten()
+        elif len(self.layer_sizes) == 1:
+            weights = self.model.net[0].weight.detach().cpu().numpy()
+            importances = np.abs(weights).mean(axis=0)
         else:
-            # Get weights from input layer to first hidden layer
-            input_weights = self.model.coefs_[0]  # Shape: (n_features, first_hidden_size)
-            # Average absolute weight across all neurons in first hidden layer
-            importances = np.abs(input_weights).mean(axis=1)
+            weights = self.model.proj.weight.detach().cpu().numpy()
+            importances = np.abs(weights).mean(axis=0)
 
         importance_df = pd.DataFrame({
             'feature': self.feature_names,
             'coefficient': importances,
             'abs_coefficient': np.abs(importances)
         })
-
-        # Sort by importance (descending)
         importance_df = importance_df.sort_values('abs_coefficient', ascending=False)
-
         return importance_df
 
     def get_model_summary(self) -> dict:
-        """
-        Get summary statistics about the fitted model.
-
-        Returns:
-            Dictionary with model metadata
-        """
         if self.model is None:
             raise ValueError("Model must be fitted before getting summary")
-
-        # Get n_iter and loss from base model (may be wrapped in calibrator)
-        if self.calibrate:
-            base = self.model.calibrated_classifiers_[0].estimator
-        else:
-            base = self.model
-
         return {
-            'model_type': 'MLPClassifier' + (' (Calibrated)' if self.calibrate else ''),
-            'hidden_layer_sizes': self.hidden_layer_sizes,
-            'activation': self.activation,
-            'alpha': self.alpha,
-            'learning_rate_init': self.learning_rate_init,
-            'max_iter': self.max_iter,
-            'early_stopping': self.early_stopping,
-            'solver': self.solver,
-            'batch_size': self.batch_size,
-            'calibrated': self.calibrate,
-            'calibration_method': self.calibration_method if self.calibrate else None,
-            'n_iter': base.n_iter_ if hasattr(base, 'n_iter_') else None,
-            'loss': base.loss_ if hasattr(base, 'loss_') else None,
-            'n_features': len(self.feature_names) if self.feature_names else 0,
+            'model_type': 'MLP (PyTorch)',
+            'n_features': len(self.feature_names or []),
             'feature_names': self.feature_names,
-            'n_layers': base.n_layers_ if hasattr(base, 'n_layers_') else None,
-            'n_outputs': base.n_outputs_ if hasattr(base, 'n_outputs_') else None
+            'layer_sizes': self.layer_sizes,
+            'dropout': self.dropout,
+            'lr': self.lr,
+            'weight_decay': self.weight_decay,
+            'epochs': self.epochs,
+            'batch_size': self.batch_size,
+            'device': str(self.device),
         }

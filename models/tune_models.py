@@ -97,47 +97,26 @@ def suggest_random_forest_params(trial: 'optuna.Trial') -> Dict:
 
 
 def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
-    """Define MLP hyperparameter search space."""
-    n_layers = trial.suggest_int('n_layers', 1, 3)
-    layer_size = trial.suggest_int('layer_size', 8, 128)
+    """Define MLP hyperparameter search space (PyTorch, GPU-enabled).
 
-    # Build hidden_layer_sizes tuple with decreasing sizes
-    if n_layers == 1:
-        hidden = (layer_size,)
-    elif n_layers == 2:
-        hidden = (layer_size, max(8, layer_size // 2))
-    else:
-        hidden = (layer_size, max(8, layer_size // 2), max(8, layer_size // 4))
+    Uses constant-width layers (same architecture as grouped MLP).
+    """
+    n_layers = trial.suggest_int('n_layers', 0, 10)
+    layer_size = trial.suggest_int('layer_size', 32, 256)
+
+    # Constant width for all layers (residual connections require matching dims)
+    layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
 
     params = {
-        'hidden_layer_sizes': hidden,
-        'activation': trial.suggest_categorical('activation', ['relu', 'logistic']),
-        'alpha': trial.suggest_float('alpha', 1e-5, 10.0, log=True),
-        'learning_rate_init': trial.suggest_float('learning_rate_init', 1e-5, 0.01, log=True),
-        'solver': trial.suggest_categorical('solver', ['adam', 'lbfgs']),
-        'max_iter': trial.suggest_int('max_iter', 1000, 4000),
-        'early_stopping': trial.suggest_categorical('early_stopping', [True, False]),
-        'validation_fraction': 0.1,
+        'layer_sizes': layer_sizes,
+        'dropout': trial.suggest_float('dropout', 0.0, 0.5),
+        'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
+        'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
+        'epochs': trial.suggest_int('epochs', 3, 30),
+        'batch_size': trial.suggest_categorical(
+            'batch_size', [2048, 4096, 8192, 16384]
+        ),
     }
-
-    params['batch_size'] = 'auto'
-
-    # lbfgs doesn't support early_stopping
-    if params['solver'] == 'lbfgs':
-        params['early_stopping'] = False
-
-    calibrate = trial.suggest_categorical('calibrate', [True, False])
-    params['calibrate'] = calibrate
-    if calibrate:
-        params['calibration_method'] = trial.suggest_categorical(
-            'calibration_method', ['isotonic', 'sigmoid']
-        )
-    else:
-        params['calibration_method'] = 'sigmoid'
-
-    exclude_turn = trial.suggest_categorical('exclude_turn_progress', [True, False])
-    if exclude_turn:
-        params['exclude_features'] = ['turn_progress']
 
     return params
 
@@ -191,27 +170,9 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
         layer_size = params.pop('layer_size', None)
 
         if n_layers is not None and layer_size is not None:
-            if model_name == 'grouped_mlp':
-                # Constant width for residual architecture
-                sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
-            else:
-                # MLP (sklearn): tapering widths
-                if n_layers == 0:
-                    sizes = ()
-                elif n_layers == 1:
-                    sizes = (layer_size,)
-                elif n_layers == 2:
-                    sizes = (layer_size, max(8, layer_size // 2))
-                else:
-                    sizes = (layer_size, max(8, layer_size // 2), max(8, layer_size // 4))
-
-            if model_name == 'mlp':
-                params['hidden_layer_sizes'] = sizes
-            else:
-                params['layer_sizes'] = sizes
-
-    if model_name == 'mlp' and params.get('solver') == 'lbfgs':
-        params['early_stopping'] = False
+            # Both MLP and grouped MLP use constant-width residual architecture
+            sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
+            params['layer_sizes'] = sizes
 
     return params
 

@@ -32,12 +32,7 @@ except ImportError:
     HAS_LIGHTGBM = False
     LightGBMPredictor = None
 
-try:
-    from models.mlp_model import MLPPredictor
-    HAS_MLP = True
-except ImportError:
-    HAS_MLP = False
-    MLPPredictor = None
+from models.mlp_model import MLPPredictor
 
 # Phase ensemble model
 from models.phase_ensemble_model import PhaseEnsemblePredictor
@@ -58,8 +53,7 @@ if HAS_XGBOOST:
 if HAS_LIGHTGBM:
     MODEL_REGISTRY['lightgbm'] = LightGBMPredictor
 
-if HAS_MLP:
-    MODEL_REGISTRY['mlp'] = MLPPredictor
+MODEL_REGISTRY['mlp'] = MLPPredictor
 
 def create_phase_ensemble(base_model_name: str, **default_ensemble_params):
     """
@@ -94,7 +88,7 @@ def create_phase_ensemble(base_model_name: str, **default_ensemble_params):
 
 
 # Register phase ensemble variants for all base models
-for base_name in ['baseline', 'random_forest', 'grouped_mlp', 'naive', 'xgboost']:
+for base_name in ['baseline', 'random_forest', 'grouped_mlp', 'mlp', 'naive', 'xgboost']:
     MODEL_REGISTRY[f'phase_{base_name}'] = create_phase_ensemble(base_name)
 
 
