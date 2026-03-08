@@ -242,11 +242,11 @@ class GroupedMLPPredictor(BasePredictor):
 
         # 5) Vectorized train loop
         self.model.train()
+        is_xla = 'xla' in str(self.device)
         gen_device = 'cpu' if is_xla or not torch.cuda.is_available() else self.device
         gen = torch.Generator(device=gen_device)
         gen.manual_seed(self.random_state)
         n_batches = max(1, (batched.n_groups + self.batch_size_groups - 1) // self.batch_size_groups)
-        is_xla = 'xla' in str(self.device)
 
         for epoch in range(self.epochs):
             idx = torch.randperm(batched.n_groups, generator=gen, device=self.device)
