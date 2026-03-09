@@ -2,20 +2,38 @@
   "model": "mlp",
   "metric": "log_loss",
   "direction": "minimize",
-  "best_value": 0.24519901120082901,
+  "best_value": 0.283427870186581,
   "best_params": {
-    "n_layers": 2,
-    "layer_size": 116,
-    "activation": "relu",
-    "alpha": 2.5568038381745084,
-    "learning_rate_init": 0.0010252286829735488,
-    "solver": "adam",
-    "max_iter": 1470,
-    "early_stopping": false,
-    "batch_size": 1000,
-    "calibrate": false,
-    "exclude_turn_progress": false
+    "n_layers": 4,
+    "layer_size": 74,
+    "dropout": 0.14676450270006072,
+    "lr": 0.0016508487822090463,
+    "weight_decay": 0.0017063017923362206,
+    "epochs": 7,
+    "batch_size": 4096
   },
   "n_trials": 1000,
-  "resample_method": "undersample"
+  "resample_method": null,
+  "validation_metrics": {
+    "roc_auc": 0.8459677205865059,
+    "brier_score": 0.08610506771817263,
+    "log_loss": 0.28407668263352115,
+    "balanced_accuracy": 0.6246162665864121
+  },
+  "train_metrics": {
+    "train_roc_auc_mean": 0.852255927811202,
+    "train_roc_auc_std": 0.0023260213774559907,
+    "train_brier_score_mean": 0.08446131389010038,
+    "train_brier_score_std": 0.0005898338605561733,
+    "train_log_loss_mean": 0.2784077144954936,
+    "train_log_loss_std": 0.0016679137436545607,
+    "train_balanced_accuracy_mean": 0.6286890873896154,
+    "train_balanced_accuracy_std": 0.003961541544558529
+  },
+  "overfitting_gaps": {
+    "overfitting_gap_roc_auc_mean": 0.0062882072246962075,
+    "overfitting_gap_brier_mean": 0.0016437538280722308,
+    "overfitting_gap_log_loss_mean": 0.005668968138027486,
+    "overfitting_gap_balanced_accuracy_mean": 0.004072820803203236
+  }
 }
