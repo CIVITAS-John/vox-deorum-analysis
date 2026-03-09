@@ -408,3 +408,83 @@ def create_matchup_matrix(strength_df, verbose=True):
                     print(f"  {player_a} vs {player_b}: {int(count_matrix[i, j])} matchups")
 
     return matchup_df, count_df, pvalue_df
+
+
+def create_mean_matchup_matrix(strength_df, verbose=True):
+    """
+    Create pairwise mean strength difference matrix between all player types.
+
+    Same iteration as create_matchup_matrix, but reports mean(A_strength - B_strength)
+    instead of win rate. This captures whether A is stronger on average, even if A
+    wins fewer than 50% of individual comparisons.
+
+    Args:
+        strength_df: DataFrame with columns: game_id, player_id, player_type, adjusted_strength
+        verbose: Print summary statistics
+
+    Returns:
+        tuple: (mean_diff_df, count_df, pvalue_df) where:
+            - mean_diff_df: NxN matrix of mean strength differences (A - B)
+            - count_df: NxN matrix of sample sizes
+            - pvalue_df: NxN matrix of p-values from one-sample t-test (H0: diff=0)
+    """
+    from scipy.stats import ttest_1samp
+
+    player_types = sorted(strength_df['player_type'].unique())
+    n_players = len(player_types)
+
+    # Store all pairwise differences for each (i, j) pair
+    diff_data = [[[] for _ in range(n_players)] for _ in range(n_players)]
+    count_matrix = np.zeros((n_players, n_players))
+
+    for game_id in strength_df['game_id'].unique():
+        game_data = strength_df[strength_df['game_id'] == game_id]
+
+        for _, player_a in game_data.iterrows():
+            for _, player_b in game_data.iterrows():
+                if player_a['player_type'] == player_b['player_type']:
+                    continue
+
+                i = player_types.index(player_a['player_type'])
+                j = player_types.index(player_b['player_type'])
+
+                diff_data[i][j].append(
+                    player_a['adjusted_strength'] - player_b['adjusted_strength']
+                )
+                count_matrix[i, j] += 1
+
+    # Calculate means and p-values
+    mean_matrix = np.full((n_players, n_players), np.nan)
+    pvalue_matrix = np.full((n_players, n_players), np.nan)
+
+    for i in range(n_players):
+        for j in range(n_players):
+            if i == j:
+                continue
+            diffs = diff_data[i][j]
+            if len(diffs) > 1:
+                mean_matrix[i, j] = np.mean(diffs)
+                _, p_value = ttest_1samp(diffs, 0)
+                pvalue_matrix[i, j] = p_value
+            elif len(diffs) == 1:
+                mean_matrix[i, j] = diffs[0]
+
+    mean_diff_df = pd.DataFrame(mean_matrix, index=player_types, columns=player_types)
+    count_df = pd.DataFrame(count_matrix, index=player_types, columns=player_types)
+    pvalue_df = pd.DataFrame(pvalue_matrix, index=player_types, columns=player_types)
+
+    if verbose:
+        print("=" * 60)
+        print("HEAD-TO-HEAD MATCHUP MATRIX (MEAN STRENGTH DIFFERENCE)")
+        print("=" * 60)
+        print(f"\nMatrix dimensions: {n_players}x{n_players}")
+        print(f"Player types: {n_players}")
+        print(f"Total games analyzed: {strength_df['game_id'].nunique()}")
+        print(f"\nInterpretation:")
+        print(f"  - Rows: Player A")
+        print(f"  - Columns: Player B")
+        print(f"  - Value: Mean(A_adjusted_strength - B_adjusted_strength)")
+        print(f"  - Positive = A is stronger on average")
+        print(f"  - P-values: One-sample t-test (H0: mean diff = 0)")
+
+    return mean_diff_df, count_df, pvalue_df

@@ -1690,7 +1690,8 @@ def plot_forest_plot(df, title, xlabel='Marginal Effect (Relative Rate %)', colo
 def plot_matchup_heatmap(matchup_df, count_df=None, pvalue_df=None,
                          title="Head-to-Head Matchup Probabilities",
                          figsize=(12, 10), cmap='RdYlGn', annot_format='.1f',
-                         as_percentage=True):
+                         as_percentage=True, vmin=None, vmax=None, center=None,
+                         cbar_label=None):
     """
     Create a heatmap visualization of pairwise outperform probabilities.
 
@@ -1703,6 +1704,10 @@ def plot_matchup_heatmap(matchup_df, count_df=None, pvalue_df=None,
         cmap: Colormap name (default: RdYlGn for Red/Yellow/Green)
         annot_format: Format string for annotations (default: '.1f' for 1 decimal)
         as_percentage: If True, display values as percentages (0-100)
+        vmin: Optional minimum value for colormap scale
+        vmax: Optional maximum value for colormap scale
+        center: Optional center value for colormap scale
+        cbar_label: Optional colorbar label
 
     Returns:
         fig, ax: Matplotlib figure and axes objects
@@ -1714,14 +1719,20 @@ def plot_matchup_heatmap(matchup_df, count_df=None, pvalue_df=None,
     # Convert to percentage if requested
     if as_percentage:
         plot_data = matchup_df * 100
-        cbar_label = 'Outperform Probability (%)'
-        vmin, vmax = 0, 100
-        center = 50
+        _cbar_label = 'Outperform Probability (%)'
+        _vmin, _vmax = 0, 100
+        _center = 50
     else:
         plot_data = matchup_df
-        cbar_label = 'Outperform Probability'
-        vmin, vmax = 0, 1
-        center = 0.5
+        _cbar_label = 'Outperform Probability'
+        _vmin, _vmax = 0, 1
+        _center = 0.5
+
+    # Allow caller overrides
+    vmin = vmin if vmin is not None else _vmin
+    vmax = vmax if vmax is not None else _vmax
+    center = center if center is not None else _center
+    cbar_label = cbar_label if cbar_label is not None else _cbar_label
 
     # Helper function to extract base model name (without strategist suffix)
     def get_base_model(player_name):
