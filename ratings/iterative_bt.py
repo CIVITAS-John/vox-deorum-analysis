@@ -194,7 +194,7 @@ def run_iterative_bt(strength_df, game_order, cache, min_games=3):
     Iteratively add games and compute BT ratings.
 
     Returns:
-        list of result dicts, updated cache
+        list of result dicts, updated cache, new_opponent_events
     """
     results = []
     n_total = len(game_order)
@@ -204,6 +204,10 @@ def run_iterative_bt(strength_df, game_order, cache, min_games=3):
 
     # Track cumulative game count per player type
     player_game_counts = {}
+    # Track which opponent types each player type has faced
+    opponents_seen = {}  # player_type -> set of opponent player_types
+    # Record events: list of (player_type, n_player_games, [new_opponent_names])
+    new_opponent_events = []
 
     for i in range(1, n_total + 1):
         game_id = game_order[i - 1]
@@ -211,6 +215,16 @@ def run_iterative_bt(strength_df, game_order, cache, min_games=3):
         # Update per-player-type game counts
         for pt in game_player_types.get(game_id, set()):
             player_game_counts[pt] = player_game_counts.get(pt, 0) + 1
+
+        # Detect new opponent introductions
+        pts_in_game = game_player_types.get(game_id, set())
+        for pt in pts_in_game:
+            if pt not in opponents_seen:
+                opponents_seen[pt] = set()
+            new_opps = pts_in_game - {pt} - opponents_seen[pt]
+            if new_opps:
+                opponents_seen[pt].update(new_opps)
+                new_opponent_events.append((pt, player_game_counts[pt], sorted(new_opps)))
 
         games_so_far = game_order[:i]
         subset = strength_df[strength_df['game_id'].isin(games_so_far)]
@@ -247,14 +261,14 @@ def run_iterative_bt(strength_df, game_order, cache, min_games=3):
         if i % 10 == 0 or i == n_total:
             print(f"  [{i}/{n_total}] {n_types} player types, {len(results)} total rows")
 
-    return results, cache
+    return results, cache, new_opponent_events
 
 
 # ---------------------------------------------------------------------------
 # Chart generation
 # ---------------------------------------------------------------------------
 
-def generate_charts(results_df, output_dir):
+def generate_charts(results_df, output_dir, new_opponent_events=None):
     """Generate per-player-type and combined Elo convergence charts."""
     sns.set_style('whitegrid')
 
@@ -291,6 +305,31 @@ def generate_charts(results_df, output_dir):
             color=color, alpha=0.15,
         )
         ax.axhline(1500, color='gray', linestyle='--', linewidth=1, label='Vanilla (1500)')
+
+        # Draw vertical lines where new opponents were introduced
+        if new_opponent_events:
+            # Collect events for this player type, dedup by x-position
+            pt_events = {}
+            for ev_pt, ev_x, ev_names in new_opponent_events:
+                if ev_pt == pt:
+                    if ev_x not in pt_events:
+                        pt_events[ev_x] = []
+                    pt_events[ev_x].extend(ev_names)
+            x_min = pt_data['n_player_games'].min()
+            x_max = pt_data['n_player_games'].max()
+            _, y_max = ax.get_ylim()
+            for ev_x, names in sorted(pt_events.items()):
+                if ev_x < x_min or ev_x > x_max:
+                    continue
+                unique_names = sorted(set(names))
+                label = ' + '.join(unique_names)
+                ax.axvline(ev_x, color='black', linestyle=':', linewidth=1, alpha=0.5)
+                ax.text(
+                    ev_x, y_max, f' {label}',
+                    rotation=90, va='top', ha='left',
+                    fontsize=7, color='black', alpha=0.7,
+                    bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.7, edgecolor='none'),
+                )
 
         ax.set_xlabel('Number of Games (player participated)', fontsize=12)
         ax.set_ylabel('Elo Rating', fontsize=12)
@@ -361,7 +400,7 @@ def main():
 
     # Run iterative BT
     print("Running iterative Bradley-Terry...")
-    results, cache = run_iterative_bt(strength_df, game_order, cache)
+    results, cache, new_opponent_events = run_iterative_bt(strength_df, game_order, cache)
 
     # Save cache
     if len(cache) > cached_count:
@@ -380,7 +419,7 @@ def main():
 
     # Generate charts
     print("Generating charts...")
-    generate_charts(results_df, output_dir)
+    generate_charts(results_df, output_dir, new_opponent_events)
 
     print("Done.")
 
