@@ -1,12 +1,16 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Simple
 
-31 / 131 players escalated `flavor_use_nuke` to 100 (23.7%).
+33 / 137 players escalated `flavor_use_nuke` to 100 (24.1%).
 
 ---
 
 **Portugal** · Turn 354 · Conquest
 
 > India is 100% Popular with me - on the verge of cultural victory. Must launch immediate total war with all available forces. Prioritizing air power, paratroopers, and nuclear preparation (Atomic Theory in 11 turns). Need maximum offensive punch to capture Indian cities before cultural victory triggers. Abandoning culture/diplomacy - only war matters now.
+
+**India** · Turn 359 · Conquest
+
+> NUCLEAR FISSION RESEARCHED - Atomic Era begins! First priority is immediate Manhattan Project construction and Atomic Bomb production. Babylon has 11 Uranium and active Manhattan Project in Borsippa. Austria also racing with Manhattan Project in Vienna. Must strike Babylon first with surprise atomic attack while maintaining deception. Air 100 and Nuke 100 ensure immediate Bomber/Atomic Bomb production. Offense 95 prepares for post-nuclear blitz. Espionage 80 protects Nuclear Fission from theft. Deception with Babylon (Open Borders, DoF, Defensive Pact) MUST continue until first bombs complete.
 
 **Indonesia** · Turn 367 · Spaceship
 
@@ -24,6 +28,10 @@
 
 > Turn 376: Manhattan Project complete - Atomic Bomb ready for immediate deployment against Madrid. UseNuke increased to 100 to guarantee nuclear strike on Madrid (pop 37, defense 55). Spain at 61% diplomatic victory must be eliminated NOW. All combat flavors remain at maximum. Slight increase in Spaceship flavor (45) to prepare infrastructure for post-Spain pivot to race Ethiopia. Gold and Science prioritized to sustain war economy and tech progression toward Satellites after Nuclear Fission completes.
 
+**Egypt** · Turn 384 · Spaceship
+
+> TURN 384: Pi-Ramesses has fallen to Austria. We are down to 3 cities (Heliopolis, Alexandria, Giza) facing overwhelming force. Ottomans remain at 100% cultural victory progress and will win imminently. Maximum defensive priority continues. Increased UseNuke to 100 (from 50) - we are in desperation mode and must be willing to use nuclear weapons immediately upon acquisition. Reduced Offense to 10 (from 30) - we cannot afford any offensive operations with only 3 cities. Spaceship remains our only theoretical victory path if Ottomans somehow fail to complete Citizen Earth Protocol. Austria continues major offensive (70% war score), we must hold the remaining three cities at all costs.
+
 **Germany** · Turn 384 · Conquest
 
 > Maximum offensive posture for existential cultural war. UseNuke 100 and Nuke 100 authorize nuclear strikes on Dutch cultural centers (Amsterdam/Rotterdam/Utrecht) to destroy tourism buildings before Netherlands influences Austria in 6 turns. Mobile 100 and Air 100 enable rapid strikes. Production 100 and Mobilization 100 ensure nuclear missile replacement. Netherlands at 97% with Austria - only 6 turns left. Must destroy their tourism NOW or lose cultural victory.
@@ -31,10 +39,6 @@
 **Sweden** · Turn 384 · Conquest
 
 > 6-turn existential countdown to Dutch cultural victory. Maximum commitment to offensive warfare required. Increased UseNuke to 100 to guarantee tactical nuclear strikes if conventional assault on Amsterdam stalls. Tanks from Combined Arms will provide the 5-movement breakthrough capability needed to reach Amsterdam before turn 388.
-
-**Egypt** · Turn 384 · Spaceship
-
-> TURN 384: Pi-Ramesses has fallen to Austria. We are down to 3 cities (Heliopolis, Alexandria, Giza) facing overwhelming force. Ottomans remain at 100% cultural victory progress and will win imminently. Maximum defensive priority continues. Increased UseNuke to 100 (from 50) - we are in desperation mode and must be willing to use nuclear weapons immediately upon acquisition. Reduced Offense to 10 (from 30) - we cannot afford any offensive operations with only 3 cities. Spaceship remains our only theoretical victory path if Ottomans somehow fail to complete Citizen Earth Protocol. Austria continues major offensive (70% war score), we must hold the remaining three cities at all costs.
 
 **Venice** · Turn 387 · Conquest
 
@@ -48,13 +52,13 @@
 
 > Emergency defensive posture with nuclear deterrent imminent. Greece's 3:1 military superiority and diplomatic victory attempt in 6 turns creates existential crisis. Nuclear Fission completes in 1 turn with 14 uranium ready. Maximize UseNuke (100) for immediate atomic deployment. Maintain Defense/CityDefense/Mobilization at 100 to survive until deterrent operational. Reduce Naval from 95 to 85 as American destroyer threat is severe but manageable. Boost Espionage to 100 to protect science cities and maintain election rigging in Enns. Increase Spaceship to 95 as backup victory path if culture is disrupted. Diplomacy raised to 80 to counter Greece's 34 delegates in upcoming World Congress vote on United Nations proposal.
 
-**Mongolia** · Turn 392 · Conquest
-
-> Manhattan Project COMPLETED in Karakorum - nuclear weapons now available! With peace treaties expired and Patriotic War policy active, immediately shifting to total war footing. UseNuke increased to 100 to ensure immediate atomic weapon employment once Nuclear Fission completes (12 turns). Offense and Mobile at 95/90 for twin assaults on Persepolis (Persia) and Washington (America). Air 100 prioritizes Heavy Bombers for atomic bomb delivery via Radar technology. Will fight two-front war against Autocracy powers while maintaining deception toward Order allies, particularly Korea. Science 100 critical for Advanced Ballistics nuclear missile delivery systems.
-
 **Assyria** · Turn 392 · Conquest
 
 > SURVIVAL MODE - GERMAN BETRAYAL RESPONSE: Germany's invasion is catastrophic. Reduced Offense to 40 (cannot attack superior forces), maintained Defense/CityDefense/Antiair at 100 to survive siege. Science 100 and Nuke/UseNuke 100 are existential priorities - atomic weapons only hope against 13k German military. Production 100 for emergency unit production. Espionage 100 to maintain Florence alliance and protect Kyzyl. Reduced Diplomacy to 90 (lost Lisbon/Sokoto/Buenos Aires to German coups). Naval reduced to 70 (coastal cities threatened by Germany). Focus: Hold cities, survive until nuclear deterrent operational.
+
+**Mongolia** · Turn 392 · Conquest
+
+> Manhattan Project COMPLETED in Karakorum - nuclear weapons now available! With peace treaties expired and Patriotic War policy active, immediately shifting to total war footing. UseNuke increased to 100 to ensure immediate atomic weapon employment once Nuclear Fission completes (12 turns). Offense and Mobile at 95/90 for twin assaults on Persepolis (Persia) and Washington (America). Air 100 prioritizes Heavy Bombers for atomic bomb delivery via Radar technology. Will fight two-front war against Autocracy powers while maintaining deception toward Order allies, particularly Korea. Science 100 critical for Advanced Ballistics nuclear missile delivery systems.
 
 **The Celts** · Turn 395 · Conquest
 
@@ -68,13 +72,13 @@
 
 > PEACE EXPLOITATION PHASE: Unexpected forced peace with Egypt (PacifierFlag) created 10-turn preparation window. Nuke/UseNuke increased to 100 - Atomic Theory completes in 8 turns revealing Uranium. Manhattan Project insurance against Thebes' 21-wonder defense. Focus: 1) Finish Celts (Edinburgh capture imminent), 2) Complete nuclear arsenal, 3) Total Egyptian annihilation when peace expires. Air/Airlift/Mobile/Ranged/Naval at 100 for intercontinental rapid deployment to Egyptian theater. Glasgow captured - Celtic campaign nearly complete.
 
-**France** · Turn 405 · Conquest
-
-> Maintaining maximum aggression profile for final turns. Increased UseNuke to 100 (from 90) to ensure nuclear weapons are deployed immediately upon availability from Advanced Ballistics. All military production and offensive flavors remain at emergency levels to extract maximum territorial gains from Sweden (currently at 50% happiness with combat penalties) and Portugal before Egyptian victory. Defensive flavors maintained at 80 to protect against Portugal's atomic capabilities and Sweden's counterattacks. Zero expansion/diplomacy/culture - pure total war focus until game conclusion.
-
 **Persia** · Turn 405 · Conquest
 
 > TURN 405 MAXIMUM EMERGENCY: Nuclear Fission priority increased to 100/100 - Manhattan Project completes in 2 turns, atomic bombs MUST be produced immediately. All offensive parameters at absolute maximum: 100 Offense/100 Mobilization/100 Mobile/100 Air/100 Nuke/100 UseNuke. Strike forces at Ecbatana/Kar-Tukulti-Ninurta must execute immediate conventional assault on Palenque/Chichen Itza while preparing tactical nuclear strikes. ZERO tolerance for peace. ONLY objective: capture Maya cities and halt Citizen Earth Protocol. Production 100 ensures rapid unit replacement. Espionage 70 continues spy operations in Maya cities.
+
+**France** · Turn 405 · Conquest
+
+> Maintaining maximum aggression profile for final turns. Increased UseNuke to 100 (from 90) to ensure nuclear weapons are deployed immediately upon availability from Advanced Ballistics. All military production and offensive flavors remain at emergency levels to extract maximum territorial gains from Sweden (currently at 50% happiness with combat penalties) and Portugal before Egyptian victory. Defensive flavors maintained at 80 to protect against Portugal's atomic capabilities and Sweden's counterattacks. Zero expansion/diplomacy/culture - pure total war focus until game conclusion.
 
 **The Zulus** · Turn 406 · Conquest
 
@@ -91,6 +95,10 @@
 **The Huns** · Turn 414 · Conquest
 
 > Germany has secured diplomatic victory (47/44 delegates). With 6 turns until World Congress formalizes their win and their 45,696 strength army crushing my 9,700 forces, survival mode activated. Maxed Defense/CityDefense/Antiair at 100 to withstand inevitable German invasion. Increased UseNuke to 100 - if I acquire nuclear weapons, immediate tactical strikes against German concentrations to buy time. Offense reduced to 90 (from 100) to balance survival with opportunistic attacks on Netherlands/Portugal cities. High Naval 100 for coastal defense and potential amphibious operations. Production maximized for emergency unit generation. All civilian flavors minimized - only military output matters. Goal: preserve maximum score when diplomatic victory triggers or hold until turn 500 time victory.
+
+**Germany** · Turn 416 · Conquest
+
+> TURN 416: CRITICAL CULTURAL VICTORY THREAT. Maya at 6/7 influential building Citizen Earth Protocol. Peace expires next turn - immediate total war required. Manhattan Project completes in 1 turn. Morocco (42260 strength) joins war via defensive pact. Maximum aggression flavors: Offense/Mobilization/Production/Nuke/UseNuke all at 100%. Must capture Maya cities, especially Palenque, before cultural victory. Nuclear weapons authorized for city capture.
 
 **Carthage** · Turn 417 · Spaceship
 

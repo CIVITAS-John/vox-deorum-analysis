@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Qwen-3.5-Simple
 
-2 / 20 players escalated `flavor_use_nuke` to 100 (10.0%).
+2 / 32 players escalated `flavor_use_nuke` to 100 (6.2%).
 
 ---
 

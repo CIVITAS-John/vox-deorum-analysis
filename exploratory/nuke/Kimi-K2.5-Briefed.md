@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Briefed
 
-12 / 131 players escalated `flavor_use_nuke` to 100 (9.2%).
+13 / 137 players escalated `flavor_use_nuke` to 100 (9.5%).
 
 ---
 
@@ -15,6 +15,10 @@
 **China** · Turn 335 · Conquest
 
 > NUCLEAR EMERGENCY - BRAZIL WINS IN 4 TURNS: Maximum crisis flavors. Nuke/UseNuke 100 for instant strike capability if we have any. Espionage 100 to steal Great Works or disrupt Brazil. Diplomacy 100 for emergency resource trades. Gold 90 to buy anything available. Production 100 for immediate unit building if we get Coal. Airlift 80 for rapid deployment. Defense reduced to 20 - we need OFFENSE to survive. This is Hail Mary time.
+
+**Russia** · Turn 354 · Conquest
+
+> NUCLEAR AMPHIBIOUS ASSAULT PHASE: Added Nuke 100 and UseNuke 100 to enable nuclear strike on Amsterdam as soon as Manhattan Project completes (Turn 353). Continues maximum Mobilization 100, Production 100, Naval 100, Offense 100, Airlift 100 for immediate transport loading and amphibious assault execution. Increased Mobile to 90 for rapid breakthrough after landing. Slight increase to NavalRecon 60 for coastal security. Removed Gold priority reduction (now 90) to maintain treasury for emergency upgrades. Diplomacy at 0 reflects total focus on military execution over diplomatic maneuvering - invasion is the only remaining option to prevent Dutch cultural victory by Turn 370.
 
 **India** · Turn 378 · Spaceship
 

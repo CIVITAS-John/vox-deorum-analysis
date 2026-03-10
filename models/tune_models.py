@@ -39,6 +39,7 @@ from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data
 def suggest_xgboost_params(trial: 'optuna.Trial') -> Dict:
     """Define XGBoost hyperparameter search space."""
     params = {
+        'n_estimators': trial.suggest_int('n_estimators', 50, 500),
         'max_depth': trial.suggest_int('max_depth', 3, 10),
         'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.2, log=True),
         'subsample': trial.suggest_float('subsample', 0.5, 1.0),
