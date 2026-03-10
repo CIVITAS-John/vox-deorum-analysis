@@ -1,8 +1,4 @@
-"""Empirical matchup matrices and OLS validation for player ratings.
-
-Moved from the original rating_system.py — these functions are model-agnostic
-and work with any rating system that produces a ``log_worth`` column.
-"""
+"""Empirical matchup matrices and OLS validation for player ratings."""
 
 import numpy as np
 import pandas as pd
@@ -11,10 +7,10 @@ import pandas as pd
 def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla',
                      baseline_rating=0.0, verbose=True):
     """
-    Compare rating scores with OLS regression coefficients for validation.
+    Compare Plackett-Luce ratings with OLS regression coefficients for validation.
 
     Args:
-        summary_df: DataFrame from calculate_ratings() (needs log_worth, player_type)
+        summary_df: DataFrame from calculate_ratings()
         ols_model: Fitted statsmodels OLS model
         baseline_type: Reference player type (default: 'Vanilla')
         baseline_rating: Baseline rating value (default: 0.0)
@@ -55,10 +51,10 @@ def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla',
 
     if verbose:
         print("=" * 60)
-        print("VALIDATION: RATINGS vs OLS COEFFICIENTS")
+        print("VALIDATION: PLACKETT-LUCE MLE vs OLS COEFFICIENTS")
         print("=" * 60)
         print("\nComparison of ranking methods:\n")
-        print(f"{'Player Type':<25} {'Rank':<8} {'Score':<12} {'OLS Coef':<12}")
+        print(f"{'Player Type':<25} {'Rank':<8} {'Log-Worth':<12} {'OLS Coef':<12}")
         print("-" * 57)
 
         for idx, row in enumerate(comparison_df.itertuples(), 1):
