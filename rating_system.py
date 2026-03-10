@@ -1,230 +1,170 @@
 """
-Rating system for player type evaluation using OpenSkill.
+Rating system for player type evaluation using Plackett-Luce MLE.
 
 This module provides functions to calculate and analyze player ratings
-using the Plackett-Luce model via the OpenSkill library, replacing
-the custom ELO implementation.
+using the Plackett-Luce model via R's PlackettLuce package (called
+via subprocess).
 """
 
 import pandas as pd
 import numpy as np
-from openskill.models import PlackettLuce, BradleyTerryFull
-from collections import defaultdict
+import subprocess
+import tempfile
+import os
 
-def prepare_game_level_data(strength_df):
+
+def _find_rscript():
+    """Find Rscript executable on the system."""
+    # Check common Windows locations
+    r_paths = []
+    for drive in ['C', 'D']:
+        r_base = f"{drive}:/Program Files/R"
+        if os.path.isdir(r_base):
+            for entry in sorted(os.listdir(r_base), reverse=True):
+                candidate = os.path.join(r_base, entry, 'bin', 'Rscript.exe')
+                if os.path.isfile(candidate):
+                    r_paths.append(candidate)
+
+    if r_paths:
+        return r_paths[0]
+
+    # Fallback: try PATH
+    return 'Rscript'
+
+
+def calculate_ratings(strength_df, verbose=True, **kwargs):
     """
-    Keep all players as individual entries for fair rating comparison.
+    Calculate player ratings using R's PlackettLuce (batch MLE).
+
+    Fits a Plackett-Luce model to all game rankings simultaneously via
+    maximum likelihood estimation. Deterministic — no random ordering needed.
 
     Args:
-        strength_df: DataFrame with columns:
-            - game_id: Unique game identifier
-            - player_id: Player identifier within game
-            - player_type: Type of player (Vanilla, GPT-OSS-120B-Simple, etc.)
-            - adjusted_strength: Civilization-adjusted strength metric
-            - civilization: Player's civilization
+        strength_df: DataFrame with columns: game_id, player_id, player_type,
+                     adjusted_strength, civilization
+        verbose: Print progress and results
 
     Returns:
-        DataFrame with game-level player records
+        DataFrame with columns: player_type, worth, log_worth, se_log_worth,
+                                z_value, p_value, elo, se_elo, mu, sigma, mu_std
     """
-    game_level_players = []
+    # Prepare input data for R script
+    # Assign unique slot IDs for duplicate player types within each game
+    input_cols = ['game_id', 'player_type', 'adjusted_strength']
+    r_input = strength_df[input_cols].copy()
+    slot_ids = []
+    for _, game in r_input.groupby('game_id'):
+        type_counters = {}
+        for idx in game.index:
+            pt = game.at[idx, 'player_type']
+            count = type_counters.get(pt, 0)
+            slot_ids.append(f"{pt}_{count}")
+            type_counters[pt] = count + 1
+    r_input['slot_id'] = slot_ids
 
-    for game_id in strength_df['game_id'].unique():
-        game = strength_df[strength_df['game_id'] == game_id].copy()
+    # Write to temp CSV
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False,
+                                     newline='') as f_in:
+        input_path = f_in.name
+        r_input.to_csv(f_in, index=False)
 
-        # Keep all players (both Vanilla and LLM) as individual entries
-        for _, player in game.iterrows():
-            game_level_players.append({
-                'game_id': game_id,
-                'player_type': player['player_type'],
-                'adjusted_strength': player['adjusted_strength'],
-                'civilization': player['civilization'],
-                'n_players': 1
-            })
+    output_path = input_path.replace('.csv', '_output.csv')
 
-    return pd.DataFrame(game_level_players)
+    try:
+        # Find R script path (relative to this file)
+        r_script = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                'plackett_luce.R')
+        rscript_exe = _find_rscript()
+
+        if verbose:
+            print("=" * 76)
+            print("CALCULATING RATINGS USING PLACKETT-LUCE MLE (R)")
+            print("=" * 76)
+            print(f"\nTotal games: {strength_df['game_id'].nunique()}")
+            print(f"Player types: {sorted(strength_df['player_type'].unique())}")
+            print(f"\nFitting model...")
+
+        # Call R
+        result = subprocess.run(
+            [rscript_exe, r_script, input_path, output_path],
+            capture_output=True, text=True, timeout=120
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"R script failed:\n{result.stderr}")
+
+        if verbose and result.stdout:
+            print(result.stdout.strip())
+
+        # Read results (already re-centered on Vanilla by R script)
+        results_df = pd.read_csv(output_path)
+
+        # Read diagnostics
+        diagnostics = {}
+        diag_path = output_path.replace('.csv', '_diagnostics.csv')
+        if os.path.exists(diag_path):
+            diag_df = pd.read_csv(diag_path)
+            diagnostics = dict(zip(diag_df['metric'], diag_df['value']))
+
+        # Elo conversion: 1500 + 400 * log10(worth)
+        # Vanilla has worth=1, so Elo=1500
+        results_df['elo'] = 1500 + 400 * np.log10(results_df['worth'])
+        results_df['se_elo'] = 400 / np.log(10) * results_df['se_log_worth']
+
+        # Backward compatibility aliases
+        results_df['mu'] = results_df['log_worth']
+        results_df['sigma'] = results_df['se_log_worth']
+        results_df['mu_std'] = 0.0
+
+        results_df = results_df.sort_values('elo', ascending=False)
+
+        if verbose:
+            print("\n" + "=" * 76)
+            print("RATING SUMMARY (PLACKETT-LUCE MLE)")
+            print("=" * 76)
+            print(f"{'Rank':<6} {'Player Type':<25} {'Worth':<10} {'Log-Worth':<12} "
+                  f"{'SE':<10} {'Elo':<8} {'p-value':<10}")
+            print("-" * 81)
+
+            for rank, row in enumerate(results_df.itertuples(), 1):
+                if row.player_type == 'Vanilla':
+                    p_str = "ref"
+                elif not np.isnan(row.p_value):
+                    p_str = f"{row.p_value:.4f}"
+                else:
+                    p_str = "N/A"
+                print(f"{rank:<6} {row.player_type:<25} {row.worth:>8.4f} "
+                      f"{row.log_worth:>10.4f} {row.se_log_worth:>10.4f} "
+                      f"{row.elo:>8.0f} {p_str:>10}")
+
+            print("\n" + "=" * 76)
+            print(f"Elo Range: {results_df['elo'].max() - results_df['elo'].min():.0f} points")
+            if diagnostics:
+                print(f"Deviance: {diagnostics.get('deviance', 'N/A'):.1f}")
+                print(f"AIC: {diagnostics.get('AIC', 'N/A'):.1f}")
+                print(f"Iterations: {int(diagnostics.get('n_iterations', 0))}")
+
+        return results_df
+
+    finally:
+        # Clean up temp files
+        for path in [input_path, output_path,
+                     output_path.replace('.csv', '_diagnostics.csv'),
+                     output_path.replace('.csv', '_slots.csv')]:
+            if os.path.exists(path):
+                os.unlink(path)
 
 
-def process_single_game_openskill(game_players, ratings, model):
+def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla',
+                     baseline_rating=0.0, verbose=True):
     """
-    Process a single game using OpenSkill's model.
-
-    When multiple players of the same type compete in one game, they each
-    start with the same rating, get rated individually, then their updated
-    ratings are averaged back to update the shared player_type rating.
-
-    Args:
-        game_players: DataFrame of players in one game
-        ratings: Dict mapping player_type to Rating objects
-        model: OpenSkill model instance
-
-    Returns:
-        Updated ratings dict
-    """
-    from collections import defaultdict
-    from scipy.stats import rankdata
-
-    players = game_players.to_dict('records')
-
-    # Build teams: each player is independent with a copy of their type's rating
-    teams = []
-    strengths = []
-    for player in players:
-        r = ratings[player['player_type']]
-        teams.append([type(r)(mu=r.mu, sigma=r.sigma)])  # Independent copy
-        strengths.append(player['adjusted_strength'])
-
-    # Convert adjusted_strength to ranks
-    # Higher strength = better = lower rank (1 = best)
-    # Use 'ordinal' method to handle ties (give different ranks to tied values)
-    # Negate strengths so higher strength gets lower rank
-    ranks = rankdata([-s for s in strengths], method='ordinal')
-
-    # Rate all players individually using ranks
-    # OpenSkill expects rank where 1 = winner, 2 = second, etc.
-    updated_teams = model.rate(teams, scores=strengths) # ranks=ranks.tolist()
-    # updated_teams = model.rate(teams, ranks=ranks.tolist()) # ranks=ranks.tolist()
-
-    # Collect updated ratings by player type
-    updates_by_type = defaultdict(list)
-    for i, player in enumerate(players):
-        updates_by_type[player['player_type']].append(updated_teams[i][0])
-
-    # Average ratings for each player type
-    new_ratings = ratings.copy()
-    for player_type, rating_list in updates_by_type.items():
-        if player_type == 'Vanilla':
-            # Keep Vanilla's rating fixed (don't update it)
-            continue
-        avg_mu = sum(r.mu for r in rating_list) / len(rating_list)
-        avg_sigma = sum(r.sigma for r in rating_list) / len(rating_list)
-        # Keep original sigma to avoid it decreasing over iterations
-        new_ratings[player_type] = type(rating_list[0])(mu=avg_mu, sigma=avg_sigma)
-
-    return new_ratings
-
-
-def calculate_ratings(strength_df, initial_mu=25.0, initial_sigma=8.33,
-                     tau=0.083, n_runs=100, verbose=True):
-    """
-    Calculate player ratings using OpenSkill with random-order averaging.
-
-    Processes all games multiple times with randomized game order, then
-    averages the results to ensure order-independent ratings.
-
-    Args:
-        strength_df: DataFrame with player strength data
-        initial_mu: Initial mean skill rating (default: 25.0)
-        initial_sigma: Initial uncertainty (default: 8.33)
-        tau: Dynamic factor for rating updates (default: 0.083)
-        n_runs: Number of random orderings to average (default: 30)
-        verbose: Print progress messages
-
-    Returns:
-        DataFrame with columns: player_type, mu, sigma, mu_std
-    """
-    # Prepare game-level data
-    game_level_df = prepare_game_level_data(strength_df)
-
-    if verbose:
-        print("=" * 76)
-        print("CALCULATING RATINGS USING OPENSKILL (RANDOM-ORDER AVERAGING)")
-        print("=" * 76)
-        print(f"\nModel: PlackettLuce (rank-based)")
-        print(f"Initial rating: μ={initial_mu}, σ={initial_sigma}")
-        print(f"Number of runs: {n_runs}")
-        print(f"Total games: {game_level_df['game_id'].nunique()}")
-        print(f"\nProcessing {n_runs} random orderings...")
-
-    # Initialize model - Use PlackettLuce for rank-based rating
-    model = PlackettLuce(mu=initial_mu, sigma=initial_sigma, tau=tau)
-
-    # Get unique player types and games
-    player_types = sorted(game_level_df['player_type'].unique())
-    game_ids = game_level_df['game_id'].unique()
-
-    # Store ratings from each run
-    all_run_ratings = defaultdict(lambda: {'mu': [], 'sigma': []})
-
-    # Run multiple times with different random orderings
-    for run in range(n_runs):
-        # Initialize ratings for this run
-        ratings = {}
-        for pt in player_types:
-            ratings[pt] = model.rating()
-        ratings["Vanilla"].sigma = 0.001
-
-        # Shuffle game order
-        shuffled_game_ids = np.random.permutation(game_ids)
-
-        # Process all games once in this random order
-        for game_id in shuffled_game_ids:
-            game_players = game_level_df[game_level_df['game_id'] == game_id]
-            ratings = process_single_game_openskill(game_players, ratings, model)
-
-        # Store results from this run
-        for pt in player_types:
-            all_run_ratings[pt]['mu'].append(ratings[pt].mu)
-            all_run_ratings[pt]['sigma'].append(ratings[pt].sigma)
-
-        if verbose and (run + 1) % 10 == 0:
-            print(f"  Completed {run + 1}/{n_runs} runs...")
-
-    if verbose:
-        print(f"\n✓ Random-order averaging complete!")
-
-    # Average ratings across all runs and calculate uncertainty
-    # First, get vanilla_mu for Elo calculations
-    vanilla_mu = np.mean(all_run_ratings['Vanilla']['mu'])
-
-    summary_data = []
-    for player_type in player_types:
-        mu_values = all_run_ratings[player_type]['mu']
-        sigma_values = all_run_ratings[player_type]['sigma']
-
-        avg_mu = np.mean(mu_values)
-        avg_sigma = np.mean(sigma_values)
-        mu_std = np.std(mu_values)  # Uncertainty across runs
-
-        # Elo conversion using each player's own sigma for scaling
-        # This makes sense since each player has different uncertainty
-        elo_score = 1500 + (avg_mu - vanilla_mu) * (200 / avg_sigma)
-
-        summary_data.append({
-            'player_type': player_type,
-            'mu': avg_mu,
-            'sigma': avg_sigma,
-            'mu_std': mu_std,
-            'elo': elo_score,
-        })
-
-    summary_df = pd.DataFrame(summary_data).sort_values('elo', ascending=False)
-
-    if verbose:
-        print("\n" + "=" * 76)
-        print("RATING SUMMARY")
-        print("=" * 76)
-        print(f"{'Rank':<6} {'Player Type':<25} {'Rating (μ)':<15} {'Sigma':<12} {'Elo':<10}")
-        print("-" * 76)
-
-        for rank, row in enumerate(summary_df.itertuples(), 1):
-            print(f"{rank:<6} {row.player_type:<25} {row.mu:>15.2f} {row.sigma:>12.3f} {row.elo:>10.0f}")
-
-        print("\n" + "=" * 76)
-        print(f"μ Range: {summary_df['mu'].max() - summary_df['mu'].min():.2f} rating points")
-        print(f"Elo Range: {summary_df['elo'].max() - summary_df['elo'].min():.0f} points")
-        print(f"Avg Uncertainty (μ_std): {summary_df['mu_std'].mean():.3f}")
-
-    return summary_df
-
-def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla', baseline_rating=25.0, verbose=True):
-    """
-    Compare OpenSkill ratings with OLS regression coefficients for validation.
+    Compare Plackett-Luce ratings with OLS regression coefficients for validation.
 
     Args:
         summary_df: DataFrame from calculate_ratings()
         ols_model: Fitted statsmodels OLS model
         baseline_type: Reference player type (default: 'Vanilla')
-        baseline_rating: Baseline rating value (default: 25.0)
+        baseline_rating: Baseline rating value (default: 0.0)
         verbose: Print comparison table
 
     Returns:
@@ -247,7 +187,7 @@ def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla', baseline_ra
 
     for _, row in summary_df.iterrows():
         player_type = row['player_type']
-        rating = row['mu']
+        rating = row['log_worth']
         rating_deviation = rating - baseline_rating
         ols_coef = ols_effects.get(player_type, np.nan)
 
@@ -262,14 +202,14 @@ def compare_with_ols(summary_df, ols_model, baseline_type='Vanilla', baseline_ra
 
     if verbose:
         print("=" * 60)
-        print("VALIDATION: OPENSKILL RATINGS vs OLS COEFFICIENTS")
+        print("VALIDATION: PLACKETT-LUCE MLE vs OLS COEFFICIENTS")
         print("=" * 60)
         print("\nComparison of ranking methods:\n")
-        print(f"{'Player Type':<25} {'Rank':<8} {'Rating Dev':<12} {'OLS Coef':<12}")
+        print(f"{'Player Type':<25} {'Rank':<8} {'Log-Worth':<12} {'OLS Coef':<12}")
         print("-" * 57)
 
         for idx, row in enumerate(comparison_df.itertuples(), 1):
-            print(f"{row.player_type:<25} {idx:<8} {row.rating_deviation:>10.2f}   {row.ols_coefficient:>10.4f}")
+            print(f"{row.player_type:<25} {idx:<8} {row.rating_deviation:>10.4f}   {row.ols_coefficient:>10.4f}")
 
         # Calculate correlation
         valid_comparison = comparison_df.dropna()
