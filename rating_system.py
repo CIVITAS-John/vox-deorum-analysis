@@ -46,7 +46,7 @@ def calculate_ratings(strength_df, verbose=True, **kwargs):
 
     Returns:
         DataFrame with columns: player_type, worth, log_worth, se_log_worth,
-                                z_value, p_value, elo, se_elo, mu, sigma, mu_std
+                                z_value, p_value, elo, se_elo, mu, sigma
     """
     # Prepare input data for R script
     # Assign unique slot IDs for duplicate player types within each game
@@ -114,7 +114,6 @@ def calculate_ratings(strength_df, verbose=True, **kwargs):
         # Backward compatibility aliases
         results_df['mu'] = results_df['log_worth']
         results_df['sigma'] = results_df['se_log_worth']
-        results_df['mu_std'] = 0.0
 
         results_df = results_df.sort_values('elo', ascending=False)
 

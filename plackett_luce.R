@@ -21,9 +21,14 @@ colnames(rankings_mat) <- slot_ids
 for (i in seq_along(game_ids)) {
   game <- df[df$game_id == game_ids[i], ]
   game <- game[order(-game$adjusted_strength), ]
+  # Assign ranks with ties: differences within 0.01 are treated as tied
+  rank <- 1L
   for (j in seq_len(nrow(game))) {
+    if (j > 1 && (game$adjusted_strength[j - 1] - game$adjusted_strength[j]) >= 0.01) {
+      rank <- j
+    }
     col_idx <- match(game$slot_id[j], slot_ids)
-    rankings_mat[i, col_idx] <- j
+    rankings_mat[i, col_idx] <- rank
   }
 }
 
