@@ -77,6 +77,67 @@ def find_all_databases(root_dir):
     return db_files, game_ids
 
 
+def extract_game_timestamps(root_dir):
+    """
+    Extract game IDs and their timestamps from database filenames.
+
+    Database files are named like: {uuid}_{timestamp_ms}.db
+    The timestamp is a Unix timestamp in milliseconds.
+
+    Args:
+        root_dir: Root directory to search
+
+    Returns:
+        list of dicts with keys: game_id, timestamp, experiment
+    """
+    results = {}
+
+    for root, dirs, files in os.walk(root_dir):
+        for file in files:
+            if not file.endswith('.db') or "-player-" in file:
+                continue
+
+            parts = file[:-3].split('_')  # Remove ".db" and split
+            if len(parts) >= 2:
+                game_id = parts[0]
+                try:
+                    timestamp = int(parts[1])
+                except (ValueError, IndexError):
+                    continue
+
+                experiment = os.path.basename(root)
+
+                # Keep latest timestamp if duplicate game_ids
+                if game_id not in results or timestamp > results[game_id]['timestamp']:
+                    results[game_id] = {
+                        'game_id': game_id,
+                        'timestamp': timestamp,
+                        'experiment': experiment,
+                    }
+
+    return sorted(results.values(), key=lambda x: x['timestamp'])
+
+
+def export_game_timestamps(root_dir, output_file='game_timestamps.csv'):
+    """
+    Export game timestamps to CSV.
+
+    Args:
+        root_dir: Root directory to search for databases
+        output_file: Output CSV path
+
+    Returns:
+        int: Number of games written
+    """
+    rows = extract_game_timestamps(root_dir)
+
+    fieldnames = ['game_id', 'timestamp', 'experiment']
+    if write_csv_file(output_file, fieldnames, rows):
+        print(f"Exported {len(rows)} game timestamps to {output_file}")
+
+    return len(rows)
+
+
 def get_player_info_cache(cursor):
     """
     Pre-fetch and cache player information from the database.

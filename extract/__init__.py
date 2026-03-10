@@ -6,7 +6,7 @@ Extracts both panel data and turn-based data from Civilization game databases.
 
 import os
 import sys
-from .utilities import find_all_databases
+from .utilities import find_all_databases, export_game_timestamps
 from .extract_panel import export_panel_data
 from .extract_turns import export_turn_data
 
@@ -45,6 +45,12 @@ def main():
     if not db_files:
         print("\nNo database files found. Exiting.")
         return
+
+    # Export game timestamps
+    print("\n" + "-"*60)
+    print("EXTRACTING GAME TIMESTAMPS")
+    print("-"*60)
+    export_game_timestamps(root_dir)
 
     # Export panel data
     print("\n" + "-"*60)
