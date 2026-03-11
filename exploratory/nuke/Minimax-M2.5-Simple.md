@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Minimax-M2.5-Simple
 
-1 / 75 players escalated `flavor_use_nuke` to 100 (1.3%).
+1 / 85 players escalated `flavor_use_nuke` to 100 (1.2%).
 
 ---
 

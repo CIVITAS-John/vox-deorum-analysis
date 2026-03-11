@@ -1,6 +1,6 @@
 # Turn Use Nuke Rationale — Kimi-K2.5-Simple
 
-33 / 137 players escalated `flavor_use_nuke` to 100 (24.1%).
+34 / 141 players escalated `flavor_use_nuke` to 100 (24.1%).
 
 ---
 
@@ -52,21 +52,25 @@
 
 > Emergency defensive posture with nuclear deterrent imminent. Greece's 3:1 military superiority and diplomatic victory attempt in 6 turns creates existential crisis. Nuclear Fission completes in 1 turn with 14 uranium ready. Maximize UseNuke (100) for immediate atomic deployment. Maintain Defense/CityDefense/Mobilization at 100 to survive until deterrent operational. Reduce Naval from 95 to 85 as American destroyer threat is severe but manageable. Boost Espionage to 100 to protect science cities and maintain election rigging in Enns. Increase Spaceship to 95 as backup victory path if culture is disrupted. Diplomacy raised to 80 to counter Greece's 34 delegates in upcoming World Congress vote on United Nations proposal.
 
-**Assyria** · Turn 392 · Conquest
+**The Iroquois** · Turn 391 · Conquest
 
-> SURVIVAL MODE - GERMAN BETRAYAL RESPONSE: Germany's invasion is catastrophic. Reduced Offense to 40 (cannot attack superior forces), maintained Defense/CityDefense/Antiair at 100 to survive siege. Science 100 and Nuke/UseNuke 100 are existential priorities - atomic weapons only hope against 13k German military. Production 100 for emergency unit production. Espionage 100 to maintain Florence alliance and protect Kyzyl. Reduced Diplomacy to 90 (lost Lisbon/Sokoto/Buenos Aires to German coups). Naval reduced to 70 (coastal cities threatened by Germany). Focus: Hold cities, survive until nuclear deterrent operational.
+> TURN 390 - MANHATTAN PROJECT COMPLETES NEXT TURN. Nuclear weapons capability unlocked imminently; prioritizing UseNuke and Nuke flavors to 100 for immediate tactical nuclear strikes on Santiago/Murcia if uranium secured from Siam. Denmark upgraded to hostile for subsidizing Spanish victory - reduced Naval priority to 60 as coalition at sea fractured. Defense lowered to 80 to maximize offensive production. We have ~8 turns before World Congress votes on Passport System (+50% tourism) which would guarantee Spanish cultural victory. Must capture remaining Spanish cities immediately.
 
 **Mongolia** · Turn 392 · Conquest
 
 > Manhattan Project COMPLETED in Karakorum - nuclear weapons now available! With peace treaties expired and Patriotic War policy active, immediately shifting to total war footing. UseNuke increased to 100 to ensure immediate atomic weapon employment once Nuclear Fission completes (12 turns). Offense and Mobile at 95/90 for twin assaults on Persepolis (Persia) and Washington (America). Air 100 prioritizes Heavy Bombers for atomic bomb delivery via Radar technology. Will fight two-front war against Autocracy powers while maintaining deception toward Order allies, particularly Korea. Science 100 critical for Advanced Ballistics nuclear missile delivery systems.
 
-**The Celts** · Turn 395 · Conquest
+**Assyria** · Turn 392 · Conquest
 
-> Brazil's cultural victory timer ticks down to 22 turns - EXISTENTIAL CRISIS. While our military flavors are optimal, UseNuke at 50 is insufficient. Increasing to 100 ensures immediate nuclear deployment upon completing Nuclear Fission, bypassing AI hesitation. Brazil's 11,878 military strength vs our 8,014 means conventional victory is uncertain. Nuclear weapons are our only guaranteed method to: 1) Break Brazil's capital defenses, 2) Destroy their cultural infrastructure, 3) Trigger war weariness to slow their victory progress. Every turn of delay brings Brazil closer to cultural dominance. When we complete Nuclear Fission after Advanced Ballistics, we must strike Brasilia and Rio de Janeiro immediately. Current flavors already prioritize offense (100), mobilization (100), and nuclear arsenal buildup (Nuke: 100) - this completes the strategic triad by ensuring actual deployment. Denmark's defensive pact will trigger when we attack, providing crucial distraction while we focus on Brazil's core cities. This is civilization's final hour - hesitation means defeat.
+> SURVIVAL MODE - GERMAN BETRAYAL RESPONSE: Germany's invasion is catastrophic. Reduced Offense to 40 (cannot attack superior forces), maintained Defense/CityDefense/Antiair at 100 to survive siege. Science 100 and Nuke/UseNuke 100 are existential priorities - atomic weapons only hope against 13k German military. Production 100 for emergency unit production. Espionage 100 to maintain Florence alliance and protect Kyzyl. Reduced Diplomacy to 90 (lost Lisbon/Sokoto/Buenos Aires to German coups). Naval reduced to 70 (coastal cities threatened by Germany). Focus: Hold cities, survive until nuclear deterrent operational.
 
 **Brazil** · Turn 395 · Culture
 
 > Critical survival mode: Austrian military strength increased to 25,518 (6.8:1 ratio) with peace treaty expired. Reduced Offense to 0 to stop wasting resources on Polynesian war - need immediate consolidation. Maintained Defense/Mobilization/Nuke at maximum for existential defense. Increased Spaceship to 70 as backup victory path. Espionage at 100 to steal technologies from Austria. We have 7 turns to achieve Influential with Babylon for Cultural Victory while surviving Austrian onslaught. Nuclear deterrence is our only hope.
+
+**The Celts** · Turn 395 · Conquest
+
+> Brazil's cultural victory timer ticks down to 22 turns - EXISTENTIAL CRISIS. While our military flavors are optimal, UseNuke at 50 is insufficient. Increasing to 100 ensures immediate nuclear deployment upon completing Nuclear Fission, bypassing AI hesitation. Brazil's 11,878 military strength vs our 8,014 means conventional victory is uncertain. Nuclear weapons are our only guaranteed method to: 1) Break Brazil's capital defenses, 2) Destroy their cultural infrastructure, 3) Trigger war weariness to slow their victory progress. Every turn of delay brings Brazil closer to cultural dominance. When we complete Nuclear Fission after Advanced Ballistics, we must strike Brasilia and Rio de Janeiro immediately. Current flavors already prioritize offense (100), mobilization (100), and nuclear arsenal buildup (Nuke: 100) - this completes the strategic triad by ensuring actual deployment. Denmark's defensive pact will trigger when we attack, providing crucial distraction while we focus on Brazil's core cities. This is civilization's final hour - hesitation means defeat.
 
 **Spain** · Turn 403 · Conquest
 

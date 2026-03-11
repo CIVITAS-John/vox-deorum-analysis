@@ -35,21 +35,21 @@ class XGBoostPredictor(BasePredictor):
     SUPPORTED_FEATURES = None
     DEFAULT_FEATURES = None
     REQUIRED_FEATURES = None
-
+    
     def __init__(
         self,
         include_features: Optional[List[str]] = None,
         exclude_features: Optional[List[str]] = [], 
         random_state: int = 42,
-        n_estimators: int = 283,
+        n_estimators: int = 333,
         max_depth: int = 7,
-        learning_rate: float = 0.016178782415106625,
-        subsample: float = 0.5225408562969561,
-        colsample_bytree: float = 0.5763709457570474,
+        learning_rate: float = 0.014066264413832344,
+        subsample: float = 0.5205547017308437,
+        colsample_bytree: float = 0.5710688605978389,
         min_child_weight: int = 8,
-        gamma: float = 0.0019184141222548987,
+        gamma: float = 0.0013389265184810247,
         reg_alpha: float = 0,
-        reg_lambda: float = 0.3103900579555468,
+        reg_lambda: float = 0.314693252460326,
         calibrate: bool = False,
         calibration_method: str = 'isotonic',
         early_stopping_rounds: Optional[int] = 10,
