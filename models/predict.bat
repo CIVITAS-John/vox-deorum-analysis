@@ -1,1 +1,1 @@
-python evaluate_model.py --resample=undersample --predict --model=grouped_mlp --full-data
+python evaluate_model.py --resample=undersample --predict --model=mlp --full-data
