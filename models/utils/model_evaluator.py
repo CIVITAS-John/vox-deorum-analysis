@@ -8,7 +8,8 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import (
     roc_auc_score, brier_score_loss, log_loss,
-    balanced_accuracy_score, confusion_matrix, roc_curve, precision_recall_curve
+    balanced_accuracy_score, confusion_matrix, roc_curve, precision_recall_curve,
+    r2_score
 )
 from typing import Dict, List, Tuple, Optional, Literal
 import sys
@@ -120,16 +121,19 @@ def evaluate_fold(
         'brier_score': brier_score_loss(y_val, y_val_pred_proba),
         'log_loss': log_loss(y_val, y_val_pred_proba),
         'balanced_accuracy': balanced_accuracy_score(y_val, y_val_pred),
+        'r2': r2_score(y_val, y_val_pred_proba),
         # Train metrics (for overfitting detection)
         'train_roc_auc': roc_auc_score(y_train, y_train_pred_proba),
         'train_brier_score': brier_score_loss(y_train, y_train_pred_proba),
         'train_log_loss': log_loss(y_train, y_train_pred_proba),
         'train_balanced_accuracy': balanced_accuracy_score(y_train, y_train_pred),
-        # Overfitting gaps (positive = overfitting for ROC-AUC/Accuracy, negative for Brier/LogLoss)
+        'train_r2': r2_score(y_train, y_train_pred_proba),
+        # Overfitting gaps (positive = overfitting for ROC-AUC/Accuracy/R², negative for Brier/LogLoss)
         'overfitting_gap_roc_auc': roc_auc_score(y_train, y_train_pred_proba) - roc_auc_score(y_val, y_val_pred_proba),
         'overfitting_gap_brier': brier_score_loss(y_val, y_val_pred_proba) - brier_score_loss(y_train, y_train_pred_proba),
         'overfitting_gap_log_loss': log_loss(y_val, y_val_pred_proba) - log_loss(y_train, y_train_pred_proba),
         'overfitting_gap_balanced_accuracy': balanced_accuracy_score(y_train, y_train_pred) - balanced_accuracy_score(y_val, y_val_pred),
+        'overfitting_gap_r2': r2_score(y_train, y_train_pred_proba) - r2_score(y_val, y_val_pred_proba),
         # Dataset info
         'n_train': len(y_train),
         'n_val': len(y_val),
@@ -197,7 +201,9 @@ def evaluate_by_turn_phase(
         phase_metrics[phase_name] = {
             'roc_auc': roc_auc_score(y_phase, y_pred_proba),
             'brier_score': brier_score_loss(y_phase, y_pred_proba),
+            'log_loss': log_loss(y_phase, y_pred_proba),
             'balanced_accuracy': balanced_accuracy_score(y_phase, y_pred),
+            'r2': r2_score(y_phase, y_pred_proba),
             'n_samples': len(y_phase)
         }
 
@@ -421,6 +427,8 @@ def run_kfold_evaluation(
         'log_loss_std': metrics_df['log_loss'].std(),
         'balanced_accuracy_mean': metrics_df['balanced_accuracy'].mean(),
         'balanced_accuracy_std': metrics_df['balanced_accuracy'].std(),
+        'r2_mean': metrics_df['r2'].mean(),
+        'r2_std': metrics_df['r2'].std(),
         # Train metrics
         'train_roc_auc_mean': metrics_df['train_roc_auc'].mean(),
         'train_roc_auc_std': metrics_df['train_roc_auc'].std(),
@@ -430,11 +438,14 @@ def run_kfold_evaluation(
         'train_log_loss_std': metrics_df['train_log_loss'].std(),
         'train_balanced_accuracy_mean': metrics_df['train_balanced_accuracy'].mean(),
         'train_balanced_accuracy_std': metrics_df['train_balanced_accuracy'].std(),
+        'train_r2_mean': metrics_df['train_r2'].mean(),
+        'train_r2_std': metrics_df['train_r2'].std(),
         # Overfitting gaps
         'overfitting_gap_roc_auc_mean': metrics_df['overfitting_gap_roc_auc'].mean(),
         'overfitting_gap_brier_mean': metrics_df['overfitting_gap_brier'].mean(),
         'overfitting_gap_log_loss_mean': metrics_df['overfitting_gap_log_loss'].mean(),
         'overfitting_gap_balanced_accuracy_mean': metrics_df['overfitting_gap_balanced_accuracy'].mean(),
+        'overfitting_gap_r2_mean': metrics_df['overfitting_gap_r2'].mean(),
     }
 
     if verbose:
@@ -443,18 +454,21 @@ def run_kfold_evaluation(
         print(f"  Brier:             {summary['brier_score_mean']:.4f} ± {summary['brier_score_std']:.4f}")
         print(f"  Log Loss:          {summary['log_loss_mean']:.4f} ± {summary['log_loss_std']:.4f}")
         print(f"  Balanced Accuracy: {summary['balanced_accuracy_mean']:.4f} ± {summary['balanced_accuracy_std']:.4f}")
+        print(f"  R²:               {summary['r2_mean']:.4f} ± {summary['r2_std']:.4f}")
 
         print(f"\nTRAIN Metrics:")
         print(f"  ROC-AUC:           {summary['train_roc_auc_mean']:.4f} ± {summary['train_roc_auc_std']:.4f}")
         print(f"  Brier:             {summary['train_brier_score_mean']:.4f} ± {summary['train_brier_score_std']:.4f}")
         print(f"  Log Loss:          {summary['train_log_loss_mean']:.4f} ± {summary['train_log_loss_std']:.4f}")
         print(f"  Balanced Accuracy: {summary['train_balanced_accuracy_mean']:.4f} ± {summary['train_balanced_accuracy_std']:.4f}")
+        print(f"  R²:               {summary['train_r2_mean']:.4f} ± {summary['train_r2_std']:.4f}")
 
         print(f"\nOVERFITTING GAPS (Train - Val):")
         print(f"  ROC-AUC Gap:       {summary['overfitting_gap_roc_auc_mean']:+.4f}")
         print(f"  Brier Gap:         {summary['overfitting_gap_brier_mean']:+.4f}")
         print(f"  Log Loss Gap:      {summary['overfitting_gap_log_loss_mean']:+.4f}")
         print(f"  Bal.Acc Gap:       {summary['overfitting_gap_balanced_accuracy_mean']:+.4f}")
+        print(f"  R² Gap:            {summary['overfitting_gap_r2_mean']:+.4f}")
 
         # Add overfitting warnings
         if summary['overfitting_gap_roc_auc_mean'] > 0.05:
@@ -525,7 +539,9 @@ def run_kfold_evaluation(
                 print(f"\n{phase.upper()} game:")
                 print(f"  ROC-AUC: {phase_df['roc_auc'].mean():.4f} ± {phase_df['roc_auc'].std():.4f}")
                 print(f"  Brier Score: {phase_df['brier_score'].mean():.4f} ± {phase_df['brier_score'].std():.4f}")
+                print(f"  Log Loss: {phase_df['log_loss'].mean():.4f} ± {phase_df['log_loss'].std():.4f}")
                 print(f"  Balanced Accuracy: {phase_df['balanced_accuracy'].mean():.4f} ± {phase_df['balanced_accuracy'].std():.4f}")
+                print(f"  R²: {phase_df['r2'].mean():.4f} ± {phase_df['r2'].std():.4f}")
                 print(f"  Samples: {phase_df['n_samples'].sum()}")
 
     return summary, feature_importance, fold_models
