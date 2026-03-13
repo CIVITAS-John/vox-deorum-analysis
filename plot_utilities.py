@@ -1456,6 +1456,19 @@ def plot_distribution_histograms(df_data, column_name, xlabel, title,
 # REGRESSION VISUALIZATION UTILITIES
 # =====================================================
 
+def pvalue_to_stars(p):
+    """Convert p-value to significance stars: *** (p<0.001), ** (p<0.01), * (p<0.05), or ''."""
+    if np.isnan(p):
+        return ''
+    elif p < 0.001:
+        return '***'
+    elif p < 0.01:
+        return '**'
+    elif p < 0.05:
+        return '*'
+    return ''
+
+
 def clean_variable_name(name, var_type='condition'):
     """
     Clean up variable names from statsmodels coefficient names.
@@ -1743,23 +1756,6 @@ def plot_matchup_heatmap(matchup_df, count_df=None, pvalue_df=None,
                 return player_name[:-len(suffix)]
         return player_name
 
-    # Helper function to convert p-value to significance stars
-    def pvalue_to_stars(p_value):
-        """
-        Convert p-value to significance stars.
-        Returns: *** (p<0.001), ** (p<0.01), * (p<0.05), or '' (n.s.)
-        """
-        if np.isnan(p_value):
-            return ''
-        elif p_value < 0.001:
-            return '***'
-        elif p_value < 0.01:
-            return '**'
-        elif p_value < 0.05:
-            return '*'
-        else:
-            return ''
-
     # Create annotations with counts if provided
     if count_df is not None:
         annot_array = np.empty(plot_data.shape, dtype=object)
@@ -1833,6 +1829,71 @@ def plot_matchup_heatmap(matchup_df, count_df=None, pvalue_df=None,
                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
 
     plt.tight_layout()
+
+    return fig, ax
+
+
+def plot_coefficient_heatmap(coef_df, pval_df=None, count_df=None, pct_df=None,
+                              title="Coefficient Heatmap",
+                              figsize=(8, 10), cmap='RdYlGn', vmin=-1, vmax=1,
+                              cbar_label='OLS β', footnote=None):
+    """
+    Create a heatmap of regression coefficients with significance stars and counts.
+
+    Args:
+        coef_df: DataFrame (rows=groups, columns=variables) of coefficients
+        pval_df: Optional DataFrame of p-values (same shape)
+        count_df: Optional DataFrame of counts (same shape)
+        pct_df: Optional DataFrame of percentages (same shape)
+        title: Plot title
+        figsize: Figure size tuple
+        cmap: Colormap name
+        vmin, vmax: Colormap range
+        cbar_label: Colorbar label
+        footnote: Optional footnote text at bottom
+
+    Returns:
+        fig, ax: Matplotlib figure and axes objects
+    """
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    annot_array = np.empty(coef_df.shape, dtype=object)
+    for i in range(coef_df.shape[0]):
+        for j in range(coef_df.shape[1]):
+            b = coef_df.iloc[i, j]
+            if np.isnan(b):
+                annot_array[i, j] = ''
+                continue
+
+            stars = pvalue_to_stars(pval_df.iloc[i, j]) if pval_df is not None else ''
+            label = f'{b:.2f}{stars}'
+
+            if count_df is not None and pct_df is not None:
+                n = count_df.iloc[i, j]
+                pct = pct_df.iloc[i, j]
+                label += f'\n({int(n)}, {pct:.0f}%)'
+            elif count_df is not None:
+                n = count_df.iloc[i, j]
+                label += f'\n(n={int(n)})'
+
+            annot_array[i, j] = label
+
+    fig, ax = plt.subplots(figsize=figsize)
+    sns.heatmap(
+        coef_df, annot=annot_array, fmt='', center=0,
+        cmap=cmap, vmin=vmin, vmax=vmax,
+        linewidths=0.5, linecolor='gray', ax=ax,
+        cbar_kws={'label': cbar_label}
+    )
+    ax.set_title(title, fontsize=14, fontweight='bold')
+    ax.set_ylabel('')
+
+    plt.tight_layout()
+    if footnote:
+        fig.subplots_adjust(bottom=0.08)
+        fig.text(0.02, 0.01, footnote, fontsize=9, style='italic',
+                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
 
     return fig, ax
 
