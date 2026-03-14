@@ -23,7 +23,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from utils.model_registry import list_models, MODEL_REGISTRY
 from utils.model_evaluator import run_kfold_evaluation
-from utils.data_utils import load_and_prepare_base_data
+from utils.data_utils import load_and_prepare_base_data, needs_variant_columns
 
 
 def parse_comma_separated(value: Optional[str]) -> Optional[List[str]]:
@@ -139,8 +139,14 @@ def main():
     print("=" * 80 + "\n")
 
     # Preload data once - shared across all model evaluations
+    # Use keep_variants if any model needs features outside SELECTED_FEATURES
+    use_variants = any(
+        needs_variant_columns(MODEL_REGISTRY[m.lower()])
+        for m in model_names
+    )
     preloaded_df = load_and_prepare_base_data(
-        args.data, filter_experiments=filter_experiments
+        args.data, filter_experiments=filter_experiments,
+        keep_variants=use_variants
     )
 
     # Run evaluations

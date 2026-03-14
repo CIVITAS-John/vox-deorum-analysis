@@ -398,6 +398,14 @@ def get_selected_feature_names() -> List[str]:
     return list(SELECTED_FEATURES)
 
 
+def needs_variant_columns(model_class) -> bool:
+    """Check if model's DEFAULT_FEATURES includes columns outside SELECTED_FEATURES."""
+    defaults = getattr(model_class, 'DEFAULT_FEATURES', None)
+    if defaults is None:
+        return False
+    return bool(set(defaults) - set(SELECTED_FEATURES))
+
+
 def _validate_feature_config():
     """Verify SELECTED_FEATURES are all defined in FEATURE_GROUPS."""
     all_features = set(get_all_feature_names())

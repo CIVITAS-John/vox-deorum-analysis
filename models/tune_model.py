@@ -50,7 +50,7 @@ FEATURE_FAMILIES = {
     # Military: 2 variants
     'military':   {'adj': 'military_adj', 'share': 'military_share'},
     # Counts: 2 variants each
-    'cities':       {'raw': 'cities',       'share': 'cities_share'},
+    'cities':       {'none': '', 'raw': 'cities',       'share': 'cities_share'},
     'population':   {'raw': 'population',   'share': 'population_share'},
     'votes':        {'raw': 'votes',        'share': 'votes_share'},
     'minor_allies': {'raw': 'minor_allies', 'share': 'minor_allies_share'},
@@ -72,10 +72,10 @@ def suggest_feature_variants(trial: 'optuna.Trial') -> list:
 
     # Pick one variant per family (or 'none' to exclude)
     for family_name, variants in FEATURE_FAMILIES.items():
-        variant_names = list(variants.keys()) # + ['none']
+        variant_names = list(variants.keys())
         chosen = trial.suggest_categorical(f'feat_{family_name}', variant_names)
-        # if chosen != 'none':
-        selected.append(variants[chosen])
+        if chosen != 'none':
+            selected.append(variants[chosen])
 
     # Toggle features on/off
     for feat_name in TOGGLE_FEATURES:
@@ -92,8 +92,8 @@ def reconstruct_include_features(raw_params: dict) -> list:
     for family_name, variants in FEATURE_FAMILIES.items():
         key = f'feat_{family_name}'
         chosen = raw_params.get(key, 'share')  # default to share
-        # if chosen != 'none':
-        selected.append(variants[chosen])
+        if chosen != 'none':
+            selected.append(variants[chosen])
 
     for feat_name in TOGGLE_FEATURES:
         key = f'feat_{feat_name}'
@@ -221,12 +221,125 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     return params
 
 
+def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
+    """Define interaction MLP (DeepSets) hyperparameter search space.
+
+    Separate encoder and decoder architectures with constant-width residual blocks.
+    """
+    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 16)
+    encoder_size = trial.suggest_int('encoder_size', 32, 256)
+    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
+    decoder_size = trial.suggest_int('decoder_size', 32, 256)
+
+    params = {
+        'encoder_sizes': tuple([encoder_size] * n_encoder_layers),
+        'decoder_sizes': tuple([decoder_size] * n_decoder_layers),
+        'dropout': trial.suggest_float('dropout', 0.0, 0.5),
+        'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
+        'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
+        'epochs': trial.suggest_int('epochs', 5, 30),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
+    }
+
+    params['include_features'] = suggest_feature_variants(trial)
+
+    return params
+
+
 SEARCH_SPACES = {
     'xgboost': suggest_xgboost_params,
     'random_forest': suggest_random_forest_params,
     'mlp': suggest_mlp_params,
     'grouped_mlp': suggest_grouped_mlp_params,
+    'interaction_mlp': suggest_interaction_mlp_params,
 }
+
+# Per-model __init__ parameter metadata: (param_name, type_annotation, formatter)
+# formatter: 'g6' = 6 sig figs, 'tuple_repeat' = compact (x,)*n, None = repr()
+PARAM_SIGNATURES = {
+    'xgboost': [
+        ('n_estimators',       'int',   None),
+        ('max_depth',          'int',   None),
+        ('learning_rate',      'float', 'g6'),
+        ('subsample',          'float', 'g6'),
+        ('colsample_bytree',   'float', 'g6'),
+        ('min_child_weight',   'int',   None),
+        ('gamma',              'float', 'g6'),
+        ('reg_alpha',          'float', 'g6'),
+        ('reg_lambda',         'float', 'g6'),
+        ('calibrate',          'bool',  None),
+        ('calibration_method', 'str',   None),
+    ],
+    'mlp': [
+        ('layer_sizes',  'tuple', 'tuple_repeat'),
+        ('dropout',      'float', 'g6'),
+        ('lr',           'float', 'g6'),
+        ('weight_decay', 'float', 'g6'),
+        ('epochs',       'int',   None),
+        ('batch_size',   'int',   None),
+        ('loss_tp_alpha','float', 'g6'),
+    ],
+    'grouped_mlp': [
+        ('layer_sizes',       'Tuple[int, ...]', 'tuple_repeat'),
+        ('dropout',           'float',           'g6'),
+        ('lr',                'float',           'g6'),
+        ('weight_decay',      'float',           'g6'),
+        ('epochs',            'int',             None),
+        ('batch_size_groups', 'int',             None),
+        ('loss_tp_alpha',     'float',           'g6'),
+    ],
+    'interaction_mlp': [
+        ('encoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
+        ('decoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
+        ('dropout',           'float',           'g6'),
+        ('lr',                'float',           'g6'),
+        ('weight_decay',      'float',           'g6'),
+        ('epochs',            'int',             None),
+        ('batch_size_groups', 'int',             None),
+        ('loss_tp_alpha',     'float',           'g6'),
+    ],
+}
+
+
+def _format_value(value, formatter):
+    """Format a single parameter value for code output."""
+    if formatter == 'tuple_repeat':
+        if isinstance(value, (tuple, list)) and len(value) > 1 and len(set(value)) == 1:
+            return f"({value[0]},) * {len(value)}"
+        return repr(value)
+    elif formatter == 'g6':
+        return f"{value:.6g}"
+    elif isinstance(value, str):
+        return repr(value)
+    else:
+        return repr(value)
+
+
+def generate_init_snippet(model_name: str, converted_params: dict) -> str:
+    """Generate a Python code snippet for pasting into a model's __init__ defaults."""
+    if model_name not in PARAM_SIGNATURES:
+        return ""
+
+    lines = []
+
+    # Handle include_features -> DEFAULT_FEATURES class attribute
+    if 'include_features' in converted_params:
+        features = converted_params['include_features']
+        lines.append("DEFAULT_FEATURES = [")
+        for f in features:
+            lines.append(f"    '{f}',")
+        lines.append("]")
+        lines.append("")  # blank separator
+
+    # Handle __init__ params
+    for param_name, type_ann, formatter in PARAM_SIGNATURES[model_name]:
+        if param_name not in converted_params:
+            continue
+        value = converted_params[param_name]
+        formatted = _format_value(value, formatter)
+        lines.append(f"{param_name}: {type_ann} = {formatted},")
+
+    return "\n".join(lines)
 
 
 def convert_best_params(model_name: str, best_params: Dict) -> Dict:
@@ -253,6 +366,17 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
             # Both MLP and grouped MLP use constant-width residual architecture
             sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
             params['layer_sizes'] = sizes
+
+    if model_name == 'interaction_mlp':
+        n_enc = params.pop('n_encoder_layers', None)
+        enc_size = params.pop('encoder_size', None)
+        n_dec = params.pop('n_decoder_layers', None)
+        dec_size = params.pop('decoder_size', None)
+
+        if n_enc is not None and enc_size is not None:
+            params['encoder_sizes'] = tuple([enc_size] * n_enc) if n_enc > 0 else ()
+        if n_dec is not None and dec_size is not None:
+            params['decoder_sizes'] = tuple([dec_size] * n_dec) if n_dec > 0 else ()
 
     return params
 
@@ -421,7 +545,7 @@ def tune_model(
 
     # Preload data and precompute k-fold splits once - shared across all trials
     # Use keep_variants=True to preserve raw/adj columns for feature variant tuning
-    use_variants = model_name in ('xgboost', 'mlp', 'grouped_mlp')
+    use_variants = model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp')
     preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
 
     model_class = MODEL_REGISTRY[model_name]
@@ -480,6 +604,8 @@ def tune_model(
 
     def save_best_callback(study, trial):
         if study.best_trial.number == trial.number:
+            converted = convert_best_params(model_name, study.best_params)
+            code_snippet = generate_init_snippet(model_name, converted)
             best = {
                 'model': model_name,
                 'metric': metric,
@@ -489,6 +615,7 @@ def tune_model(
                 'best_trial': trial.number,
                 'n_trials_so_far': len(study.trials),
                 'resample_method': resample_method,
+                'generated_code': code_snippet,
             }
             with open(result_file, 'w') as f:
                 json.dump(best, f, indent=2, default=str)
@@ -560,6 +687,8 @@ def tune_model(
         elif key.startswith('overfitting_gap_'):
             overfitting_gaps[key] = best_summary[key]
 
+    code_snippet = generate_init_snippet(model_name, best_model_kwargs)
+
     result = {
         'model': model_name,
         'metric': metric,
@@ -577,6 +706,7 @@ def tune_model(
         },
         'train_metrics': train_metrics,
         'overfitting_gaps': overfitting_gaps,
+        'generated_code': code_snippet,
     }
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2, default=str)

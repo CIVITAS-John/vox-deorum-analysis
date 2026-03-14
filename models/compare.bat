@@ -1,1 +1,1 @@
-python compare_models.py --resample=undersample --models=baseline,xgboost,mlp,grouped_mlp,naive --full-data
+python compare_models.py --resample=undersample --models=xgboost,mlp,grouped_mlp,interaction_mlp --full-data

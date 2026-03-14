@@ -23,7 +23,7 @@ except ImportError:
 # Add parent directory for imports
 sys.path.append(str(Path(__file__).parent.parent))
 from models.base_predictor import BasePredictor
-from utils.data_utils import load_and_prepare_data, load_and_prepare_base_data, apply_resampling
+from utils.data_utils import load_and_prepare_data, load_and_prepare_base_data, apply_resampling, needs_variant_columns
 
 
 
@@ -336,9 +336,10 @@ def run_kfold_evaluation(
             # For non-phased models, filter to late game (80%+)
             phase_filter = (1, [0.8])
 
+        use_variants = needs_variant_columns(model_class)
         df, X, y, cv_splits = load_and_prepare_data(
             csv_path, filter_experiments, n_splits, random_state, phase_filter,
-            preloaded_df=preloaded_df
+            preloaded_df=preloaded_df, use_variant_columns=use_variants
         )
 
     # Store results
