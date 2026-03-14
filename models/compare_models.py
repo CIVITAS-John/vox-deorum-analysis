@@ -177,8 +177,6 @@ def main():
                 'log_loss_std': summary['log_loss_std'],
                 'balanced_accuracy_mean': summary['balanced_accuracy_mean'],
                 'balanced_accuracy_std': summary['balanced_accuracy_std'],
-                'r2_mean': summary['r2_mean'],
-                'r2_std': summary['r2_std'],
                 'n_features': len(models[0].get_selected_features()) if models else 0
             }
             results.append(result)
@@ -215,12 +213,9 @@ def main():
     display_df['Balanced Accuracy'] = display_df.apply(
         lambda x: f"{x['balanced_accuracy_mean']:.4f} ± {x['balanced_accuracy_std']:.4f}", axis=1
     )
-    display_df['R²'] = display_df.apply(
-        lambda x: f"{x['r2_mean']:.4f} ± {x['r2_std']:.4f}", axis=1
-    )
 
     # Use tabulate if available, otherwise fall back to pandas
-    table_df = display_df[['model', 'ROC-AUC', 'Brier (strat.)', 'Log Loss (strat.)', 'Balanced Accuracy', 'R²', 'n_features']]
+    table_df = display_df[['model', 'ROC-AUC', 'Brier (strat.)', 'Log Loss (strat.)', 'Balanced Accuracy', 'n_features']]
     if HAS_TABULATE:
         print(tabulate(table_df, headers='keys', tablefmt='simple', showindex=False))
     else:
@@ -243,8 +238,6 @@ def main():
           f"({comparison_df['log_loss_mean'].min():.4f})")
     print(f"Highest Balanced Accuracy:  {comparison_df.loc[comparison_df['balanced_accuracy_mean'].idxmax(), 'model']} "
           f"({comparison_df['balanced_accuracy_mean'].max():.4f})")
-    print(f"Highest R²:                {comparison_df.loc[comparison_df['r2_mean'].idxmax(), 'model']} "
-          f"({comparison_df['r2_mean'].max():.4f})")
     print("=" * 80 + "\n")
 
     return 0
