@@ -16,6 +16,7 @@ from models.baseline_model import BaselineVictoryPredictor
 from models.random_forest_model import RandomForestPredictor
 from models.grouped_mlp_model import GroupedMLPPredictor
 from models.interaction_mlp_model import InteractionMLPPredictor
+from models.attention_model import AttentionMLPPredictor
 from models.naive_model import NaivePredictor
 
 # Try to import new models (may fail if dependencies not installed)
@@ -53,6 +54,7 @@ if HAS_LIGHTGBM:
 
 MODEL_REGISTRY['mlp'] = MLPPredictor
 MODEL_REGISTRY['interaction_mlp'] = InteractionMLPPredictor
+MODEL_REGISTRY['attention_mlp'] = AttentionMLPPredictor
 
 
 def get_model(name: str, **kwargs) -> BasePredictor:

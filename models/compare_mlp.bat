@@ -1,0 +1,1 @@
+python compare_models.py --resample=undersample --models=mlp,grouped_mlp,interaction_mlp,attention_mlp --full-data
