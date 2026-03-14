@@ -170,7 +170,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Uses constant-width layers (same architecture as grouped MLP).
     """
-    n_layers = trial.suggest_int('n_layers', 1, 16)
+    n_layers = trial.suggest_int('n_layers', 1, 32)
     layer_size = trial.suggest_int('layer_size', 16, 256)
 
     # Constant width for all layers (residual connections require matching dims)
@@ -198,8 +198,8 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     Uses constant-width layers (required for residual skip connections).
     Supports up to 10 layers with the residual _UtilityNet architecture.
     """
-    n_layers = trial.suggest_int('n_layers', 1, 16)
-    layer_size = trial.suggest_int('layer_size', 32, 256)
+    n_layers = trial.suggest_int('n_layers', 1, 32)
+    layer_size = trial.suggest_int('layer_size', 16, 256)
 
     # Constant width for all layers (residual connections require matching dims)
     layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
@@ -227,9 +227,9 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
     Separate encoder and decoder architectures with constant-width residual blocks.
     """
     n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 16)
-    encoder_size = trial.suggest_int('encoder_size', 32, 256)
-    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
-    decoder_size = trial.suggest_int('decoder_size', 32, 256)
+    encoder_size = trial.suggest_int('encoder_size', 16, 256)
+    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 16)
+    decoder_size = trial.suggest_int('decoder_size', 16, 256)
 
     params = {
         'encoder_sizes': tuple([encoder_size] * n_encoder_layers),

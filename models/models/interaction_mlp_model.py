@@ -5,8 +5,8 @@ Interaction MLP predictor (DeepSets architecture) for real-time winrate.
 Key idea:
 - Group = (game_id, turn)
 - Encode each player's features into an embedding (shared encoder)
-- Pool embeddings across all players in the group (masked mean)
-- Decode [player_embed, pool_context] → scalar logit per player (shared decoder)
+- Pool embeddings across all players in the group (masked mean + max)
+- Decode [player_embed, mean_context, max_context] → scalar logit per player (shared decoder)
 - Softmax across players => winrate table
 
 Unlike GroupedMLPPredictor where each player is scored independently,
@@ -80,23 +80,30 @@ class _DeepSetsNet(nn.Module):
 
     Architecture:
     1. Encoder: per-player features → H-dim embedding (shared weights)
-    2. Pool: masked mean across players → context vector
-    3. Decoder: [player_embed, context] → scalar logit (shared weights)
+    2. Pool: masked mean + max across players → context vectors
+    3. Decoder: [player_embed, mean_context, max_context] → scalar logit (shared weights)
     """
+    POOL_MODES = ('mean', 'max', 'mean+max')
+
     def __init__(
         self,
         d_in: int,
         encoder_sizes: Tuple[int, ...] = (64,),
         decoder_sizes: Tuple[int, ...] = (64,),
         dropout: float = 0.0,
+        pool_mode: str = 'mean+max',
     ):
         super().__init__()
+        if pool_mode not in self.POOL_MODES:
+            raise ValueError(f"pool_mode must be one of {self.POOL_MODES}, got '{pool_mode}'")
+        self.pool_mode = pool_mode
         # Embedding dimension = first encoder layer size (or d_in if no layers)
         self.embed_dim = encoder_sizes[0] if encoder_sizes else d_in
+        n_pools = len(pool_mode.split('+'))
 
         self.encoder = _ResidualMLP(d_in, self.embed_dim, encoder_sizes, dropout)
-        # Decoder input: player embedding + pooled context = 2 * embed_dim
-        self.decoder = _ResidualMLP(self.embed_dim * 2, 1, decoder_sizes, dropout)
+        # Decoder input: player embedding + pooled context(s)
+        self.decoder = _ResidualMLP(self.embed_dim * (1 + n_pools), 1, decoder_sizes, dropout)
 
     def forward(self, x: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
         """
@@ -113,17 +120,24 @@ class _DeepSetsNet(nn.Module):
         flat = x.reshape(B * P, D)
         h = self.encoder(flat).reshape(B, P, self.embed_dim)  # (B, P, H)
 
-        # 2. Masked mean pool across players
+        # 2. Pool across players
         mask_f = mask.unsqueeze(-1).float()  # (B, P, 1)
-        h_masked = h * mask_f
-        pool = h_masked.sum(dim=1) / mask_f.sum(dim=1).clamp(min=1)  # (B, H)
+        pools = []
+        if 'mean' in self.pool_mode:
+            h_masked = h * mask_f
+            pools.append(h_masked.sum(dim=1) / mask_f.sum(dim=1).clamp(min=1))  # (B, H)
+        if 'max' in self.pool_mode:
+            h_for_max = h.masked_fill(~mask.unsqueeze(-1), float('-inf'))
+            pools.append(h_for_max.max(dim=1).values)  # (B, H)
 
-        # 3. Broadcast context and concat with player embeddings
-        pool_expanded = pool.unsqueeze(1).expand(-1, P, -1)  # (B, P, H)
-        combined = torch.cat([h, pool_expanded], dim=-1)  # (B, P, 2H)
+        # 3. Broadcast and concat: [player_embed, pool_context(s)]
+        parts = [h]
+        for pool in pools:
+            parts.append(pool.unsqueeze(1).expand(-1, P, -1))
+        combined = torch.cat(parts, dim=-1)  # (B, P, (1+n_pools)*H)
 
         # 4. Decode to scalar logit per player
-        flat_combined = combined.reshape(B * P, self.embed_dim * 2)
+        flat_combined = combined.reshape(B * P, -1)
         logits = self.decoder(flat_combined).reshape(B, P)  # (B, P)
 
         return logits
@@ -168,6 +182,7 @@ class InteractionMLPPredictor(BasePredictor):
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
         encoder_sizes: Tuple[int, ...] = (128,),
         decoder_sizes: Tuple[int, ...] = (128,),
+        pool_mode: str = 'mean+max',
         dropout: float = 0.3,
         lr: float = 0.001,
         weight_decay: float = 0.001,
@@ -182,6 +197,7 @@ class InteractionMLPPredictor(BasePredictor):
 
         self.encoder_sizes = encoder_sizes
         self.decoder_sizes = decoder_sizes
+        self.pool_mode = pool_mode
         self.dropout = dropout
         self.lr = lr
         self.weight_decay = weight_decay
@@ -303,6 +319,7 @@ class InteractionMLPPredictor(BasePredictor):
             encoder_sizes=self.encoder_sizes,
             decoder_sizes=self.decoder_sizes,
             dropout=self.dropout,
+            pool_mode=self.pool_mode,
         ).to(self.device)
 
         is_xla = 'xla' in str(self.device)
@@ -453,6 +470,7 @@ class InteractionMLPPredictor(BasePredictor):
             "feature_names": self.feature_names,
             "encoder_sizes": self.encoder_sizes,
             "decoder_sizes": self.decoder_sizes,
+            "pool_mode": self.pool_mode,
             "dropout": self.dropout,
             "lr": self.lr,
             "epochs": self.epochs,
