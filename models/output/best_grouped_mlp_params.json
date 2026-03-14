@@ -2,7 +2,7 @@
   "model": "grouped_mlp",
   "metric": "brier_score",
   "direction": "minimize",
-  "best_value": 0.08328948218562993,
+  "best_value": 0.25033316641813047,
   "best_params": {
     "n_layers": 4,
     "layer_size": 36,
@@ -29,7 +29,31 @@
     "feat_religion_percentage": false,
     "feat_military_utilization": false
   },
-  "best_trial": 9,
-  "n_trials_so_far": 10,
-  "resample_method": null
+  "n_trials": 1000,
+  "resample_method": null,
+  "validation_metrics": {
+    "roc_auc": 0.8556610573279058,
+    "brier_score": 0.24778184447976387,
+    "log_loss": 0.7278421219115929,
+    "balanced_accuracy": 0.7018561762047563
+  },
+  "train_metrics": {
+    "train_roc_auc_mean": 0.8676681934346393,
+    "train_roc_auc_std": 0.0049145699400676085,
+    "train_brier_score_mean": 0.2390733677492894,
+    "train_brier_score_std": 0.0049126477905695526,
+    "train_log_loss_mean": 0.697083558574714,
+    "train_log_loss_std": 0.010934108706640293,
+    "train_balanced_accuracy_mean": 0.7143169405485589,
+    "train_balanced_accuracy_std": 0.007042357349661358,
+    "train_r2_mean": 0.2997445106506348,
+    "train_r2_std": 0.01216447946446427
+  },
+  "overfitting_gaps": {
+    "overfitting_gap_roc_auc_mean": 0.012007136106733474,
+    "overfitting_gap_brier_mean": 0.00870847673047448,
+    "overfitting_gap_log_loss_mean": 0.030758563336878698,
+    "overfitting_gap_balanced_accuracy_mean": 0.012460764343802565,
+    "overfitting_gap_r2_mean": 0.029317295551300047
+  }
 }

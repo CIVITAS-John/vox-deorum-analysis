@@ -185,6 +185,7 @@ def apply_city_adjustments(df: pd.DataFrame) -> pd.DataFrame:
     df['faith_adj'] = df['faith_per_turn'] / df['city_multiplier']
     df['production_adj'] = df['production_per_turn'] / df['city_multiplier']
     df['food_adj'] = df['food_per_turn'] / df['city_multiplier']
+    df['military_adj'] = df['military_strength'] / df['city_multiplier']
     df['population_per_city'] = df['population'] / df['cities'].replace(0, 1)
     df['territory_per_city'] = df['territory'] / df['cities'].replace(0, 1)
 
@@ -337,7 +338,7 @@ def drop_transformed_columns(df: pd.DataFrame, keep_variants: bool = False) -> p
             'military_units', 'military_supply',
             # Intermediate adjusted columns (-> shares)
             'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-            'faith_adj', 'production_adj', 'food_adj',
+            'faith_adj', 'production_adj', 'food_adj', 'military_adj',
             # Intermediate computation columns
             'city_multiplier', 'max_players',
             # Raw columns (-> shares/gaps)

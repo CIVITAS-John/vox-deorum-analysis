@@ -107,12 +107,12 @@ class GroupedMLPPredictor(BasePredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        layer_sizes: Tuple[int, ...] = (71,71),
-        dropout: float = 0.4768,
-        lr: float = 0.00721332,
-        weight_decay: float = 0.00226799,
-        epochs: int = 28,
-        batch_size_groups: int = 512,
+        layer_sizes: Tuple[int, ...] = (36,36,36,36),
+        dropout: float = 0.16103958279158914,
+        lr: float = 0.00026478660665736327,
+        weight_decay: float = 9.604882504090125e-05,
+        epochs: int = 12,
+        batch_size_groups: int = 1024,
         device: Optional[str] = None,
     ):
         super().__init__(include_features, exclude_features, random_state)
@@ -309,9 +309,6 @@ class GroupedMLPPredictor(BasePredictor):
 
             total_loss = (total_loss_t.item()) / n_batches
             print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
-
-            if epoch_callback is not None and not epoch_callback(epoch, total_loss):
-                break
 
         return self
 

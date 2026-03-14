@@ -39,28 +39,25 @@ from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data, 
 
 # Feature families: for each family, Optuna picks one variant (or 'none' to exclude)
 FEATURE_FAMILIES = {
-    # Per-turn rates: 4 variants (raw, adj, share, raw_share)
-    'science':    {'raw': 'science_per_turn',    'adj': 'science_adj',    'share': 'science_share',    'raw_share': 'science_raw_share'},
-    'culture':    {'raw': 'culture_per_turn',    'adj': 'culture_adj',    'share': 'culture_share',    'raw_share': 'culture_raw_share'},
-    'tourism':    {'raw': 'tourism_per_turn',    'adj': 'tourism_adj',    'share': 'tourism_share',    'raw_share': 'tourism_raw_share'},
-    'gold':       {'raw': 'gold_per_turn',       'adj': 'gold_adj',       'share': 'gold_share',       'raw_share': 'gold_raw_share'},
-    'faith':      {'raw': 'faith_per_turn',      'adj': 'faith_adj',      'share': 'faith_share',      'raw_share': 'faith_raw_share'},
-    'production': {'raw': 'production_per_turn', 'adj': 'production_adj', 'share': 'production_share', 'raw_share': 'production_raw_share'},
-    'food':       {'raw': 'food_per_turn',       'adj': 'food_adj',       'share': 'food_share',       'raw_share': 'food_raw_share'},
+    # Per-turn rates: 3 variants (adj, share, raw_share)
+    'science':    {'adj': 'science_adj',    'share': 'science_share',    'raw_share': 'science_raw_share'},
+    'culture':    {'adj': 'culture_adj',    'share': 'culture_share',    'raw_share': 'culture_raw_share'},
+    'tourism':    {'adj': 'tourism_adj',    'share': 'tourism_share',    'raw_share': 'tourism_raw_share'},
+    'gold':       {'adj': 'gold_adj',       'share': 'gold_share',       'raw_share': 'gold_raw_share'},
+    'faith':      {'adj': 'faith_adj',      'share': 'faith_share',      'raw_share': 'faith_raw_share'},
+    'production': {'adj': 'production_adj', 'share': 'production_share', 'raw_share': 'production_raw_share'},
+    'food':       {'adj': 'food_adj',       'share': 'food_share',       'raw_share': 'food_raw_share'},
     # Military: 2 variants
-    'military':   {'raw': 'military_strength', 'share': 'military_share'},
+    'military':   {'adj': 'military_adj', 'share': 'military_share'},
     # Counts: 2 variants each
     'cities':       {'raw': 'cities',       'share': 'cities_share'},
     'population':   {'raw': 'population',   'share': 'population_share'},
     'votes':        {'raw': 'votes',        'share': 'votes_share'},
     'minor_allies': {'raw': 'minor_allies', 'share': 'minor_allies_share'},
-    # Cumulative: 2 variants each
-    'technologies': {'raw': 'technologies', 'gap': 'technologies_gap'},
-    'policies':     {'raw': 'policies',     'gap': 'policies_gap'},
 }
 
 # Always included (derived from FEATURE_GROUPS to stay in sync with data_utils)
-FIXED_FEATURES = FEATURE_GROUPS['progress']
+FIXED_FEATURES = FEATURE_GROUPS['progress'] + FEATURE_GROUPS['gaps']
 
 # Toggleable features (on/off)
 TOGGLE_FEATURES = FEATURE_GROUPS['percentages']
@@ -75,10 +72,10 @@ def suggest_feature_variants(trial: 'optuna.Trial') -> list:
 
     # Pick one variant per family (or 'none' to exclude)
     for family_name, variants in FEATURE_FAMILIES.items():
-        variant_names = list(variants.keys()) + ['none']
+        variant_names = list(variants.keys()) # + ['none']
         chosen = trial.suggest_categorical(f'feat_{family_name}', variant_names)
-        if chosen != 'none':
-            selected.append(variants[chosen])
+        # if chosen != 'none':
+        #     selected.append(variants[chosen])
 
     # Toggle features on/off
     for feat_name in TOGGLE_FEATURES:
@@ -95,8 +92,8 @@ def reconstruct_include_features(raw_params: dict) -> list:
     for family_name, variants in FEATURE_FAMILIES.items():
         key = f'feat_{family_name}'
         chosen = raw_params.get(key, 'share')  # default to share
-        if chosen != 'none':
-            selected.append(variants[chosen])
+        # if chosen != 'none':
+        #     selected.append(variants[chosen])
 
     for feat_name in TOGGLE_FEATURES:
         key = f'feat_{feat_name}'
@@ -174,7 +171,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
     Uses constant-width layers (same architecture as grouped MLP).
     """
     n_layers = trial.suggest_int('n_layers', 1, 10)
-    layer_size = trial.suggest_int('layer_size', 32, 256)
+    layer_size = trial.suggest_int('layer_size', 16, 256)
 
     # Constant width for all layers (residual connections require matching dims)
     layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
@@ -246,9 +243,6 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
         params['include_features'] = reconstruct_include_features(params)
         for k in [k for k in params if k.startswith('feat_')]:
             del params[k]
-
-    # Remove old exclude_turn_progress if present
-    params.pop('exclude_turn_progress', None)
 
     if model_name in ('mlp', 'grouped_mlp'):
         n_layers = params.pop('n_layers', None)
