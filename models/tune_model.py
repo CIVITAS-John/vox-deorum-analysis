@@ -75,7 +75,7 @@ def suggest_feature_variants(trial: 'optuna.Trial') -> list:
         variant_names = list(variants.keys()) # + ['none']
         chosen = trial.suggest_categorical(f'feat_{family_name}', variant_names)
         # if chosen != 'none':
-        #     selected.append(variants[chosen])
+        selected.append(variants[chosen])
 
     # Toggle features on/off
     for feat_name in TOGGLE_FEATURES:
@@ -93,7 +93,7 @@ def reconstruct_include_features(raw_params: dict) -> list:
         key = f'feat_{family_name}'
         chosen = raw_params.get(key, 'share')  # default to share
         # if chosen != 'none':
-        #     selected.append(variants[chosen])
+        selected.append(variants[chosen])
 
     for feat_name in TOGGLE_FEATURES:
         key = f'feat_{feat_name}'
@@ -170,7 +170,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Uses constant-width layers (same architecture as grouped MLP).
     """
-    n_layers = trial.suggest_int('n_layers', 1, 10)
+    n_layers = trial.suggest_int('n_layers', 1, 16)
     layer_size = trial.suggest_int('layer_size', 16, 256)
 
     # Constant width for all layers (residual connections require matching dims)
@@ -198,7 +198,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     Uses constant-width layers (required for residual skip connections).
     Supports up to 10 layers with the residual _UtilityNet architecture.
     """
-    n_layers = trial.suggest_int('n_layers', 1, 10)
+    n_layers = trial.suggest_int('n_layers', 1, 16)
     layer_size = trial.suggest_int('layer_size', 32, 256)
 
     # Constant width for all layers (residual connections require matching dims)
