@@ -85,8 +85,8 @@ class GroupedMLPPredictor(GroupedTorchPredictor):
     SUPPORTED_FEATURES = None
     DEFAULT_FEATURES = [
         # City-adjusted per-turn rates
-        'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-        'food_adj', 'military_adj',
+        'science_share', 'culture_share', 'tourism_share', 'gold_share',
+        'food_share', 'military_share',
         # Raw share variants
         'faith_raw_share', 'production_raw_share',
         # Raw counts

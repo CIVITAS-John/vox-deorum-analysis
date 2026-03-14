@@ -2,12 +2,17 @@
 """
 Hyperparameter tuning script using Optuna for victory prediction models.
 
+Supports three tuning modes (--mode):
+    params     Tune model hyperparameters only (default). Uses model's DEFAULT_FEATURES.
+    variables  Tune feature variants only. Uses model's default hyperparameters.
+    both       Tune features and hyperparameters simultaneously (legacy behavior).
+
 Usage:
-    python tune_models.py --model xgboost --n-trials 100
-    python tune_models.py --model random_forest --n-trials 100 --metric brier_score
-    python tune_models.py --model mlp --n-trials 100
-    python tune_models.py --model all --n-trials 50
-    python tune_models.py --model xgboost --n-trials 100 --resample undersample
+    python tune_model.py --model grouped_mlp --n-trials 100
+    python tune_model.py --model grouped_mlp --n-trials 100 --mode variables
+    python tune_model.py --model grouped_mlp --n-trials 100 --mode both
+    python tune_model.py --model all --n-trials 50
+    python tune_model.py --model xgboost --n-trials 100 --resample undersample
 """
 
 import argparse
@@ -129,8 +134,6 @@ def suggest_xgboost_params(trial: 'optuna.Trial') -> Dict:
     else:
         params['calibration_method'] = 'sigmoid'  # unused but needs a value
 
-    params['include_features'] = suggest_feature_variants(trial)
-
     return params
 
 
@@ -187,8 +190,6 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         #),
     }
 
-    params['include_features'] = suggest_feature_variants(trial)
-
     return params
 
 
@@ -216,8 +217,6 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
     }
 
-    params['include_features'] = suggest_feature_variants(trial)
-
     return params
 
 
@@ -240,8 +239,6 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
         'epochs': trial.suggest_int('epochs', 5, 30),
         'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
     }
-
-    params['include_features'] = suggest_feature_variants(trial)
 
     return params
 
@@ -391,8 +388,14 @@ def create_objective(
     random_state: int = 42,
     resample_method: Optional[str] = None,
     precomputed_data=None,
+    mode: str = 'params',
 ):
-    """Create an Optuna objective function for a given model."""
+    """Create an Optuna objective function for a given model.
+
+    Args:
+        mode: 'params' (tune hyperparams only), 'variables' (tune features only),
+              or 'both' (tune both simultaneously).
+    """
 
     model_class = MODEL_REGISTRY[model_name]
     suggest_fn = SEARCH_SPACES[model_name]
@@ -401,7 +404,15 @@ def create_objective(
     minimize_metrics = {'brier_score', 'log_loss'}
 
     def objective(trial: 'optuna.Trial') -> float:
-        params = suggest_fn(trial)
+        if mode == 'variables':
+            # Only tune feature variants; use model defaults for hyperparams
+            params = {'include_features': suggest_feature_variants(trial)}
+        elif mode == 'params':
+            # Only tune hyperparams; use model's DEFAULT_FEATURES
+            params = suggest_fn(trial)
+        else:  # 'both'
+            params = suggest_fn(trial)
+            params['include_features'] = suggest_feature_variants(trial)
 
         # Unpack precomputed data for per-fold iteration
         df, X, y, cv_splits = precomputed_data
@@ -531,8 +542,14 @@ def tune_model(
     storage: Optional[str] = None,
     full_data: bool = False,
     n_jobs: int = 1,
+    mode: str = 'params',
 ) -> 'optuna.Study':
-    """Run Optuna hyperparameter tuning for a single model."""
+    """Run Optuna hyperparameter tuning for a single model.
+
+    Args:
+        mode: 'params' (tune hyperparams only, default), 'variables' (tune
+              feature variants only), or 'both' (tune both simultaneously).
+    """
 
     if not HAS_OPTUNA:
         print("Error: optuna is required. Install with: pip install optuna", file=sys.stderr)
@@ -545,7 +562,11 @@ def tune_model(
 
     # Preload data and precompute k-fold splits once - shared across all trials
     # Use keep_variants=True to preserve raw/adj columns for feature variant tuning
-    use_variants = model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp')
+    # Only needed when tuning variables (mode='variables' or 'both')
+    use_variants = (
+        mode in ('variables', 'both')
+        and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp')
+    )
     preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
 
     model_class = MODEL_REGISTRY[model_name]
@@ -569,10 +590,11 @@ def tune_model(
     objective, minimize = create_objective(
         model_name, metric, random_state, resample_method,
         precomputed_data=precomputed_data,
+        mode=mode,
     )
 
     direction = 'minimize' if minimize else 'maximize'
-    study_name = f"tune_{model_name}"
+    study_name = f"tune_{model_name}_{mode}"
     if resample_method:
         study_name += f"_{resample_method}"
 
@@ -586,8 +608,9 @@ def tune_model(
     )
 
     print("=" * 80)
-    print(f"TUNING: {model_name.upper()}")
+    print(f"TUNING: {model_name.upper()} ({mode} mode)")
     print("=" * 80)
+    print(f"Mode:       {mode}")
     print(f"Metric:     {metric} ({direction})")
     print(f"Trials:     {n_trials}")
     print(f"CV Splits:  {n_splits}")
@@ -600,7 +623,10 @@ def tune_model(
     # Callback to save best params whenever a new best trial is found
     output_dir = Path('output')
     output_dir.mkdir(exist_ok=True)
-    result_file = output_dir / f"best_{model_name}_params.json"
+    if mode == 'params':
+        result_file = output_dir / f"best_{model_name}_params.json"
+    else:
+        result_file = output_dir / f"best_{model_name}_{mode}_params.json"
 
     def save_best_callback(study, trial):
         if study.best_trial.number == trial.number:
@@ -608,6 +634,7 @@ def tune_model(
             code_snippet = generate_init_snippet(model_name, converted)
             best = {
                 'model': model_name,
+                'mode': mode,
                 'metric': metric,
                 'direction': direction,
                 'best_value': study.best_value,
@@ -691,6 +718,7 @@ def tune_model(
 
     result = {
         'model': model_name,
+        'mode': mode,
         'metric': metric,
         'direction': direction,
         'best_value': study.best_value,
@@ -721,10 +749,10 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python tune_models.py --model xgboost --n-trials 100
-  python tune_models.py --model mlp --n-trials 50 --metric log_loss
-  python tune_models.py --model random_forest --n-trials 100 --resample undersample
-  python tune_models.py --model all --n-trials 50
+  python tune_model.py --model grouped_mlp --n-trials 100                  # params mode (default)
+  python tune_model.py --model grouped_mlp --n-trials 100 --mode variables # feature variants only
+  python tune_model.py --model grouped_mlp --n-trials 100 --mode both      # legacy: both at once
+  python tune_model.py --model all --n-trials 50
         """
     )
 
@@ -771,6 +799,12 @@ Examples:
         '--n-jobs', type=int, default=1,
         help="Number of parallel Optuna jobs (default: 1)"
     )
+    parser.add_argument(
+        '--mode', type=str, default='params',
+        choices=['params', 'variables', 'both'],
+        help="Tuning mode: 'params' (hyperparams only, default), "
+             "'variables' (feature variants only), 'both' (simultaneous)"
+    )
 
     args = parser.parse_args()
 
@@ -790,6 +824,7 @@ Examples:
             storage=args.storage,
             full_data=args.full_data,
             n_jobs=args.n_jobs,
+            mode=args.mode,
         )
         print()
 
