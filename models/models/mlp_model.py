@@ -96,8 +96,9 @@ class MLPPredictor(BasePredictor):
 
         # Create model
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        import sys
         is_xla = 'xla' in str(self.device)
-        if not is_xla:
+        if not is_xla and sys.platform != 'win32':
             try:
                 self.model = torch.compile(self.model)
             except Exception:
