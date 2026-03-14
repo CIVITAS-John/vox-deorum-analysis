@@ -96,7 +96,23 @@ class GroupedMLPPredictor(BasePredictor):
     """
 
     SUPPORTED_FEATURES = None
-    DEFAULT_FEATURES = None
+    DEFAULT_FEATURES = [
+        # City-adjusted per-turn rates
+        'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
+        'food_adj', 'military_adj',
+        # Raw share variants
+        'faith_raw_share', 'production_raw_share',
+        # Raw counts
+        'cities', 'population', 'votes',
+        # Share variant
+        'minor_allies_share',
+        # Gaps from leader
+        'technologies_gap', 'policies_gap',
+        # Percentage / ratio metrics
+        'happiness_percentage', 'military_utilization',
+        # Progress
+        'turn_progress',
+    ]
     DISABLE_RESAMPLING = True
     REQUIRED_FEATURES = None
     REQUIRES_ID_COLUMNS = ['game_id', 'turn', 'player_id']
@@ -108,13 +124,13 @@ class GroupedMLPPredictor(BasePredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        layer_sizes: Tuple[int, ...] = (130),
-        dropout: float = 0.13394024308534622,
-        lr: float = 0.004196476230609499,
-        weight_decay: float = 0.00020220044775533165,
+        layer_sizes: Tuple[int, ...] = (174,),
+        dropout: float = 0.4792138768856818,
+        lr: float = 0.006582552285612628,
+        weight_decay: float = 7.4971997385145e-05,
         epochs: int = 6,
         batch_size_groups: int = 4096,
-        loss_tp_alpha: float = 0.6076629294179872,
+        loss_tp_alpha: float = 0.5452262063470605,
         device: Optional[str] = None,
     ):
         super().__init__(include_features, exclude_features, random_state)
