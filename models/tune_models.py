@@ -29,7 +29,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from utils.model_evaluator import run_kfold_evaluation
 from utils.model_registry import MODEL_REGISTRY
-from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data
+from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data, FEATURE_GROUPS
 
 
 # ============================================================================
@@ -58,11 +58,11 @@ FEATURE_FAMILIES = {
     'policies':     {'raw': 'policies',     'gap': 'policies_gap',     'share': 'policies_share'},
 }
 
-# Always included
-FIXED_FEATURES = ['turn_progress']
+# Always included (derived from FEATURE_GROUPS to stay in sync with data_utils)
+FIXED_FEATURES = FEATURE_GROUPS['progress']
 
 # Toggleable features (on/off)
-TOGGLE_FEATURES = ['happiness_percentage', 'religion_percentage', 'military_utilization']
+TOGGLE_FEATURES = FEATURE_GROUPS['percentages']
 
 
 def suggest_feature_variants(trial: 'optuna.Trial') -> list:

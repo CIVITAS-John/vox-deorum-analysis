@@ -15,7 +15,7 @@ from pathlib import Path
 # Add parent directory for imports
 sys.path.append(str(Path(__file__).parent.parent))
 from .base_predictor import BasePredictor
-from utils.data_utils import get_all_feature_names
+from utils.data_utils import get_selected_feature_names
 
 
 class BaselineVictoryPredictor(BasePredictor):
@@ -28,7 +28,7 @@ class BaselineVictoryPredictor(BasePredictor):
     # All numeric features are supported (no specific restrictions)
     SUPPORTED_FEATURES = None  # None = all features supported
     # Baseline uses all features EXCEPT turn_progress (to avoid temporal confounding)
-    DEFAULT_FEATURES = [f for f in get_all_feature_names() if f != 'turn_progress']
+    DEFAULT_FEATURES = [f for f in get_selected_feature_names() if f != 'turn_progress']
     REQUIRED_FEATURES = None   # None = no required features
 
     def __init__(

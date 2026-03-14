@@ -407,6 +407,11 @@ def get_all_feature_names() -> List[str]:
     return [f for group in FEATURE_GROUPS.values() for f in group]
 
 
+def get_selected_feature_names() -> List[str]:
+    """Return a copy of SELECTED_FEATURES."""
+    return list(SELECTED_FEATURES)
+
+
 def _validate_feature_config():
     """Verify SELECTED_FEATURES are all defined in FEATURE_GROUPS."""
     all_features = set(get_all_feature_names())
