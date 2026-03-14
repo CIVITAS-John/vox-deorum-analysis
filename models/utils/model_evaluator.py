@@ -326,7 +326,6 @@ def run_kfold_evaluation(
         # Check if model needs full game data
         needs_full_data = (
             (callable(model_class) and not isinstance(model_class, type)) or  # It's a factory function
-            model_class.__name__ == 'PhaseEnsemblePredictor' or
             (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
         )
 
@@ -595,10 +594,9 @@ def run_full_prediction(
     # Load data (without creating CV splits)
     from utils.data_utils import load_turn_data, apply_city_adjustments, add_relative_features, add_competitive_features, prepare_features, drop_transformed_columns
 
-    # Check if model needs full game data (e.g., PhaseEnsemble)
+    # Check if model needs full game data
     needs_full_data = (
         (callable(model_class) and not isinstance(model_class, type)) or  # It's a factory function
-        model_class.__name__ == 'PhaseEnsemblePredictor' or
         (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
     )
 

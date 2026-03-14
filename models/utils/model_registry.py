@@ -34,9 +34,6 @@ except ImportError:
 
 from models.mlp_model import MLPPredictor
 
-# Phase ensemble model
-from models.phase_ensemble_model import PhaseEnsemblePredictor
-
 
 # Registry mapping model names to classes
 MODEL_REGISTRY: Dict[str, Type[BasePredictor]] = {
@@ -54,42 +51,6 @@ if HAS_LIGHTGBM:
     MODEL_REGISTRY['lightgbm'] = LightGBMPredictor
 
 MODEL_REGISTRY['mlp'] = MLPPredictor
-
-def create_phase_ensemble(base_model_name: str, **default_ensemble_params):
-    """
-    Factory function to create phase ensemble variants.
-
-    Args:
-        base_model_name: Name of base model to use for each phase
-        **default_ensemble_params: Default parameters for ensemble
-
-    Returns:
-        Factory function for creating ensemble instances
-    """
-    def factory(**kwargs):
-        # Get base model class
-        if base_model_name not in MODEL_REGISTRY:
-            raise ValueError(f"Base model '{base_model_name}' not found in registry")
-
-        base_class = MODEL_REGISTRY[base_model_name]
-
-        # Separate ensemble-specific params from base model params
-        phase_boundaries = kwargs.pop('phase_boundaries', default_ensemble_params.get('phase_boundaries', [0.66, 0.82]))
-        blend_width = kwargs.pop('blend_width', default_ensemble_params.get('blend_width', 0))
-
-        return PhaseEnsemblePredictor(
-            base_model_class=base_class,
-            phase_boundaries=phase_boundaries,
-            blend_width=blend_width,
-            **kwargs
-        )
-
-    return factory
-
-
-# Register phase ensemble variants for all base models
-for base_name in ['baseline', 'random_forest', 'grouped_mlp', 'mlp', 'naive', 'xgboost']:
-    MODEL_REGISTRY[f'phase_{base_name}'] = create_phase_ensemble(base_name)
 
 
 def get_model(name: str, **kwargs) -> BasePredictor:

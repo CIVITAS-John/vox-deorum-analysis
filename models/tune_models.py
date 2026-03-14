@@ -33,6 +33,79 @@ from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data
 
 
 # ============================================================================
+# Feature variant tuning
+# ============================================================================
+
+# Feature families: for each family, Optuna picks one variant (or 'none' to exclude)
+FEATURE_FAMILIES = {
+    # Per-turn rates: 4 variants (raw, adj, share, raw_share)
+    'science':    {'raw': 'science_per_turn',    'adj': 'science_adj',    'share': 'science_share',    'raw_share': 'science_raw_share'},
+    'culture':    {'raw': 'culture_per_turn',    'adj': 'culture_adj',    'share': 'culture_share',    'raw_share': 'culture_raw_share'},
+    'tourism':    {'raw': 'tourism_per_turn',    'adj': 'tourism_adj',    'share': 'tourism_share',    'raw_share': 'tourism_raw_share'},
+    'gold':       {'raw': 'gold_per_turn',       'adj': 'gold_adj',       'share': 'gold_share',       'raw_share': 'gold_raw_share'},
+    'faith':      {'raw': 'faith_per_turn',      'adj': 'faith_adj',      'share': 'faith_share',      'raw_share': 'faith_raw_share'},
+    'production': {'raw': 'production_per_turn', 'adj': 'production_adj', 'share': 'production_share', 'raw_share': 'production_raw_share'},
+    'food':       {'raw': 'food_per_turn',       'adj': 'food_adj',       'share': 'food_share',       'raw_share': 'food_raw_share'},
+    # Military: 2 variants
+    'military':   {'raw': 'military_strength', 'share': 'military_share'},
+    # Counts: 2 variants each
+    'cities':       {'raw': 'cities',       'share': 'cities_share'},
+    'population':   {'raw': 'population',   'share': 'population_share'},
+    'votes':        {'raw': 'votes',        'share': 'votes_share'},
+    'minor_allies': {'raw': 'minor_allies', 'share': 'minor_allies_share'},
+    # Cumulative: 3 variants each
+    'technologies': {'raw': 'technologies', 'gap': 'technologies_gap', 'share': 'technologies_share'},
+    'policies':     {'raw': 'policies',     'gap': 'policies_gap',     'share': 'policies_share'},
+}
+
+# Always included
+FIXED_FEATURES = ['turn_progress']
+
+# Toggleable features (on/off)
+TOGGLE_FEATURES = ['happiness_percentage', 'religion_percentage', 'military_utilization']
+
+
+def suggest_feature_variants(trial: 'optuna.Trial') -> list:
+    """Let Optuna select one variant per feature family and toggle optional features.
+
+    Returns list of column names to use as include_features.
+    """
+    selected = list(FIXED_FEATURES)
+
+    # Pick one variant per family (or 'none' to exclude)
+    for family_name, variants in FEATURE_FAMILIES.items():
+        variant_names = list(variants.keys()) + ['none']
+        chosen = trial.suggest_categorical(f'feat_{family_name}', variant_names)
+        if chosen != 'none':
+            selected.append(variants[chosen])
+
+    # Toggle features on/off
+    for feat_name in TOGGLE_FEATURES:
+        if trial.suggest_categorical(f'feat_{feat_name}', [True, False]):
+            selected.append(feat_name)
+
+    return selected
+
+
+def reconstruct_include_features(raw_params: dict) -> list:
+    """Reconstruct include_features from feat_* trial params stored by Optuna."""
+    selected = list(FIXED_FEATURES)
+
+    for family_name, variants in FEATURE_FAMILIES.items():
+        key = f'feat_{family_name}'
+        chosen = raw_params.get(key, 'share')  # default to share
+        if chosen != 'none':
+            selected.append(variants[chosen])
+
+    for feat_name in TOGGLE_FEATURES:
+        key = f'feat_{feat_name}'
+        if raw_params.get(key, True):
+            selected.append(feat_name)
+
+    return selected
+
+
+# ============================================================================
 # Search space definitions
 # ============================================================================
 
@@ -58,10 +131,7 @@ def suggest_xgboost_params(trial: 'optuna.Trial') -> Dict:
     else:
         params['calibration_method'] = 'sigmoid'  # unused but needs a value
 
-    # Test whether excluding turn_progress helps
-    exclude_turn = trial.suggest_categorical('exclude_turn_progress', [True, False])
-    if exclude_turn:
-        params['exclude_features'] = ['turn_progress']
+    params['include_features'] = suggest_feature_variants(trial)
 
     return params
 
@@ -119,6 +189,8 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         ),
     }
 
+    params['include_features'] = suggest_feature_variants(trial)
+
     return params
 
 
@@ -145,6 +217,8 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         ),
     }
 
+    params['include_features'] = suggest_feature_variants(trial)
+
     return params
 
 
@@ -159,12 +233,21 @@ SEARCH_SPACES = {
 def convert_best_params(model_name: str, best_params: Dict) -> Dict:
     """Convert raw Optuna best_params to model kwargs.
 
-    Optuna stores intermediate trial parameters (e.g. n_layers, layer_size)
-    that the suggest functions convert into derived parameters (e.g. layer_sizes).
-    This function applies the same conversion so best_params can be passed
-    directly to model constructors.
+    Optuna stores intermediate trial parameters (e.g. n_layers, layer_size,
+    feat_* variant choices) that the suggest functions convert into derived
+    parameters. This function applies the same conversion so best_params
+    can be passed directly to model constructors.
     """
     params = dict(best_params)
+
+    # Reconstruct include_features from feat_* params
+    if any(k.startswith('feat_') for k in params):
+        params['include_features'] = reconstruct_include_features(params)
+        for k in [k for k in params if k.startswith('feat_')]:
+            del params[k]
+
+    # Remove old exclude_turn_progress if present
+    params.pop('exclude_turn_progress', None)
 
     if model_name in ('mlp', 'grouped_mlp'):
         n_layers = params.pop('n_layers', None)
@@ -272,7 +355,7 @@ def create_objective(
 
 def _format_params(params: Dict) -> str:
     """Format parameters for concise display."""
-    skip = {'exclude_features', 'calibration_method', 'validation_fraction'}
+    skip = {'exclude_features', 'include_features', 'calibration_method', 'validation_fraction'}
     parts = []
     for k, v in params.items():
         if k in skip:
@@ -314,12 +397,13 @@ def tune_model(
         sys.exit(1)
 
     # Preload data and precompute k-fold splits once - shared across all trials
-    preloaded_df = load_and_prepare_base_data(csv_path)
+    # Use keep_variants=True to preserve raw/adj columns for feature variant tuning
+    use_variants = model_name in ('xgboost', 'mlp', 'grouped_mlp')
+    preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
 
     model_class = MODEL_REGISTRY[model_name]
     needs_full_data = (
         (callable(model_class) and not isinstance(model_class, type)) or
-        model_class.__name__ == 'PhaseEnsemblePredictor' or
         (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
     )
     if full_data:
@@ -332,6 +416,7 @@ def tune_model(
     precomputed_data = load_and_prepare_data(
         csv_path, n_splits=n_splits, random_state=random_state,
         phase_filter=phase_filter, preloaded_df=preloaded_df,
+        use_variant_columns=use_variants,
     )
 
     objective, minimize = create_objective(

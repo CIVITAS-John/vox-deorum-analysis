@@ -13,7 +13,9 @@ import sys
 from pathlib import Path
 
 # Add parent directory for imports
+sys.path.append(str(Path(__file__).parent.parent))
 from .base_predictor import BasePredictor
+from utils.data_utils import get_all_feature_names
 
 
 class BaselineVictoryPredictor(BasePredictor):
@@ -25,18 +27,8 @@ class BaselineVictoryPredictor(BasePredictor):
 
     # All numeric features are supported (no specific restrictions)
     SUPPORTED_FEATURES = None  # None = all features supported
-    # Baseline model explicitly excludes turn_progress to avoid temporal confounding
-    DEFAULT_FEATURES = [
-        # Relative shares
-        'science_share', 'culture_share', 'tourism_share', 'gold_share',
-        'faith_share', 'production_share', 'food_share', 'military_share',
-        'cities_share', 'population_share', 'votes_share', 'minor_allies_share',
-        # Gaps from leader (cumulative metrics)
-        'technologies_gap', 'policies_gap',
-        # Percentage metrics
-        'happiness_percentage', 'religion_percentage'
-        # Explicitly excluding 'turn_progress' for baseline model
-    ]
+    # Baseline uses all features EXCEPT turn_progress (to avoid temporal confounding)
+    DEFAULT_FEATURES = [f for f in get_all_feature_names() if f != 'turn_progress']
     REQUIRED_FEATURES = None   # None = no required features
 
     def __init__(

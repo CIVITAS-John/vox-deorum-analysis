@@ -2,6 +2,56 @@
 """
 Data utilities for loading, processing, and splitting Civilization V game data.
 Handles city-based cost adjustments per Vox Populi mechanics.
+
+Feature Pipeline
+================
+1. load_turn_data()           - Load raw CSV, filter experiments/phases/zero-scores
+2. apply_city_adjustments()   - Per-city cost scaling (Vox Populi formula)
+3. add_relative_features()    - Score ratio, normalized rank, turn progress
+4. add_competitive_features() - Relative shares, gaps, military utilization
+5. drop_transformed_columns() - Remove raw/intermediate columns
+6. prepare_features()         - Select features from SELECTED_FEATURES (or all)
+7. BasePredictor._filter_features() - Per-model narrowing via DEFAULT_FEATURES
+
+Configuration Hierarchy
+-----------------------
+FEATURE_GROUPS    All engineered features, organized by type.
+SELECTED_FEATURES Default active subset for modeling (edit this to change defaults).
+Model.DEFAULT_FEATURES  Per-model override (e.g. baseline excludes turn_progress).
+
+Feature Reference
+-----------------
+Shares (relative to opponents within each turn):
+    Formula: (my_value / sum_all_in_turn) * num_players * 100
+    Average player = 100; values are comparable across different player counts.
+    City-adjusted inputs use: adjusted = value / max(1.05 * (cities - 1), 1.0)
+
+    science_share     Science per turn (city-adjusted) share
+    culture_share     Culture per turn (city-adjusted) share
+    tourism_share     Tourism per turn (city-adjusted) share
+    gold_share        Gold per turn (city-adjusted) share
+    faith_share       Faith per turn (city-adjusted) share
+    production_share  Production per turn (city-adjusted) share
+    food_share        Food per turn (city-adjusted) share
+    military_share    Military strength share (NOT city-adjusted)
+    cities_share      Number of cities share
+    population_share  Total population share
+    votes_share       World Congress votes share
+    minor_allies_share  City-state allies share
+
+Gaps (distance from turn leader):
+    Formula: max_value_in_turn - my_value
+
+    technologies_gap  Gap in number of technologies researched
+    policies_gap      Gap in number of policies adopted
+
+Percentages / Ratios:
+    happiness_percentage   Happiness % (0-100, raw from game)
+    religion_percentage    % of global cities following player's religion
+    military_utilization   military_units / military_supply (0 = none, 1 = at cap)
+
+Progress:
+    turn_progress   turn / max_turn (0 = start, 1 = end)
 """
 
 import pandas as pd
@@ -228,30 +278,91 @@ def add_competitive_features(df: pd.DataFrame) -> pd.DataFrame:
         group_max = df.groupby(group_key)[source_col].transform('max')
         df[target_col] = (group_max - df[source_col])
 
+    # Military utilization: fraction of supply cap used (0 = no units, 1 = at cap)
+    if 'military_units' in df.columns and 'military_supply' in df.columns:
+        df['military_utilization'] = df['military_units'] / df['military_supply'].replace(0, 1)
+
     return df
 
 
-def drop_transformed_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Drop original/intermediate columns that have been superseded by transformations."""
-    cols_to_drop = [
-        # Raw per-turn rates (-> adjusted -> shares)
-        'science_per_turn', 'culture_per_turn', 'tourism_per_turn',
-        'gold_per_turn', 'faith_per_turn', 'production_per_turn', 'food_per_turn',
-        # Raw absolute (-> adjusted -> share)
-        'military_strength',
-        # Intermediate adjusted columns (-> shares)
-        'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-        'faith_adj', 'production_adj', 'food_adj',
-        # Intermediate computation columns
-        'city_multiplier', 'max_players',
-        # Raw columns (-> shares/gaps)
-        'cities', 'population', 'territory', 'votes', 'minor_allies',
-        'technologies', 'policies',
-        # Raw columns (-> relative features)
-        'score', 'max_score', 'rank',
-        # Text column (space savings)
-        'rationale',
-    ]
+def add_raw_share_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Compute competitive shares from raw (non-city-adjusted) per-turn values.
+    These are alternatives to the adj-based shares in add_competitive_features().
+
+    Creates: science_raw_share, culture_raw_share, tourism_raw_share,
+             gold_raw_share, faith_raw_share, production_raw_share, food_raw_share
+    """
+    df = df.copy()
+    group_key = ['game_id', 'turn']
+    raw_share_metrics = {
+        'science_per_turn': 'science_raw_share',
+        'culture_per_turn': 'culture_raw_share',
+        'tourism_per_turn': 'tourism_raw_share',
+        'gold_per_turn': 'gold_raw_share',
+        'faith_per_turn': 'faith_raw_share',
+        'production_per_turn': 'production_raw_share',
+        'food_per_turn': 'food_raw_share',
+    }
+    for source_col, target_col in raw_share_metrics.items():
+        group_sum = df.groupby(group_key)[source_col].transform('sum').replace(0, 1)
+        df[target_col] = (df[source_col] / group_sum) * df['max_players'] * 100
+    return df
+
+
+def add_cumulative_share_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Compute competitive shares for cumulative metrics (technologies, policies).
+    These are alternatives to the gap variants in add_competitive_features().
+    """
+    df = df.copy()
+    group_key = ['game_id', 'turn']
+    for source_col, target_col in [('technologies', 'technologies_share'),
+                                    ('policies', 'policies_share')]:
+        group_sum = df.groupby(group_key)[source_col].transform('sum').replace(0, 1)
+        df[target_col] = (df[source_col] / group_sum) * df['max_players'] * 100
+    return df
+
+
+def drop_transformed_columns(df: pd.DataFrame, keep_variants: bool = False) -> pd.DataFrame:
+    """Drop original/intermediate columns that have been superseded by transformations.
+
+    Args:
+        df: DataFrame with all transformations applied
+        keep_variants: If True, keep raw/adj columns for variant tuning.
+                      Only drops computation intermediates.
+    """
+    if keep_variants:
+        cols_to_drop = [
+            'city_multiplier', 'max_players',
+            'rationale',
+            # These are always superseded
+            'military_units', 'military_supply',
+            'territory',
+            'score', 'max_score', 'rank',
+        ]
+    else:
+        cols_to_drop = [
+            # Raw per-turn rates (-> adjusted -> shares)
+            'science_per_turn', 'culture_per_turn', 'tourism_per_turn',
+            'gold_per_turn', 'faith_per_turn', 'production_per_turn', 'food_per_turn',
+            # Raw absolute (-> adjusted -> share)
+            'military_strength',
+            # Raw military columns (-> military_utilization)
+            'military_units', 'military_supply',
+            # Intermediate adjusted columns (-> shares)
+            'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
+            'faith_adj', 'production_adj', 'food_adj',
+            # Intermediate computation columns
+            'city_multiplier', 'max_players',
+            # Raw columns (-> shares/gaps)
+            'cities', 'population', 'territory', 'votes', 'minor_allies',
+            'technologies', 'policies',
+            # Raw columns (-> relative features)
+            'score', 'max_score', 'rank',
+            # Text column (space savings)
+            'rationale',
+        ]
     return df.drop(columns=[c for c in cols_to_drop if c in df.columns])
 
 
@@ -266,12 +377,44 @@ FEATURE_GROUPS = {
         'technologies_gap', 'policies_gap'
     ],
     'percentages': [
-        'happiness_percentage', 'religion_percentage'
+        'happiness_percentage', 'religion_percentage',
+        'military_utilization'
     ],
     'progress': [
         'turn_progress'
     ]
 }
+
+# Default feature selection for modeling.
+# To change which features are active, modify this list.
+SELECTED_FEATURES = [
+    # Relative shares (subset of FEATURE_GROUPS['shares'])
+    'tourism_share', 'gold_share',
+    'production_share', 'military_share',
+    'population_share', 'votes_share', 'minor_allies_share',
+    # Gaps from leader
+    'technologies_gap', 'policies_gap',
+    # Percentage / ratio metrics
+    'happiness_percentage', 'religion_percentage',
+    'military_utilization',
+    # Temporal
+    'turn_progress',
+]
+
+
+def get_all_feature_names() -> List[str]:
+    """Flat list of ALL feature names from FEATURE_GROUPS."""
+    return [f for group in FEATURE_GROUPS.values() for f in group]
+
+
+def _validate_feature_config():
+    """Verify SELECTED_FEATURES are all defined in FEATURE_GROUPS."""
+    all_features = set(get_all_feature_names())
+    unknown = set(SELECTED_FEATURES) - all_features
+    if unknown:
+        raise ValueError(f"SELECTED_FEATURES contains features not in FEATURE_GROUPS: {unknown}")
+
+_validate_feature_config()
 
 
 def get_all_available_features(df: pd.DataFrame, include_civs: bool = False) -> List[str]:
@@ -319,7 +462,12 @@ def get_feature_group(group_name: str) -> List[str]:
     return FEATURE_GROUPS[group_name].copy()
 
 
-def prepare_features(df: pd.DataFrame, keep_ids: bool = True) -> Tuple[pd.DataFrame, pd.Series]:
+def prepare_features(
+    df: pd.DataFrame,
+    keep_ids: bool = True,
+    use_all_features: bool = False,
+    use_variant_columns: bool = False
+) -> Tuple[pd.DataFrame, pd.Series]:
     """
     Prepare feature matrix X and target vector y for modeling.
 
@@ -327,22 +475,26 @@ def prepare_features(df: pd.DataFrame, keep_ids: bool = True) -> Tuple[pd.DataFr
         df: DataFrame with all preprocessing applied (including add_competitive_features)
         keep_ids: If True, include game_id, turn, player_id in X (default: True).
                   Models that don't need these columns will strip them automatically.
+        use_all_features: If True, use all features from FEATURE_GROUPS.
+                         If False, use SELECTED_FEATURES (default).
+        use_variant_columns: If True, pass through all numeric columns for variant tuning.
+                            Model's include_features will do the actual selection.
 
     Returns:
         Tuple of (X: features DataFrame, y: target Series)
     """
-    feature_cols = [
-        # Relative shares
-        # 'science_share', 'culture_share',
-        'tourism_share', 'gold_share',
-        'production_share', 'military_share',
-        'population_share', 'votes_share', 'minor_allies_share',
-        # 'faith_share', 'cities_share', , 'food_share'
-        # Gaps from leader (cumulative metrics)
-        'technologies_gap', 'policies_gap',
-        # Percentage metrics
-        'happiness_percentage', 'religion_percentage', 'turn_progress'
-    ]
+    if use_variant_columns:
+        # Pass all numeric columns; let model's include_features handle selection
+        meta_cols = {'game_id', 'turn', 'player_id', 'experiment', 'civilization',
+                     'is_winner', 'is_changed', 'max_turn'}
+        feature_cols = [c for c in df.columns
+                        if c not in meta_cols
+                        and not c.startswith('flavor_')
+                        and c != 'grand_strategy']
+    else:
+        feature_cols = get_all_feature_names() if use_all_features else list(SELECTED_FEATURES)
+        # Filter to columns actually present in the DataFrame
+        feature_cols = [c for c in feature_cols if c in df.columns]
 
     if keep_ids:
         # Include ID columns along with features (NEW BEHAVIOR - DEFAULT)
@@ -507,13 +659,18 @@ def get_kfold_splits(
 def load_and_prepare_base_data(
     csv_path: str = "../turn_data.csv",
     filter_experiments: Optional[List[str]] = None,
-    filter_zero_score: bool = True
+    filter_zero_score: bool = True,
+    keep_variants: bool = False
 ) -> pd.DataFrame:
     """
     Load CSV and run all feature engineering (no phase filter, no CV splits).
 
     This is the expensive part of data preparation. Call once and pass the result
     to load_and_prepare_data via preloaded_df to avoid redundant work.
+
+    Args:
+        keep_variants: If True, preserve raw/adj columns and add raw_share/cumulative_share
+                      variants for feature variant tuning.
 
     Returns:
         Processed DataFrame with all engineered features
@@ -522,8 +679,11 @@ def load_and_prepare_base_data(
                         filter_zero_score=filter_zero_score)
     df = apply_city_adjustments(df)
     df = add_relative_features(df)
+    if keep_variants:
+        df = add_raw_share_features(df)
+        df = add_cumulative_share_features(df)
     df = add_competitive_features(df)
-    df = drop_transformed_columns(df)
+    df = drop_transformed_columns(df, keep_variants=keep_variants)
     return df
 
 
@@ -534,7 +694,8 @@ def load_and_prepare_data(
     random_state: int = 42,
     phase_filter: Optional[Tuple[int, List[float]]] = None,
     filter_zero_score: bool = True,
-    preloaded_df: Optional[pd.DataFrame] = None
+    preloaded_df: Optional[pd.DataFrame] = None,
+    use_variant_columns: bool = False
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, List[Tuple[np.ndarray, np.ndarray]]]:
     """
     Full pipeline: load, adjust, engineer features, and create CV splits.
@@ -549,6 +710,7 @@ def load_and_prepare_data(
         filter_zero_score: If True, filters out records where score = 0 (eliminated players)
         preloaded_df: Pre-processed DataFrame from load_and_prepare_base_data.
                       When provided, skips CSV loading and feature engineering.
+        use_variant_columns: If True, pass all numeric columns through (for variant tuning).
 
     Returns:
         Tuple of (df_processed, X, y, cv_splits)
@@ -572,7 +734,7 @@ def load_and_prepare_data(
         df = drop_transformed_columns(df)
 
     # Prepare features
-    X, y = prepare_features(df)
+    X, y = prepare_features(df, use_variant_columns=use_variant_columns)
 
     # Generate CV splits
     if n_splits == 0:

@@ -68,6 +68,8 @@ TURN_FIELD_MAPPINGS = {
     'territory': None,         # Territory tiles controlled
     'technologies': None,      # Number of technologies researched
     'military_strength': None, # Military strength value
+    'military_units': None,    # Number of military units
+    'military_supply': None,   # Maximum supply capacity
     'gold': None,              # Total gold accumulated
     'gold_per_turn': None,     # Gold per turn
     'production_per_turn': None,  # Production per turn
@@ -357,6 +359,8 @@ def extract_game_turn_data(db_path):
                 COALESCE(ps.Territory, 0) as Territory,
                 COALESCE(ps.Technologies, 0) as Technologies,
                 COALESCE(ps.MilitaryStrength, 0) as MilitaryStrength,
+                COALESCE(ps.MilitaryUnits, 0) as MilitaryUnits,
+                COALESCE(ps.MilitarySupply, 0) as MilitarySupply,
                 COALESCE(ps.Gold, 0) as Gold,
                 COALESCE(ps.GoldPerTurn, 0) as GoldPerTurn,
                 COALESCE(ps.HappinessPercentage, 0) as HappinessPercentage,
@@ -382,6 +386,7 @@ def extract_game_turn_data(db_path):
 
         for row in cursor.fetchall():
             (turn_num, player_id, score, cities, pop, territory, tech, military,
+             military_units, military_supply,
              gold, gold_per_turn, happiness_percentage, culture_per_turn, science_per_turn,
              tourism_per_turn, faith_per_turn, policy_branches_json, votes, founded_religion, civilization) = row
 
@@ -419,6 +424,8 @@ def extract_game_turn_data(db_path):
                 'territory': territory if territory is not None else 0,
                 'technologies': tech if tech is not None else 0,
                 'military_strength': military if military is not None else 0,
+                'military_units': military_units if military_units is not None else 0,
+                'military_supply': military_supply if military_supply is not None else 0,
                 'gold': gold if gold is not None else 0,
                 'gold_per_turn': gold_per_turn if gold_per_turn is not None else 0,
                 'happiness_percentage': happiness_percentage if happiness_percentage is not None else 0,
@@ -558,6 +565,8 @@ def process_turn_group(turn_players, turn_data, experiment_name, game_id, max_tu
             'territory': player_info['territory'],
             'technologies': player_info['technologies'],
             'military_strength': player_info['military_strength'],
+            'military_units': player_info['military_units'],
+            'military_supply': player_info['military_supply'],
             'gold': player_info['gold'],
             'gold_per_turn': player_info['gold_per_turn'],
             'production_per_turn': production_per_turn,
