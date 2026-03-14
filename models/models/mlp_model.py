@@ -100,6 +100,7 @@ class MLPPredictor(BasePredictor):
         is_xla = 'xla' in str(self.device)
         if not is_xla and sys.platform != 'win32':
             try:
+                torch.set_float32_matmul_precision('high')
                 self.model = torch.compile(self.model)
             except Exception:
                 pass

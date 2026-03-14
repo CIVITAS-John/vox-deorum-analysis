@@ -326,6 +326,7 @@ class InteractionMLPPredictor(BasePredictor):
         import sys
         if not is_xla and sys.platform != 'win32':
             try:
+                torch.set_float32_matmul_precision('high')
                 self.model = torch.compile(self.model)
             except Exception:
                 pass
