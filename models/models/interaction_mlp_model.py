@@ -322,6 +322,7 @@ class InteractionMLPPredictor(BasePredictor):
             pool_mode=self.pool_mode,
         ).to(self.device)
 
+        self._uncompiled_model = self.model
         is_xla = 'xla' in str(self.device)
         import sys
         if not is_xla and sys.platform != 'win32':
@@ -389,6 +390,8 @@ class InteractionMLPPredictor(BasePredictor):
             total_loss = (total_loss_t.item()) / n_batches
             print(f"[InteractionMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
 
+        # Restore uncompiled model for inference (avoids FX/Dynamo conflicts)
+        self.model = self._uncompiled_model
         return self
 
     def predict_group_winrate(self, X: pd.DataFrame) -> pd.Series:

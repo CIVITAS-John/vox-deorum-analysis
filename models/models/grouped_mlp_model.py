@@ -270,6 +270,7 @@ class GroupedMLPPredictor(BasePredictor):
         # 4) Create model
         d = len(self.selected_features_)
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        self._uncompiled_model = self.model
         is_xla = 'xla' in str(self.device)
         import sys
         if not is_xla and sys.platform != 'win32':
@@ -343,6 +344,8 @@ class GroupedMLPPredictor(BasePredictor):
             total_loss = (total_loss_t.item()) / n_batches
             print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
 
+        # Restore uncompiled model for inference (avoids FX/Dynamo conflicts)
+        self.model = self._uncompiled_model
         return self
 
     def predict_group_winrate(self, X: pd.DataFrame) -> pd.Series:

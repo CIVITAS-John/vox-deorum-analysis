@@ -96,6 +96,7 @@ class MLPPredictor(BasePredictor):
 
         # Create model
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        self._uncompiled_model = self.model
         import sys
         is_xla = 'xla' in str(self.device)
         if not is_xla and sys.platform != 'win32':
@@ -164,6 +165,8 @@ class MLPPredictor(BasePredictor):
             if epoch_callback is not None and not epoch_callback(epoch, total_loss):
                 break
 
+        # Restore uncompiled model for inference (avoids FX/Dynamo conflicts)
+        self.model = self._uncompiled_model
         return self
 
     def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
