@@ -309,21 +309,6 @@ def add_raw_share_features(df: pd.DataFrame) -> pd.DataFrame:
         df[target_col] = (df[source_col] / group_sum) * df['max_players'] * 100
     return df
 
-
-def add_cumulative_share_features(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Compute competitive shares for cumulative metrics (technologies, policies).
-    These are alternatives to the gap variants in add_competitive_features().
-    """
-    df = df.copy()
-    group_key = ['game_id', 'turn']
-    for source_col, target_col in [('technologies', 'technologies_share'),
-                                    ('policies', 'policies_share')]:
-        group_sum = df.groupby(group_key)[source_col].transform('sum').replace(0, 1)
-        df[target_col] = (df[source_col] / group_sum) * df['max_players'] * 100
-    return df
-
-
 def drop_transformed_columns(df: pd.DataFrame, keep_variants: bool = False) -> pd.DataFrame:
     """Drop original/intermediate columns that have been superseded by transformations.
 
@@ -674,7 +659,7 @@ def load_and_prepare_base_data(
     to load_and_prepare_data via preloaded_df to avoid redundant work.
 
     Args:
-        keep_variants: If True, preserve raw/adj columns and add raw_share/cumulative_share
+        keep_variants: If True, preserve raw/adj columns and add raw_share
                       variants for feature variant tuning.
 
     Returns:
@@ -686,7 +671,6 @@ def load_and_prepare_base_data(
     df = add_relative_features(df)
     if keep_variants:
         df = add_raw_share_features(df)
-        df = add_cumulative_share_features(df)
     df = add_competitive_features(df)
     df = drop_transformed_columns(df, keep_variants=keep_variants)
     return df

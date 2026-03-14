@@ -53,9 +53,9 @@ FEATURE_FAMILIES = {
     'population':   {'raw': 'population',   'share': 'population_share'},
     'votes':        {'raw': 'votes',        'share': 'votes_share'},
     'minor_allies': {'raw': 'minor_allies', 'share': 'minor_allies_share'},
-    # Cumulative: 3 variants each
-    'technologies': {'raw': 'technologies', 'gap': 'technologies_gap', 'share': 'technologies_share'},
-    'policies':     {'raw': 'policies',     'gap': 'policies_gap',     'share': 'policies_share'},
+    # Cumulative: 2 variants each
+    'technologies': {'raw': 'technologies', 'gap': 'technologies_gap'},
+    'policies':     {'raw': 'policies',     'gap': 'policies_gap'},
 }
 
 # Always included (derived from FEATURE_GROUPS to stay in sync with data_utils)
