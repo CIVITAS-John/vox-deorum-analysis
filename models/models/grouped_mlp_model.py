@@ -31,6 +31,7 @@ class _BatchedGroups:
     X: np.ndarray          # (n_groups, max_players, n_features)
     y_indices: np.ndarray  # (n_groups,) winner index per group
     mask: np.ndarray       # (n_groups, max_players) True for real players
+    tp: np.ndarray         # (n_groups,) turn_progress per group
     n_groups: int
 
 
@@ -107,12 +108,13 @@ class GroupedMLPPredictor(BasePredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        layer_sizes: Tuple[int, ...] = (36,36,36,36),
-        dropout: float = 0.16103958279158914,
-        lr: float = 0.00026478660665736327,
-        weight_decay: float = 9.604882504090125e-05,
-        epochs: int = 12,
-        batch_size_groups: int = 1024,
+        layer_sizes: Tuple[int, ...] = (150,150,150,150,150,150),
+        dropout: float = 0.4920211620038405,
+        lr: float = 0.0001283376051197963,
+        weight_decay: float = 0.003208128364036625,
+        epochs: int = 18,
+        batch_size_groups: int = 4096,
+        loss_tp_alpha: float = 0.0,
         device: Optional[str] = None,
     ):
         super().__init__(include_features, exclude_features, random_state)
@@ -125,6 +127,7 @@ class GroupedMLPPredictor(BasePredictor):
         self.weight_decay = weight_decay
         self.epochs = epochs
         self.batch_size_groups = batch_size_groups
+        self.loss_tp_alpha = loss_tp_alpha
 
         if device:
             self.device = device
@@ -153,12 +156,15 @@ class GroupedMLPPredictor(BasePredictor):
             return X
         return (X - self._mu) / self._sigma
 
-    def _build_groups(self, df: pd.DataFrame, y: pd.Series) -> _BatchedGroups:
+    def _build_groups(self, df: pd.DataFrame, y: pd.Series, raw_tp: Optional[np.ndarray] = None) -> _BatchedGroups:
         """
         Convert row-wise data into padded, batched tensors for vectorized training.
 
         Uses vectorized pandas/numpy ops instead of Python for-loops.
         Returns _BatchedGroups with pre-padded arrays ready for GPU.
+
+        raw_tp: raw (pre-standardization) turn_progress values aligned to df.index,
+                used for temporal loss weighting. Must be in [0, 1].
         """
         g_game, g_turn = self.group_cols
 
@@ -208,7 +214,17 @@ class GroupedMLPPredictor(BasePredictor):
         winner_df = df[df["_is_winner"] == 1]
         y_indices[winner_df["_gid"].values] = winner_df["_pos"].values
 
-        return _BatchedGroups(X=X_padded, y_indices=y_indices, mask=mask, n_groups=n_groups)
+        # Turn progress per group (raw, pre-standardization values in [0,1])
+        tp = np.ones(n_groups, dtype=np.float32)
+        if raw_tp is not None:
+            # raw_tp is a Series with original index; .loc aligns to surviving rows
+            tp_vals = raw_tp.loc[df.index].values.astype(np.float32)
+            # One tp per group: take first row of each group
+            tp_per_row = pd.Series(tp_vals, index=df.index)
+            tp_df = df[["_gid"]].assign(_tp=tp_per_row).groupby("_gid")["_tp"].first()
+            tp[tp_df.index.values] = tp_df.values
+
+        return _BatchedGroups(X=X_padded, y_indices=y_indices, mask=mask, tp=tp, n_groups=n_groups)
 
     def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> "GroupedMLPPredictor":
         """
@@ -245,13 +261,21 @@ class GroupedMLPPredictor(BasePredictor):
         X_std = pd.concat([X[["game_id", "turn", "player_id"]], X_std], axis=1)
 
         # 3) Build grouped samples (padded tensors)
-        batched = self._build_groups(X_std, y)
+        #    Pass raw turn_progress (pre-standardization) for temporal loss weighting
+        raw_tp = X["turn_progress"] if "turn_progress" in X.columns and self.loss_tp_alpha != 0 else None
+        batched = self._build_groups(X_std, y, raw_tp=raw_tp)
         if batched.n_groups == 0:
             raise ValueError("No valid (game_id, turn) groups constructed. Check your data.")
 
         # 4) Create model
         d = len(self.selected_features_)
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        is_xla = 'xla' in str(self.device)
+        if not is_xla:
+            try:
+                self.model = torch.compile(self.model)
+            except Exception:
+                pass
 
         opt = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
 
@@ -268,11 +292,11 @@ class GroupedMLPPredictor(BasePredictor):
         X_all = torch.tensor(batched.X, dtype=torch.float32, device=self.device)     # (N, P, D)
         y_all = torch.tensor(batched.y_indices, dtype=torch.long, device=self.device) # (N,)
         mask_all = torch.tensor(batched.mask, device=self.device)                     # (N, P)
+        tp_all = torch.tensor(batched.tp, dtype=torch.float32, device=self.device) if self.loss_tp_alpha != 0 else None
         max_players = X_all.shape[1]
 
         # 5) Vectorized train loop
         self.model.train()
-        is_xla = 'xla' in str(self.device)
         gen_device = 'cpu' if is_xla or not torch.cuda.is_available() else self.device
         gen = torch.Generator(device=gen_device)
         gen.manual_seed(self.random_state)
@@ -286,8 +310,8 @@ class GroupedMLPPredictor(BasePredictor):
                 batch_idx_t = idx[start:start + self.batch_size_groups]
                 B = batch_idx_t.shape[0]
 
-                X_batch = X_all[batch_idx_t]     # (B, P, D)
-                y_batch = y_all[batch_idx_t]     # (B,)
+                X_batch = X_all[batch_idx_t]       # (B, P, D)
+                y_batch = y_all[batch_idx_t]       # (B,)
                 mask_batch = mask_all[batch_idx_t]  # (B, P)
 
                 # Single forward pass: flatten players, then reshape
@@ -298,7 +322,14 @@ class GroupedMLPPredictor(BasePredictor):
                 logits = logits.masked_fill(~mask_batch, float('-inf'))
 
                 opt.zero_grad()
-                loss = F.cross_entropy(logits, y_batch)
+                if tp_all is not None:
+                    # Temporal loss weighting: down-weight early-game (noisy features)
+                    tp_batch = tp_all[batch_idx_t]              # (B,)
+                    weight = tp_batch ** self.loss_tp_alpha      # (B,)
+                    raw_loss = F.cross_entropy(logits, y_batch, reduction='none')  # (B,)
+                    loss = (raw_loss * weight).mean()
+                else:
+                    loss = F.cross_entropy(logits, y_batch)
                 loss.backward()
                 opt.step()
                 if is_xla:
@@ -376,8 +407,10 @@ class GroupedMLPPredictor(BasePredictor):
     def predict(self, X: pd.DataFrame) -> np.ndarray:
         """
         Binary prediction: 1 if highest winrate in its group, else 0.
+        Reuses predict_proba to avoid a redundant forward pass.
         """
-        p = self.predict_group_winrate(X)
+        proba = self.predict_proba(X)
+        p = pd.Series(proba[:, 1], index=X.index, name="p_win_group")
         preds = np.zeros(len(X), dtype=np.int64)
 
         # Vectorized: find argmax within each group
@@ -403,6 +436,7 @@ class GroupedMLPPredictor(BasePredictor):
             "dropout": self.dropout,
             "lr": self.lr,
             "epochs": self.epochs,
+            "loss_tp_alpha": self.loss_tp_alpha,
             "device": self.device,
         }
 

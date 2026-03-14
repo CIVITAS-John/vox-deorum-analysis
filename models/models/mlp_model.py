@@ -43,6 +43,7 @@ class MLPPredictor(BasePredictor):
         weight_decay: float = 0.0017063017923362206,
         epochs: int = 7,
         batch_size: int = 4096,
+        loss_tp_alpha: float = 0.0,
         device: Optional[str] = None,
     ):
         super().__init__(include_features, exclude_features, random_state)
@@ -53,6 +54,7 @@ class MLPPredictor(BasePredictor):
         self.weight_decay = weight_decay
         self.epochs = epochs
         self.batch_size = batch_size
+        self.loss_tp_alpha = loss_tp_alpha
 
         if device:
             self.device = device
@@ -94,6 +96,12 @@ class MLPPredictor(BasePredictor):
 
         # Create model
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
+        is_xla = 'xla' in str(self.device)
+        if not is_xla:
+            try:
+                self.model = torch.compile(self.model)
+            except Exception:
+                pass
         opt = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
 
         # Log device
@@ -108,10 +116,13 @@ class MLPPredictor(BasePredictor):
         # Move data to device
         X_all = torch.tensor(Xmat, dtype=torch.float32, device=self.device)
         y_all = torch.tensor(ymat, dtype=torch.float32, device=self.device)
+        if self.loss_tp_alpha != 0 and "turn_progress" in X.columns:
+            tp_all = torch.tensor(X["turn_progress"].values, dtype=torch.float32, device=self.device)
+        else:
+            tp_all = None
 
         # Train loop
         self.model.train()
-        is_xla = 'xla' in str(self.device)
         gen_device = 'cpu' if is_xla or not torch.cuda.is_available() else self.device
         gen = torch.Generator(device=gen_device)
         gen.manual_seed(self.random_state)
@@ -130,7 +141,13 @@ class MLPPredictor(BasePredictor):
                 logits = self.model(X_batch)  # (B,)
 
                 opt.zero_grad()
-                loss = F.binary_cross_entropy_with_logits(logits, y_batch)
+                if tp_all is not None:
+                    tp_batch = tp_all[batch_idx]
+                    weight = tp_batch ** self.loss_tp_alpha
+                    raw_loss = F.binary_cross_entropy_with_logits(logits, y_batch, reduction='none')
+                    loss = (raw_loss * weight).mean()
+                else:
+                    loss = F.binary_cross_entropy_with_logits(logits, y_batch)
                 loss.backward()
                 opt.step()
                 if is_xla:
@@ -205,5 +222,6 @@ class MLPPredictor(BasePredictor):
             'weight_decay': self.weight_decay,
             'epochs': self.epochs,
             'batch_size': self.batch_size,
+            'loss_tp_alpha': self.loss_tp_alpha,
             'device': str(self.device),
         }

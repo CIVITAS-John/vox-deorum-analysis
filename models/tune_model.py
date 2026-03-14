@@ -213,6 +213,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         'batch_size_groups': trial.suggest_categorical(
             'batch_size_groups', [1024, 2048, 4096]
         ),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
     }
 
     params['include_features'] = suggest_feature_variants(trial)
