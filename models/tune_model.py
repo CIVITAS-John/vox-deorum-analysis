@@ -173,7 +173,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Uses constant-width layers (same architecture as grouped MLP).
     """
-    n_layers = trial.suggest_int('n_layers', 0, 10)
+    n_layers = trial.suggest_int('n_layers', 1, 10)
     layer_size = trial.suggest_int('layer_size', 32, 256)
 
     # Constant width for all layers (residual connections require matching dims)
@@ -184,9 +184,9 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         'dropout': trial.suggest_float('dropout', 0.0, 0.5),
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
-        'epochs': trial.suggest_int('epochs', 3, 30),
+        'epochs': trial.suggest_int('epochs', 5, 30),
         'batch_size': trial.suggest_categorical(
-            'batch_size', [2048, 4096, 8192, 16384]
+            'batch_size', [4096, 8192, 16384]
         ),
     }
 
@@ -201,7 +201,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     Uses constant-width layers (required for residual skip connections).
     Supports up to 10 layers with the residual _UtilityNet architecture.
     """
-    n_layers = trial.suggest_int('n_layers', 0, 10)
+    n_layers = trial.suggest_int('n_layers', 1, 10)
     layer_size = trial.suggest_int('layer_size', 32, 256)
 
     # Constant width for all layers (residual connections require matching dims)
@@ -212,9 +212,9 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         'dropout': trial.suggest_float('dropout', 0.0, 0.5),
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
-        'epochs': trial.suggest_int('epochs', 3, 30),
+        'epochs': trial.suggest_int('epochs', 5, 30),
         'batch_size_groups': trial.suggest_categorical(
-            'batch_size_groups', [512, 1024, 2048, 4096]
+            'batch_size_groups', [1024, 2048, 4096]
         ),
     }
 
@@ -300,13 +300,29 @@ def create_objective(
 
                 # Instantiate a fresh model for each fold
                 model = model_class(random_state=random_state, **params)
+
+                # Create epoch-level callback for MLP models
+                max_epochs = params.get('epochs', 0)
+                if max_epochs > 0:
+                    def epoch_cb(epoch, loss, _fold=fold_idx, _max=max_epochs):
+                        step = _fold * _max + epoch
+                        trial.report(loss, step)
+                        if trial.should_prune():
+                            raise optuna.TrialPruned()
+                        return True
+                else:
+                    epoch_cb = None
+
                 fold_metrics = evaluate_fold(
                     model, X_train, y_train, X_val, y_val,
                     clusters_train=clusters_train,
                     resample_method=resample_method,
                     random_state=random_state,
                     _resample_skip_warned=resample_skip_warned,
+                    epoch_callback=epoch_cb,
                 )
+            except optuna.TrialPruned:
+                raise  # Re-raise pruning signal to Optuna
             except Exception as e:
                 print(f"  Trial {trial.number} failed on fold {fold_idx}: {e}")
                 if metric in minimize_metrics:
@@ -334,8 +350,11 @@ def create_objective(
             fold_penalized_values.append(fold_val)
 
             # Report penalized running mean to Optuna for pruning
+            # Use step after all epoch steps to avoid conflicts
+            max_epochs = params.get('epochs', 0)
+            fold_step = len(cv_splits) * max_epochs + fold_idx if max_epochs > 0 else fold_idx
             running_mean = np.mean(fold_penalized_values)
-            trial.report(running_mean, fold_idx)
+            trial.report(running_mean, fold_step)
             if trial.should_prune():
                 raise optuna.TrialPruned()
 

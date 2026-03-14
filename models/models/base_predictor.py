@@ -142,7 +142,7 @@ class BasePredictor(ABC):
         return X[selected].copy()
 
     @abstractmethod
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'BasePredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'BasePredictor':
         """
         Fit the model on training data.
 

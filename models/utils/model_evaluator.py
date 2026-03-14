@@ -62,7 +62,8 @@ def evaluate_fold(
     clusters_train: pd.Series = None,
     resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
     random_state: int = 42,
-    _resample_skip_warned: Optional[set] = None
+    _resample_skip_warned: Optional[set] = None,
+    epoch_callback=None,
 ) -> Dict[str, float]:
     """
     Train and evaluate model on a single fold.
@@ -106,7 +107,7 @@ def evaluate_fold(
             )
 
     # Train model with cluster information
-    model.fit(X_train, y_train, clusters=clusters_train)
+    model.fit(X_train, y_train, clusters=clusters_train, epoch_callback=epoch_callback)
 
     # Predict on BOTH training and validation sets
     y_train_pred_proba = model.predict_proba(X_train)[:, 1]  # P(win) on train

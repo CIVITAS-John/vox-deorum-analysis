@@ -79,7 +79,7 @@ class MLPPredictor(BasePredictor):
             return X
         return (X - self._mu) / self._sigma
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'MLPPredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'MLPPredictor':
         # Filter features
         X_filtered = self._filter_features(X)
         self.feature_names = list(X_filtered.columns)
@@ -141,6 +141,9 @@ class MLPPredictor(BasePredictor):
 
             total_loss = total_loss_t.item() / n_batches
             print(f"[MLP] epoch={epoch} loss={total_loss:.4f} samples={n}")
+
+            if epoch_callback is not None and not epoch_callback(epoch, total_loss):
+                break
 
         return self
 

@@ -210,7 +210,7 @@ class GroupedMLPPredictor(BasePredictor):
 
         return _BatchedGroups(X=X_padded, y_indices=y_indices, mask=mask, n_groups=n_groups)
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> "GroupedMLPPredictor":
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> "GroupedMLPPredictor":
         """
         Fit grouped MLP using group-wise cross entropy.
 
@@ -309,6 +309,9 @@ class GroupedMLPPredictor(BasePredictor):
 
             total_loss = (total_loss_t.item()) / n_batches
             print(f"[GroupedMLP] epoch={epoch} loss={total_loss:.4f} groups={batched.n_groups}")
+
+            if epoch_callback is not None and not epoch_callback(epoch, total_loss):
+                break
 
         return self
 
