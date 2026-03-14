@@ -206,10 +206,10 @@ def main():
     display_df['ROC-AUC'] = display_df.apply(
         lambda x: f"{x['roc_auc_mean']:.4f} ± {x['roc_auc_std']:.4f}", axis=1
     )
-    display_df['Brier'] = display_df.apply(
+    display_df['Brier (strat.)'] = display_df.apply(
         lambda x: f"{x['brier_mean']:.4f} ± {x['brier_std']:.4f}", axis=1
     )
-    display_df['Log Loss'] = display_df.apply(
+    display_df['Log Loss (strat.)'] = display_df.apply(
         lambda x: f"{x['log_loss_mean']:.4f} ± {x['log_loss_std']:.4f}", axis=1
     )
     display_df['Balanced Accuracy'] = display_df.apply(
@@ -220,7 +220,7 @@ def main():
     )
 
     # Use tabulate if available, otherwise fall back to pandas
-    table_df = display_df[['model', 'ROC-AUC', 'Brier', 'Log Loss', 'Balanced Accuracy', 'R²', 'n_features']]
+    table_df = display_df[['model', 'ROC-AUC', 'Brier (strat.)', 'Log Loss (strat.)', 'Balanced Accuracy', 'R²', 'n_features']]
     if HAS_TABULATE:
         print(tabulate(table_df, headers='keys', tablefmt='simple', showindex=False))
     else:
@@ -237,9 +237,9 @@ def main():
     print("=" * 80)
     print(f"Highest ROC-AUC:            {comparison_df.loc[comparison_df['roc_auc_mean'].idxmax(), 'model']} "
           f"({comparison_df['roc_auc_mean'].max():.4f})")
-    print(f"Lowest Brier:               {comparison_df.loc[comparison_df['brier_mean'].idxmin(), 'model']} "
+    print(f"Lowest Brier (strat.):      {comparison_df.loc[comparison_df['brier_mean'].idxmin(), 'model']} "
           f"({comparison_df['brier_mean'].min():.4f})")
-    print(f"Lowest Log Loss:            {comparison_df.loc[comparison_df['log_loss_mean'].idxmin(), 'model']} "
+    print(f"Lowest Log Loss (strat.):   {comparison_df.loc[comparison_df['log_loss_mean'].idxmin(), 'model']} "
           f"({comparison_df['log_loss_mean'].min():.4f})")
     print(f"Highest Balanced Accuracy:  {comparison_df.loc[comparison_df['balanced_accuracy_mean'].idxmax(), 'model']} "
           f"({comparison_df['balanced_accuracy_mean'].max():.4f})")

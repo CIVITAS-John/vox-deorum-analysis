@@ -69,7 +69,7 @@ class RandomForestPredictor(BasePredictor):
         self.model = None
         self.feature_names = None
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'RandomForestPredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'RandomForestPredictor':
         """
         Fit Random Forest on training data.
 

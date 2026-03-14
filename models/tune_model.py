@@ -478,7 +478,29 @@ def tune_model(
         print(f"Storage:    {storage}")
     print("=" * 80)
 
-    study.optimize(objective, n_jobs=n_jobs, n_trials=n_trials, show_progress_bar=True)
+    # Callback to save best params whenever a new best trial is found
+    output_dir = Path('output')
+    output_dir.mkdir(exist_ok=True)
+    result_file = output_dir / f"best_{model_name}_params.json"
+
+    def save_best_callback(study, trial):
+        if study.best_trial.number == trial.number:
+            best = {
+                'model': model_name,
+                'metric': metric,
+                'direction': direction,
+                'best_value': study.best_value,
+                'best_params': study.best_params,
+                'best_trial': trial.number,
+                'n_trials_so_far': len(study.trials),
+                'resample_method': resample_method,
+            }
+            with open(result_file, 'w') as f:
+                json.dump(best, f, indent=2, default=str)
+            print(f"  ★ New best! Trial {trial.number}: {metric} = {study.best_value:.6f} → saved to {result_file}")
+
+    study.optimize(objective, n_jobs=n_jobs, n_trials=n_trials, show_progress_bar=True,
+                   callbacks=[save_best_callback])
 
     # Re-evaluate best trial to get full metrics including train performance
     print("\n" + "=" * 80)
@@ -533,11 +555,7 @@ def tune_model(
 
     print("=" * 80)
 
-    # Save best params to JSON with overfitting diagnostics
-    output_dir = Path('output')
-    output_dir.mkdir(exist_ok=True)
-    result_file = output_dir / f"best_{model_name}_params.json"
-
+    # Save final best params to JSON with overfitting diagnostics
     # Extract train metrics and overfitting gaps from best_summary
     train_metrics = {}
     overfitting_gaps = {}

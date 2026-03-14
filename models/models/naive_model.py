@@ -46,7 +46,7 @@ class NaivePredictor(BasePredictor):
         super().__init__(include_features, exclude_features, random_state)
         self.win_rate_ = None  # Will store positive / total from training
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'NaivePredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'NaivePredictor':
         """
         Fit the model by calculating win rate from training data.
 

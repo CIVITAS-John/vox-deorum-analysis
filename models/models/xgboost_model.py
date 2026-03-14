@@ -107,7 +107,7 @@ class XGBoostPredictor(BasePredictor):
         self.model = None
         self.feature_names = None
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'XGBoostPredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'XGBoostPredictor':
         """
         Fit XGBoost on training data.
 

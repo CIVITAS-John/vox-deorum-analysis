@@ -83,7 +83,7 @@ class LightGBMPredictor(BasePredictor):
         self.model = None
         self.feature_names = None
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'LightGBMPredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'LightGBMPredictor':
         """
         Fit LightGBM on training data.
 

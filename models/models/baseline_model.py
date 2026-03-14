@@ -50,7 +50,7 @@ class BaselineVictoryPredictor(BasePredictor):
         self.model_results = None  # Will store statsmodels LogitResults
         self.feature_names = None  # Will store feature names after filtering
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None) -> 'BaselineVictoryPredictor':
+    def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'BaselineVictoryPredictor':
         """
         Fit the model on training data.
 
