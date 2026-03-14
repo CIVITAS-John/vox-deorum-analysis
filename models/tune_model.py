@@ -27,7 +27,8 @@ except ImportError:
 # Add parent directory for imports
 sys.path.append(str(Path(__file__).parent))
 
-from utils.model_evaluator import run_kfold_evaluation
+import numpy as np
+from utils.model_evaluator import run_kfold_evaluation, evaluate_fold
 from utils.model_registry import MODEL_REGISTRY
 from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data, FEATURE_GROUPS
 
@@ -267,13 +268,9 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
 
 def create_objective(
     model_name: str,
-    csv_path: str,
-    metric: str = 'brier_score',
-    n_splits: int = 5,
+    metric: str = 'log_loss',
     random_state: int = 42,
     resample_method: Optional[str] = None,
-    preloaded_df=None,
-    full_data: bool = False,
     precomputed_data=None,
 ):
     """Create an Optuna objective function for a given model."""
@@ -287,65 +284,77 @@ def create_objective(
     def objective(trial: 'optuna.Trial') -> float:
         params = suggest_fn(trial)
 
-        try:
-            summary, _, _ = run_kfold_evaluation(
-                model_class=model_class,
-                model_kwargs=params,
-                csv_path=csv_path,
-                n_splits=n_splits,
-                random_state=random_state,
-                verbose=False,
-                save_importance_path=None,
-                resample_method=resample_method,
-                preloaded_df=preloaded_df,
-                full_data=full_data,
-                precomputed_data=precomputed_data,
-            )
-        except Exception as e:
-            print(f"  Trial {trial.number} failed: {e}")
-            # Return worst possible value
-            if metric in minimize_metrics:
-                return float('inf')
-            else:
-                return 0.0
+        # Unpack precomputed data for per-fold iteration
+        df, X, y, cv_splits = precomputed_data
 
-        value = summary[f'{metric}_mean']
+        fold_penalized_values = []
+        fold_raw_values = []
+        fold_gaps = []
+        resample_skip_warned = set()
 
-        # Check for overfitting using train metrics
-        train_metric_key = f'train_{metric}_mean'
-        if train_metric_key in summary:
-            train_value = summary[train_metric_key]
-            val_value = value
+        for fold_idx, (train_idx, val_idx) in enumerate(cv_splits):
+            try:
+                X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+                y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+                clusters_train = df.iloc[train_idx]['game_id']
 
-            # Compute overfitting gap (direction-aware)
-            if metric in minimize_metrics:
-                # For loss metrics: train should be lower (better) than validation
-                # Gap = val - train (positive gap = overfitting)
-                gap = val_value - train_value
-            else:
-                # For performance metrics: train should be higher (better) than validation
-                # Gap = train - val (positive gap = overfitting)
-                gap = train_value - val_value
+                # Instantiate a fresh model for each fold
+                model = model_class(random_state=random_state, **params)
+                fold_metrics = evaluate_fold(
+                    model, X_train, y_train, X_val, y_val,
+                    clusters_train=clusters_train,
+                    resample_method=resample_method,
+                    random_state=random_state,
+                    _resample_skip_warned=resample_skip_warned,
+                )
+            except Exception as e:
+                print(f"  Trial {trial.number} failed on fold {fold_idx}: {e}")
+                if metric in minimize_metrics:
+                    return float('inf')
+                else:
+                    return 0.0
 
-            # Detect excessive overfitting
-            overfitting_threshold = 0.05  # 5% gap threshold
-            if gap > overfitting_threshold:
-                print(f"  Trial {trial.number}: {metric} = {value:.6f} ⚠ OVERFITTING (gap={gap:.4f})  "
+            fold_val = fold_metrics[metric]
+            fold_train = fold_metrics.get(f'train_{metric}', None)
+            fold_raw_values.append(fold_val)
+
+            # Apply per-fold overfitting penalty before reporting to pruner
+            if fold_train is not None:
+                if metric in minimize_metrics:
+                    gap = fold_val - fold_train
+                else:
+                    gap = fold_train - fold_val
+                fold_gaps.append(gap)
+                penalty = gap**2 * 10
+                if metric in minimize_metrics:
+                    fold_val += penalty
+                else:
+                    fold_val -= penalty
+
+            fold_penalized_values.append(fold_val)
+
+            # Report penalized running mean to Optuna for pruning
+            running_mean = np.mean(fold_penalized_values)
+            trial.report(running_mean, fold_idx)
+            if trial.should_prune():
+                raise optuna.TrialPruned()
+
+        # All folds completed
+        value = np.mean(fold_penalized_values)
+        raw_value = np.mean(fold_raw_values)
+
+        # Log results
+        if fold_gaps:
+            gap = np.mean(fold_gaps)
+            train_value = raw_value - gap if metric in minimize_metrics else raw_value + gap
+            if gap > 0.05:
+                print(f"  Trial {trial.number}: {metric} = {raw_value:.6f} ⚠ OVERFITTING (gap={gap:.4f})  "
                       f"(params: {_format_params(params)})")
             else:
-                # Print normal progress with train-val info
-                print(f"  Trial {trial.number}: {metric} = {value:.6f} (train={train_value:.6f}, gap={gap:+.4f})  "
+                print(f"  Trial {trial.number}: {metric} = {raw_value:.6f} (train={train_value:.6f}, gap={gap:+.4f})  "
                       f"(params: {_format_params(params)})")
-
-            # Constantly apply penalty to discourage overfitting
-            penalty = gap**2 * 10  # gap ^ 2 * 10 as penalty (e.g. 0.1 => 0.1, 0.05 => 0.025, 0.01 => 0.001 etc)
-            if metric in minimize_metrics:
-                value += penalty  # Penalize by increasing the loss
-            else:
-                value -= penalty  # Penalize by decreasing the score
         else:
-            # Fall back to original progress print if train metrics not available
-            print(f"  Trial {trial.number}: {metric} = {value:.6f}  "
+            print(f"  Trial {trial.number}: {metric} = {raw_value:.6f}  "
                   f"(params: {_format_params(params)})")
 
         return value
@@ -377,7 +386,7 @@ def tune_model(
     model_name: str,
     n_trials: int = 100,
     csv_path: str = '../turn_data.csv',
-    metric: str = 'brier_score',
+    metric: str = 'log_loss',
     n_splits: int = 5,
     random_state: int = 42,
     resample_method: Optional[str] = None,
@@ -420,9 +429,7 @@ def tune_model(
     )
 
     objective, minimize = create_objective(
-        model_name, csv_path, metric, n_splits, random_state, resample_method,
-        preloaded_df=preloaded_df,
-        full_data=full_data,
+        model_name, metric, random_state, resample_method,
         precomputed_data=precomputed_data,
     )
 
@@ -564,13 +571,13 @@ Examples:
         help=f"Model to tune: {', '.join(list(SEARCH_SPACES.keys()) + ['all'])}"
     )
     parser.add_argument(
-        '--n-trials', type=int, default=100,
-        help="Number of Optuna trials (default: 100)"
+        '--n-trials', type=int, default=1000,
+        help="Number of Optuna trials (default: 1000)"
     )
     parser.add_argument(
         '--metric', type=str, default='brier_score',
         choices=['brier_score', 'log_loss', 'roc_auc', 'balanced_accuracy'],
-        help="Metric to optimize (default: brier_score)"
+        help="Metric to optimize (default: log_loss)"
     )
     parser.add_argument(
         '--data', type=str, default='../turn_data.csv',
