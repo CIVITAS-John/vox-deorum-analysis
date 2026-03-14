@@ -182,9 +182,9 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'batch_size': trial.suggest_categorical(
-            'batch_size', [4096, 8192, 16384]
-        ),
+        #'batch_size': trial.suggest_categorical(
+        #    'batch_size', [4096, 8192, 16384]
+        #),
     }
 
     params['include_features'] = suggest_feature_variants(trial)
@@ -210,9 +210,9 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'batch_size_groups': trial.suggest_categorical(
-            'batch_size_groups', [1024, 2048, 4096]
-        ),
+        #'batch_size_groups': trial.suggest_categorical(
+        #    'batch_size_groups', [1024, 2048, 4096]
+        #),
         'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
     }
 

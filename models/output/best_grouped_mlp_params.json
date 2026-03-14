@@ -2,13 +2,13 @@
   "model": "grouped_mlp",
   "metric": "brier_score",
   "direction": "minimize",
-  "best_value": 0.2435209353838709,
+  "best_value": 0.2432576273020187,
   "best_params": {
     "n_layers": 2,
-    "layer_size": 241,
-    "dropout": 0.44710590830304997,
-    "lr": 0.0003143751485920972,
-    "weight_decay": 0.00036558070226321726,
+    "layer_size": 251,
+    "dropout": 0.437642972027007,
+    "lr": 0.0003196399513689307,
+    "weight_decay": 0.0004191924736174832,
     "epochs": 6,
     "batch_size_groups": 4096,
     "feat_science": "adj",
@@ -27,7 +27,7 @@
     "feat_religion_percentage": false,
     "feat_military_utilization": true
   },
-  "best_trial": 245,
-  "n_trials_so_far": 246,
+  "best_trial": 264,
+  "n_trials_so_far": 265,
   "resample_method": null
 }

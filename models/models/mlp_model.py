@@ -42,7 +42,7 @@ class MLPPredictor(BasePredictor):
         lr: float = 0.0016508487822090463,
         weight_decay: float = 0.0017063017923362206,
         epochs: int = 7,
-        batch_size: int = 4096,
+        batch_size: int = 32768,
         loss_tp_alpha: float = 0.0,
         device: Optional[str] = None,
     ):

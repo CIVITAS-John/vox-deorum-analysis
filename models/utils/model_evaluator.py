@@ -26,35 +26,6 @@ from models.base_predictor import BasePredictor
 from utils.data_utils import load_and_prepare_data, load_and_prepare_base_data, apply_resampling
 
 
-def stratified_brier_score(y_true, y_pred_proba):
-    """Brier score stratified by actual outcome, then averaged.
-
-    Computes Brier score separately for winners (y=1) and losers (y=0),
-    then averages. Gives equal weight to both classes despite imbalanced
-    data (~25% win rate in 4-player games).
-    """
-    y_true, y_pred_proba = np.asarray(y_true), np.asarray(y_pred_proba)
-    pos, neg = y_true == 1, y_true == 0
-    if pos.sum() == 0 or neg.sum() == 0:
-        return brier_score_loss(y_true, y_pred_proba)
-    return (brier_score_loss(y_true[pos], y_pred_proba[pos]) +
-            brier_score_loss(y_true[neg], y_pred_proba[neg])) / 2
-
-
-def stratified_log_loss(y_true, y_pred_proba):
-    """Log loss stratified by actual outcome, then averaged.
-
-    Computes log loss separately for winners (y=1) and losers (y=0),
-    then averages. Gives equal weight to both classes despite imbalanced
-    data (~25% win rate in 4-player games).
-    """
-    y_true, y_pred_proba = np.asarray(y_true), np.asarray(y_pred_proba)
-    pos, neg = y_true == 1, y_true == 0
-    if pos.sum() == 0 or neg.sum() == 0:
-        return log_loss(y_true, y_pred_proba)
-    return (log_loss(y_true[pos], y_pred_proba[pos], labels=[0, 1]) +
-            log_loss(y_true[neg], y_pred_proba[neg], labels=[0, 1])) / 2
-
 
 def _strip_id_columns_if_not_needed(X: pd.DataFrame, model: BasePredictor) -> pd.DataFrame:
     """
@@ -148,18 +119,18 @@ def evaluate_fold(
     metrics = {
         # Validation metrics
         'roc_auc': roc_auc_score(y_val, y_val_pred_proba),
-        'brier_score': stratified_brier_score(y_val, y_val_pred_proba),
-        'log_loss': stratified_log_loss(y_val, y_val_pred_proba),
+        'brier_score': brier_score_loss(y_val, y_val_pred_proba),
+        'log_loss': log_loss(y_val, y_val_pred_proba),
         'balanced_accuracy': balanced_accuracy_score(y_val, y_val_pred),
         # Train metrics (for overfitting detection)
         'train_roc_auc': roc_auc_score(y_train, y_train_pred_proba),
-        'train_brier_score': stratified_brier_score(y_train, y_train_pred_proba),
-        'train_log_loss': stratified_log_loss(y_train, y_train_pred_proba),
+        'train_brier_score': brier_score_loss(y_train, y_train_pred_proba),
+        'train_log_loss': log_loss(y_train, y_train_pred_proba),
         'train_balanced_accuracy': balanced_accuracy_score(y_train, y_train_pred),
         # Overfitting gaps (positive = overfitting for ROC-AUC/Accuracy, negative for Brier/LogLoss)
         'overfitting_gap_roc_auc': roc_auc_score(y_train, y_train_pred_proba) - roc_auc_score(y_val, y_val_pred_proba),
-        'overfitting_gap_brier': stratified_brier_score(y_val, y_val_pred_proba) - stratified_brier_score(y_train, y_train_pred_proba),
-        'overfitting_gap_log_loss': stratified_log_loss(y_val, y_val_pred_proba) - stratified_log_loss(y_train, y_train_pred_proba),
+        'overfitting_gap_brier': brier_score_loss(y_val, y_val_pred_proba) - brier_score_loss(y_train, y_train_pred_proba),
+        'overfitting_gap_log_loss': log_loss(y_val, y_val_pred_proba) - log_loss(y_train, y_train_pred_proba),
         'overfitting_gap_balanced_accuracy': balanced_accuracy_score(y_train, y_train_pred) - balanced_accuracy_score(y_val, y_val_pred),
         # Dataset info
         'n_train': len(y_train),
@@ -227,8 +198,8 @@ def evaluate_by_turn_phase(
         # Compute metrics
         phase_metrics[phase_name] = {
             'roc_auc': roc_auc_score(y_phase, y_pred_proba),
-            'brier_score': stratified_brier_score(y_phase, y_pred_proba),
-            'log_loss': stratified_log_loss(y_phase, y_pred_proba),
+            'brier_score': brier_score_loss(y_phase, y_pred_proba),
+            'log_loss': log_loss(y_phase, y_pred_proba),
             'balanced_accuracy': balanced_accuracy_score(y_phase, y_pred),
             'n_samples': len(y_phase)
         }
@@ -381,7 +352,7 @@ def run_kfold_evaluation(
         print("\n" + "=" * 80)
         print("TRAINING AND EVALUATION")
         print("=" * 80)
-        print(f"\n{'Fold':<6} {'Val ROC-AUC':<12} {'Train ROC-AUC':<13} {'Gap':<8} {'Val S-Brier':<11} {'Train S-Brier':<13} {'Gap':<8}")
+        print(f"\n{'Fold':<6} {'Val ROC-AUC':<12} {'Train ROC-AUC':<13} {'Gap':<8} {'Val Brier':<11} {'Train Brier':<13} {'Gap':<8}")
         print("-" * 80)
 
     for fold_idx, (train_idx, val_idx) in enumerate(cv_splits):
@@ -471,27 +442,27 @@ def run_kfold_evaluation(
     if verbose:
         print(f"\nVALIDATION Metrics:")
         print(f"  ROC-AUC:           {summary['roc_auc_mean']:.4f} ± {summary['roc_auc_std']:.4f}")
-        print(f"  Brier (strat.):    {summary['brier_score_mean']:.4f} ± {summary['brier_score_std']:.4f}")
-        print(f"  Log Loss (strat.): {summary['log_loss_mean']:.4f} ± {summary['log_loss_std']:.4f}")
+        print(f"  Brier Score:    {summary['brier_score_mean']:.4f} ± {summary['brier_score_std']:.4f}")
+        print(f"  Log Loss: {summary['log_loss_mean']:.4f} ± {summary['log_loss_std']:.4f}")
         print(f"  Balanced Accuracy: {summary['balanced_accuracy_mean']:.4f} ± {summary['balanced_accuracy_std']:.4f}")
 
         print(f"\nTRAIN Metrics:")
         print(f"  ROC-AUC:           {summary['train_roc_auc_mean']:.4f} ± {summary['train_roc_auc_std']:.4f}")
-        print(f"  Brier (strat.):    {summary['train_brier_score_mean']:.4f} ± {summary['train_brier_score_std']:.4f}")
-        print(f"  Log Loss (strat.): {summary['train_log_loss_mean']:.4f} ± {summary['train_log_loss_std']:.4f}")
+        print(f"  Brier Score:    {summary['train_brier_score_mean']:.4f} ± {summary['train_brier_score_std']:.4f}")
+        print(f"  Log Loss: {summary['train_log_loss_mean']:.4f} ± {summary['train_log_loss_std']:.4f}")
         print(f"  Balanced Accuracy: {summary['train_balanced_accuracy_mean']:.4f} ± {summary['train_balanced_accuracy_std']:.4f}")
 
         print(f"\nOVERFITTING GAPS (Train - Val):")
         print(f"  ROC-AUC Gap:       {summary['overfitting_gap_roc_auc_mean']:+.4f}")
-        print(f"  S-Brier Gap:       {summary['overfitting_gap_brier_mean']:+.4f}")
-        print(f"  S-Log Loss Gap:    {summary['overfitting_gap_log_loss_mean']:+.4f}")
+        print(f"  Brier Gap:       {summary['overfitting_gap_brier_mean']:+.4f}")
+        print(f"  Log Loss Gap:    {summary['overfitting_gap_log_loss_mean']:+.4f}")
         print(f"  Bal.Acc Gap:       {summary['overfitting_gap_balanced_accuracy_mean']:+.4f}")
 
         # Add overfitting warnings
         if summary['overfitting_gap_roc_auc_mean'] > 0.05:
             print(f"\n⚠ WARNING: ROC-AUC gap > 5% - model may be overfitting!")
         if summary['overfitting_gap_brier_mean'] > 0.01:
-            print(f"\n⚠ WARNING: Stratified Brier score gap > 0.01 - model may be overfitting!")
+            print(f"\n⚠ WARNING: Brier score gap > 0.01 - model may be overfitting!")
         if summary['overfitting_gap_log_loss_mean'] > 0.05:
             print(f"\n⚠ WARNING: Log loss gap > 0.05 - model may be overfitting!")
 
@@ -555,8 +526,8 @@ def run_kfold_evaluation(
                 phase_df = pd.DataFrame(phase_data)
                 print(f"\n{phase.upper()} game:")
                 print(f"  ROC-AUC: {phase_df['roc_auc'].mean():.4f} ± {phase_df['roc_auc'].std():.4f}")
-                print(f"  Brier (strat.): {phase_df['brier_score'].mean():.4f} ± {phase_df['brier_score'].std():.4f}")
-                print(f"  Log Loss (strat.): {phase_df['log_loss'].mean():.4f} ± {phase_df['log_loss'].std():.4f}")
+                print(f"  Brier Score: {phase_df['brier_score'].mean():.4f} ± {phase_df['brier_score'].std():.4f}")
+                print(f"  Log Loss: {phase_df['log_loss'].mean():.4f} ± {phase_df['log_loss'].std():.4f}")
                 print(f"  Balanced Accuracy: {phase_df['balanced_accuracy'].mean():.4f} ± {phase_df['balanced_accuracy'].std():.4f}")
                 print(f"  Samples: {phase_df['n_samples'].sum()}")
 
