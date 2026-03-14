@@ -16,11 +16,11 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 
-from .base_predictor import BasePredictor
+from .base_torch_predictor import BaseTorchPredictor
 from .grouped_mlp_model import _UtilityNet
 
 
-class MLPPredictor(BasePredictor):
+class MLPPredictor(BaseTorchPredictor):
     """
     PyTorch MLP for victory prediction with GPU support.
     Uses the same residual _UtilityNet architecture as GroupedMLPPredictor,
@@ -30,7 +30,6 @@ class MLPPredictor(BasePredictor):
     SUPPORTED_FEATURES = None
     DEFAULT_FEATURES = None
     REQUIRED_FEATURES = None
-    DISABLE_RESAMPLING = True
 
     def __init__(
         self,
@@ -46,40 +45,19 @@ class MLPPredictor(BasePredictor):
         loss_tp_alpha: float = 0.0,
         device: Optional[str] = None,
     ):
-        super().__init__(include_features, exclude_features, random_state)
-
+        super().__init__(
+            include_features=include_features,
+            exclude_features=exclude_features,
+            random_state=random_state,
+            dropout=dropout,
+            lr=lr,
+            weight_decay=weight_decay,
+            epochs=epochs,
+            loss_tp_alpha=loss_tp_alpha,
+            device=device,
+        )
         self.layer_sizes = layer_sizes
-        self.dropout = dropout
-        self.lr = lr
-        self.weight_decay = weight_decay
-        self.epochs = epochs
         self.batch_size = batch_size
-        self.loss_tp_alpha = loss_tp_alpha
-
-        if device:
-            self.device = device
-        else:
-            try:
-                import torch_xla.core.xla_model as xm
-                self.device = xm.xla_device()
-            except (ImportError, RuntimeError):
-                self.device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        self.model: Optional[_UtilityNet] = None
-        self.feature_names: Optional[List[str]] = None
-        self._mu: Optional[np.ndarray] = None
-        self._sigma: Optional[np.ndarray] = None
-
-    def _standardize_fit(self, X: np.ndarray) -> np.ndarray:
-        self._mu = X.mean(axis=0)
-        self._sigma = X.std(axis=0)
-        self._sigma[self._sigma == 0] = 1.0
-        return (X - self._mu) / self._sigma
-
-    def _standardize_apply(self, X: np.ndarray) -> np.ndarray:
-        if self._mu is None or self._sigma is None:
-            return X
-        return (X - self._mu) / self._sigma
 
     def fit(self, X: pd.DataFrame, y: pd.Series, clusters: Optional[pd.Series] = None, epoch_callback=None) -> 'MLPPredictor':
         # Filter features
@@ -96,25 +74,9 @@ class MLPPredictor(BasePredictor):
 
         # Create model
         self.model = _UtilityNet(d_in=d, layer_sizes=self.layer_sizes, dropout=self.dropout).to(self.device)
-        self._uncompiled_model = self.model
-        import sys
-        is_xla = 'xla' in str(self.device)
-        if not is_xla and sys.platform != 'win32':
-            try:
-                torch.set_float32_matmul_precision('high')
-                self.model = torch.compile(self.model)
-            except Exception:
-                pass
+        self._compile_model()
         opt = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
-
-        # Log device
-        print(f"[MLP] Training on device: {self.device}")
-        if 'xla' in str(self.device):
-            print(f"[MLP] TPU available via torch_xla")
-        elif torch.cuda.is_available():
-            print(f"[MLP] GPU available: {torch.cuda.get_device_name(0)}")
-        else:
-            print(f"[MLP] GPU not available, using CPU")
+        self._log_device("MLP")
 
         # Move data to device
         X_all = torch.tensor(Xmat, dtype=torch.float32, device=self.device)
@@ -126,9 +88,8 @@ class MLPPredictor(BasePredictor):
 
         # Train loop
         self.model.train()
-        gen_device = 'cpu' if is_xla or not torch.cuda.is_available() else self.device
-        gen = torch.Generator(device=gen_device)
-        gen.manual_seed(self.random_state)
+        gen = self._make_generator()
+        scaler = self._create_scaler()
         n_batches = max(1, (n + self.batch_size - 1) // self.batch_size)
 
         for epoch in range(self.epochs):
@@ -141,22 +102,27 @@ class MLPPredictor(BasePredictor):
                 X_batch = X_all[batch_idx]  # (B, D)
                 y_batch = y_all[batch_idx]  # (B,)
 
-                logits = self.model(X_batch)  # (B,)
-
                 opt.zero_grad()
-                if tp_all is not None:
-                    tp_batch = tp_all[batch_idx]
-                    weight = tp_batch ** self.loss_tp_alpha
-                    raw_loss = F.binary_cross_entropy_with_logits(logits, y_batch, reduction='none')
-                    loss = (raw_loss * weight).mean()
-                else:
-                    loss = F.binary_cross_entropy_with_logits(logits, y_batch)
-                loss.backward()
-                opt.step()
-                if is_xla:
-                    import torch_xla.core.xla_model as xm
-                    xm.mark_step()
+                with torch.amp.autocast('cuda', enabled=self._amp_enabled):
+                    logits = self.model(X_batch)  # (B,)
 
+                    if tp_all is not None:
+                        tp_batch = tp_all[batch_idx]
+                        weight = tp_batch ** self.loss_tp_alpha
+                        raw_loss = F.binary_cross_entropy_with_logits(logits, y_batch, reduction='none')
+                        loss = (raw_loss * weight).mean()
+                    else:
+                        loss = F.binary_cross_entropy_with_logits(logits, y_batch)
+
+                if scaler is not None:
+                    scaler.scale(loss).backward()
+                    scaler.step(opt)
+                    scaler.update()
+                else:
+                    loss.backward()
+                    opt.step()
+
+                self._xla_mark_step()
                 total_loss_t += loss.detach()
 
             total_loss = total_loss_t.item() / n_batches
@@ -165,8 +131,7 @@ class MLPPredictor(BasePredictor):
             if epoch_callback is not None and not epoch_callback(epoch, total_loss):
                 break
 
-        # Restore uncompiled model for inference (avoids FX/Dynamo conflicts)
-        self.model = self._uncompiled_model
+        self._restore_model()
         return self
 
     def predict_proba(self, X: pd.DataFrame) -> np.ndarray:
