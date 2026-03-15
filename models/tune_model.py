@@ -444,8 +444,6 @@ def create_objective(
                     random_state=random_state,
                     _resample_skip_warned=resample_skip_warned,
                 )
-            except optuna.TrialPruned:
-                raise  # Re-raise pruning signal to Optuna
             except Exception as e:
                 print(f"  Trial {trial.number} failed on fold {fold_idx}: {e}")
                 if metric in minimize_metrics:
