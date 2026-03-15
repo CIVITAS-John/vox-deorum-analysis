@@ -16,6 +16,7 @@ Usage:
 """
 
 import argparse
+import gc
 import multiprocessing
 import sys
 import json
@@ -217,14 +218,17 @@ def suggest_attention_mlp_params(trial: 'optuna.Trial') -> Dict:
     Encoder-attention-decoder architecture with multi-head self-attention.
     """
     n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 8)
-    encoder_size = trial.suggest_int('encoder_size', 16, 256)
+    num_heads = trial.suggest_int('num_heads', 2, 8)
+    # embed_dim must be divisible by num_heads; sample a multiplier instead
+    encoder_mult = trial.suggest_int('encoder_mult', 2, 256 // num_heads)
+    encoder_size = encoder_mult * num_heads
     n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
     decoder_size = trial.suggest_int('decoder_size', 16, 256)
 
     params = {
         'encoder_sizes': tuple([encoder_size] * n_encoder_layers),
         'decoder_sizes': tuple([decoder_size] * n_decoder_layers),
-        'num_heads': trial.suggest_int('num_heads', 2, 8),
+        'num_heads': num_heads,
         'n_attn_layers': trial.suggest_int('n_attn_layers', 1, 4),
         'attn_dropout': trial.suggest_float('attn_dropout', 0.0, 0.3),
         'dropout': trial.suggest_float('dropout', 0.0, 0.5),
@@ -374,8 +378,14 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
     if model_name in ('interaction_mlp', 'attention_mlp'):
         n_enc = params.pop('n_encoder_layers', None)
         enc_size = params.pop('encoder_size', None)
+        enc_mult = params.pop('encoder_mult', None)
+        num_heads = params.get('num_heads', None)
         n_dec = params.pop('n_decoder_layers', None)
         dec_size = params.pop('decoder_size', None)
+
+        # attention_mlp stores encoder_mult instead of encoder_size
+        if enc_size is None and enc_mult is not None and num_heads is not None:
+            enc_size = enc_mult * num_heads
 
         if n_enc is not None and enc_size is not None:
             params['encoder_sizes'] = tuple([enc_size] * n_enc) if n_enc > 0 else ()
@@ -494,6 +504,15 @@ def create_objective(
         else:
             print(f"  Trial {trial.number}: {metric} = {raw_value:.6f}  "
                   f"(params: {_format_params(params)})")
+
+        # Free stale model/optimizer references between trials
+        gc.collect()
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+        except ImportError:
+            pass
 
         return value
 
@@ -676,8 +695,10 @@ def tune_model(
     print("=" * 80)
 
     if n_jobs > 1:
-        # Multi-process: spawn workers, each runs a portion of trials
-        ctx = multiprocessing.get_context('spawn')
+        # Multi-process: use fork on Linux (required for Colab/notebooks where
+        # spawn hangs trying to re-import __main__), spawn on Windows.
+        mp_method = 'fork' if sys.platform != 'win32' else 'spawn'
+        ctx = multiprocessing.get_context(mp_method)
         trials_per_worker = n_trials // n_jobs
         remainder = n_trials % n_jobs
 

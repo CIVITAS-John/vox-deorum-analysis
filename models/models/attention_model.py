@@ -124,7 +124,7 @@ class AttentionMLPPredictor(GroupedTorchPredictor):
     DEFAULT_FEATURES = [
         # City-adjusted per-turn rates (not relative to opponents)
         'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-        'food_adj', 'production_adj', 'military_adj', 'fait_adj',
+        'food_adj', 'production_adj', 'military_adj', 'faith_adj',
         # Non-adjusted
         'population', 'cities', 'votes', 'minor_allies',
         # Gaps from leader
@@ -144,17 +144,17 @@ class AttentionMLPPredictor(GroupedTorchPredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        encoder_sizes: Tuple[int, ...] = (128,),
-        decoder_sizes: Tuple[int, ...] = (128,),
-        num_heads: int = 4,
-        n_attn_layers: int = 1,
-        attn_dropout: float = 0.1,
-        dropout: float = 0.3,
-        lr: float = 0.001,
-        weight_decay: float = 0.001,
+        encoder_sizes: Tuple[int, ...] = (252,) * 5,
+        decoder_sizes: Tuple[int, ...] = (89,) * 7,
+        num_heads: int = 3,
+        n_attn_layers: int = 2,
+        attn_dropout: float = 0.0821594,
+        dropout: float = 0.319734,
+        lr: float = 0.00301871,
+        weight_decay: float = 0.0073043,
         epochs: int = 10,
+        loss_tp_alpha: float = 1.04449,
         batch_size_groups: int = 4096,
-        loss_tp_alpha: float = 0.0,
         device: Optional[str] = None,
     ):
         super().__init__(
