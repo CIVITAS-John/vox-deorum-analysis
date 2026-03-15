@@ -137,37 +137,6 @@ def suggest_xgboost_params(trial: 'optuna.Trial') -> Dict:
     return params
 
 
-def suggest_random_forest_params(trial: 'optuna.Trial') -> Dict:
-    """Define Random Forest hyperparameter search space."""
-    params = {
-        'n_estimators': trial.suggest_int('n_estimators', 100, 2000),
-        'max_depth': trial.suggest_int('max_depth', 3, 30),
-        'min_samples_split': trial.suggest_int('min_samples_split', 10, 100),  # Changed from 2 to 10 to prevent overfitting
-        'min_samples_leaf': trial.suggest_int('min_samples_leaf', 5, 50),      # Changed from 1 to 5 to prevent overfitting
-        'max_features': trial.suggest_categorical(
-            'max_features', ['sqrt', 'log2', None]
-        ),
-        'class_weight': trial.suggest_categorical(
-            'class_weight', ['balanced', 'balanced_subsample', None]
-        ),
-    }
-
-    calibrate = trial.suggest_categorical('calibrate', [True, False])
-    params['calibrate'] = calibrate
-    if calibrate:
-        params['calibration_method'] = trial.suggest_categorical(
-            'calibration_method', ['isotonic', 'sigmoid']
-        )
-    else:
-        params['calibration_method'] = 'sigmoid'
-
-    exclude_turn = trial.suggest_categorical('exclude_turn_progress', [True, False])
-    if exclude_turn:
-        params['exclude_features'] = ['turn_progress']
-
-    return params
-
-
 def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
     """Define MLP hyperparameter search space (PyTorch, GPU-enabled).
 
@@ -185,9 +154,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        #'batch_size': trial.suggest_categorical(
-        #    'batch_size', [4096, 8192, 16384]
-        #),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
     }
 
     return params
@@ -199,8 +166,8 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     Uses constant-width layers (required for residual skip connections).
     Supports up to 10 layers with the residual _UtilityNet architecture.
     """
-    n_layers = trial.suggest_int('n_layers', 1, 32)
-    layer_size = trial.suggest_int('layer_size', 16, 256)
+    n_layers = trial.suggest_int('n_layers', 1, 8)
+    layer_size = trial.suggest_int('layer_size', 32, 256)
 
     # Constant width for all layers (residual connections require matching dims)
     layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
@@ -214,7 +181,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         #'batch_size_groups': trial.suggest_categorical(
         #    'batch_size_groups', [1024, 2048, 4096]
         #),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
     }
 
     return params
@@ -237,7 +204,33 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 3.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
+    }
+
+    return params
+
+
+def suggest_attention_mlp_params(trial: 'optuna.Trial') -> Dict:
+    """Define attention MLP hyperparameter search space.
+
+    Encoder-attention-decoder architecture with multi-head self-attention.
+    """
+    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 8)
+    encoder_size = trial.suggest_int('encoder_size', 16, 256)
+    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
+    decoder_size = trial.suggest_int('decoder_size', 16, 256)
+
+    params = {
+        'encoder_sizes': tuple([encoder_size] * n_encoder_layers),
+        'decoder_sizes': tuple([decoder_size] * n_decoder_layers),
+        'num_heads': trial.suggest_int('num_heads', 2, 8),
+        'n_attn_layers': trial.suggest_int('n_attn_layers', 1, 4),
+        'attn_dropout': trial.suggest_float('attn_dropout', 0.0, 0.3),
+        'dropout': trial.suggest_float('dropout', 0.0, 0.5),
+        'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
+        'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
+        'epochs': trial.suggest_int('epochs', 5, 30),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
     }
 
     return params
@@ -245,10 +238,10 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
 
 SEARCH_SPACES = {
     'xgboost': suggest_xgboost_params,
-    'random_forest': suggest_random_forest_params,
     'mlp': suggest_mlp_params,
     'grouped_mlp': suggest_grouped_mlp_params,
     'interaction_mlp': suggest_interaction_mlp_params,
+    'attention_mlp': suggest_attention_mlp_params,
 }
 
 # Per-model __init__ parameter metadata: (param_name, type_annotation, formatter)
@@ -288,6 +281,19 @@ PARAM_SIGNATURES = {
     'interaction_mlp': [
         ('encoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
         ('decoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
+        ('dropout',           'float',           'g6'),
+        ('lr',                'float',           'g6'),
+        ('weight_decay',      'float',           'g6'),
+        ('epochs',            'int',             None),
+        ('batch_size_groups', 'int',             None),
+        ('loss_tp_alpha',     'float',           'g6'),
+    ],
+    'attention_mlp': [
+        ('encoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
+        ('decoder_sizes',     'Tuple[int, ...]', 'tuple_repeat'),
+        ('num_heads',         'int',             None),
+        ('n_attn_layers',     'int',             None),
+        ('attn_dropout',      'float',           'g6'),
         ('dropout',           'float',           'g6'),
         ('lr',                'float',           'g6'),
         ('weight_decay',      'float',           'g6'),
@@ -364,7 +370,7 @@ def convert_best_params(model_name: str, best_params: Dict) -> Dict:
             sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
             params['layer_sizes'] = sizes
 
-    if model_name == 'interaction_mlp':
+    if model_name in ('interaction_mlp', 'attention_mlp'):
         n_enc = params.pop('n_encoder_layers', None)
         enc_size = params.pop('encoder_size', None)
         n_dec = params.pop('n_decoder_layers', None)
@@ -565,7 +571,7 @@ def tune_model(
     # Only needed when tuning variables (mode='variables' or 'both')
     use_variants = (
         mode in ('variables', 'both')
-        and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp')
+        and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp', 'attention_mlp')
     )
     preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
 

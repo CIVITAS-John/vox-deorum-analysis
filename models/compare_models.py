@@ -3,7 +3,7 @@
 Compare multiple models side-by-side.
 
 Usage:
-    python compare_models.py --models baseline,random_forest
+    python compare_models.py --models baseline,grouped_mlp
 """
 
 import argparse

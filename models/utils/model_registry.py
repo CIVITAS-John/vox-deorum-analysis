@@ -13,7 +13,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from models.base_predictor import BasePredictor
 from models.baseline_model import BaselineVictoryPredictor
-from models.random_forest_model import RandomForestPredictor
 from models.grouped_mlp_model import GroupedMLPPredictor
 from models.interaction_mlp_model import InteractionMLPPredictor
 from models.attention_model import AttentionMLPPredictor
@@ -27,20 +26,12 @@ except ImportError:
     HAS_XGBOOST = False
     XGBoostPredictor = None
 
-try:
-    from models.lightgbm_model import LightGBMPredictor
-    HAS_LIGHTGBM = True
-except ImportError:
-    HAS_LIGHTGBM = False
-    LightGBMPredictor = None
-
 from models.mlp_model import MLPPredictor
 
 
 # Registry mapping model names to classes
 MODEL_REGISTRY: Dict[str, Type[BasePredictor]] = {
     'baseline': BaselineVictoryPredictor,
-    'random_forest': RandomForestPredictor,
     'grouped_mlp': GroupedMLPPredictor,
     'naive': NaivePredictor,
 }
@@ -48,9 +39,6 @@ MODEL_REGISTRY: Dict[str, Type[BasePredictor]] = {
 # Add optional models if dependencies are available
 if HAS_XGBOOST:
     MODEL_REGISTRY['xgboost'] = XGBoostPredictor
-
-if HAS_LIGHTGBM:
-    MODEL_REGISTRY['lightgbm'] = LightGBMPredictor
 
 MODEL_REGISTRY['mlp'] = MLPPredictor
 MODEL_REGISTRY['interaction_mlp'] = InteractionMLPPredictor
