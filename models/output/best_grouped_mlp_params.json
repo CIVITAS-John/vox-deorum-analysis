@@ -3,18 +3,18 @@
   "mode": "params",
   "metric": "log_loss",
   "direction": "minimize",
-  "best_value": 0.29028647583973244,
+  "best_value": 0.29383882425722047,
   "best_params": {
     "n_layers": 7,
-    "layer_size": 46,
-    "dropout": 0.18118721905347343,
-    "lr": 0.0038406878888899007,
-    "weight_decay": 0.007365377810531541,
-    "epochs": 29,
-    "loss_tp_alpha": 0.7155860026723578
+    "layer_size": 222,
+    "dropout": 0.21998310012188949,
+    "lr": 0.0023980345904032743,
+    "weight_decay": 0.003872055115721756,
+    "epochs": 24,
+    "loss_tp_alpha": 0.3139144377635827
   },
-  "best_trial": 215,
-  "n_trials_so_far": 218,
+  "best_trial": 26,
+  "n_trials_so_far": 27,
   "resample_method": null,
   "features": [
     "science_share",
@@ -32,8 +32,7 @@
     "technologies_gap",
     "policies_gap",
     "happiness_percentage",
-    "military_utilization",
-    "turn_progress"
+    "military_utilizationturn_progress"
   ],
-  "generated_code": "layer_sizes: Tuple[int, ...] = (46,) * 7,\ndropout: float = 0.181187,\nlr: float = 0.00384069,\nweight_decay: float = 0.00736538,\nepochs: int = 29,\nloss_tp_alpha: float = 0.715586,"
+  "generated_code": "layer_sizes: Tuple[int, ...] = (222,) * 7,\ndropout: float = 0.219983,\nlr: float = 0.00239803,\nweight_decay: float = 0.00387206,\nepochs: int = 24,\nloss_tp_alpha: float = 0.313914,"
 }

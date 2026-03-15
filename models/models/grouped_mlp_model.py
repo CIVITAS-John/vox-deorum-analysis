@@ -96,7 +96,7 @@ class GroupedMLPPredictor(GroupedTorchPredictor):
         # Gaps from leader
         'technologies_gap', 'policies_gap',
         # Percentage / ratio metrics
-        'happiness_percentage', 'military_utilization' #, 'religion_percentage' (known to be worse)
+        'happiness_percentage', 'military_utilization', #, 'religion_percentage' (known to be worse)
         # Progress
         'turn_progress',
     ]
