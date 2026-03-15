@@ -3,18 +3,18 @@
   "mode": "params",
   "metric": "log_loss",
   "direction": "minimize",
-  "best_value": 0.29294533191409217,
+  "best_value": 0.291787399120513,
   "best_params": {
-    "n_layers": 28,
-    "layer_size": 160,
-    "dropout": 0.35403628889802274,
-    "lr": 0.00010994335574766199,
-    "weight_decay": 0.008123245085588688,
-    "epochs": 26,
-    "loss_tp_alpha": 1.0308477766956905
+    "n_layers": 2,
+    "layer_size": 38,
+    "dropout": 0.23631647463569383,
+    "lr": 0.004188610512455052,
+    "weight_decay": 0.0009601882697362841,
+    "epochs": 18,
+    "loss_tp_alpha": 1.956123576516315
   },
-  "best_trial": 1,
-  "n_trials_so_far": 2,
+  "best_trial": 147,
+  "n_trials_so_far": 148,
   "resample_method": null,
-  "generated_code": "layer_sizes: Tuple[int, ...] = (160,) * 28,\ndropout: float = 0.354036,\nlr: float = 0.000109943,\nweight_decay: float = 0.00812325,\nepochs: int = 26,\nloss_tp_alpha: float = 1.03085,"
+  "generated_code": "layer_sizes: Tuple[int, ...] = (38,) * 2,\ndropout: float = 0.236316,\nlr: float = 0.00418861,\nweight_decay: float = 0.000960188,\nepochs: int = 18,\nloss_tp_alpha: float = 1.95612,"
 }

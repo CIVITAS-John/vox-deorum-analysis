@@ -437,25 +437,12 @@ def create_objective(
                 # Instantiate a fresh model for each fold
                 model = model_class(random_state=random_state, **params)
 
-                # Create epoch-level callback for MLP models
-                max_epochs = params.get('epochs', 0)
-                if max_epochs > 0:
-                    def epoch_cb(epoch, loss, _fold=fold_idx, _max=max_epochs):
-                        step = _fold * _max + epoch
-                        trial.report(loss, step)
-                        if trial.should_prune():
-                            raise optuna.TrialPruned()
-                        return True
-                else:
-                    epoch_cb = None
-
                 fold_metrics = evaluate_fold(
                     model, X_train, y_train, X_val, y_val,
                     clusters_train=clusters_train,
                     resample_method=resample_method,
                     random_state=random_state,
                     _resample_skip_warned=resample_skip_warned,
-                    epoch_callback=epoch_cb,
                 )
             except optuna.TrialPruned:
                 raise  # Re-raise pruning signal to Optuna
@@ -638,6 +625,10 @@ def tune_model(
         if study.best_trial.number == trial.number:
             converted = convert_best_params(model_name, study.best_params)
             code_snippet = generate_init_snippet(model_name, converted)
+            # Resolve features: from tuned params if available, else model defaults
+            features = converted.get('include_features')
+            if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
+                features = list(model_class.DEFAULT_FEATURES)
             best = {
                 'model': model_name,
                 'mode': mode,
@@ -648,6 +639,7 @@ def tune_model(
                 'best_trial': trial.number,
                 'n_trials_so_far': len(study.trials),
                 'resample_method': resample_method,
+                'features': features,
                 'generated_code': code_snippet,
             }
             with open(result_file, 'w') as f:
@@ -722,6 +714,11 @@ def tune_model(
 
     code_snippet = generate_init_snippet(model_name, best_model_kwargs)
 
+    # Resolve features: from tuned params if available, else model defaults
+    features = best_model_kwargs.get('include_features')
+    if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
+        features = list(model_class.DEFAULT_FEATURES)
+
     result = {
         'model': model_name,
         'mode': mode,
@@ -731,6 +728,7 @@ def tune_model(
         'best_params': study.best_params,
         'n_trials': len(study.trials),
         'resample_method': resample_method,
+        'features': features,
         # Add train metrics and overfitting diagnostics
         'validation_metrics': {
             'roc_auc': best_summary.get('roc_auc_mean'),
