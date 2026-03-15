@@ -144,8 +144,8 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Uses constant-width layers (same architecture as grouped MLP).
     """
-    n_layers = trial.suggest_int('n_layers', 1, 32)
-    layer_size = trial.suggest_int('layer_size', 16, 256)
+    n_layers = trial.suggest_int('n_layers', 1, 16)
+    layer_size = trial.suggest_int('layer_size', 16, 192)
 
     # Constant width for all layers (residual connections require matching dims)
     layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
@@ -169,7 +169,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
     Supports up to 10 layers with the residual _UtilityNet architecture.
     """
     n_layers = trial.suggest_int('n_layers', 1, 8)
-    layer_size = trial.suggest_int('layer_size', 32, 256)
+    layer_size = trial.suggest_int('layer_size', 16, 256)
 
     # Constant width for all layers (residual connections require matching dims)
     layer_sizes = tuple([layer_size] * n_layers) if n_layers > 0 else ()
@@ -194,9 +194,9 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Separate encoder and decoder architectures with constant-width residual blocks.
     """
-    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 16)
+    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 8)
     encoder_size = trial.suggest_int('encoder_size', 16, 256)
-    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 16)
+    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
     decoder_size = trial.suggest_int('decoder_size', 16, 256)
 
     params = {
@@ -217,19 +217,19 @@ def suggest_attention_mlp_params(trial: 'optuna.Trial') -> Dict:
 
     Encoder-attention-decoder architecture with multi-head self-attention.
     """
-    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 8)
-    num_heads = trial.suggest_int('num_heads', 2, 8)
+    n_encoder_layers = trial.suggest_int('n_encoder_layers', 1, 6)
+    num_heads = trial.suggest_int('num_heads', 2, 4)
     # embed_dim must be divisible by num_heads; sample a multiplier instead
-    encoder_mult = trial.suggest_int('encoder_mult', 2, 256 // num_heads)
+    encoder_mult = trial.suggest_int('encoder_mult', 2, 128 // num_heads)
     encoder_size = encoder_mult * num_heads
-    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 8)
-    decoder_size = trial.suggest_int('decoder_size', 16, 256)
+    n_decoder_layers = trial.suggest_int('n_decoder_layers', 1, 6)
+    decoder_size = trial.suggest_int('decoder_size', 16, 128)
 
     params = {
         'encoder_sizes': tuple([encoder_size] * n_encoder_layers),
         'decoder_sizes': tuple([decoder_size] * n_decoder_layers),
         'num_heads': num_heads,
-        'n_attn_layers': trial.suggest_int('n_attn_layers', 1, 4),
+        'n_attn_layers': trial.suggest_int('n_attn_layers', 1, 2),
         'attn_dropout': trial.suggest_float('attn_dropout', 0.0, 0.3),
         'dropout': trial.suggest_float('dropout', 0.0, 0.5),
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
