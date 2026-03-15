@@ -1,1 +1,1 @@
-python tune_model.py --model=grouped_mlp --full-data --storage sqlite:///output/grouped_mlp.db --metric=log_loss
+python tune_model.py --model=grouped_mlp --full-data --storage sqlite:///output/grouped_mlp.db --metric=log_loss --n-jobs=2

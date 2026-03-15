@@ -96,7 +96,7 @@ class GroupedMLPPredictor(GroupedTorchPredictor):
         # Gaps from leader
         'technologies_gap', 'policies_gap',
         # Percentage / ratio metrics
-        'happiness_percentage', 'military_utilization',
+        'happiness_percentage', 'military_utilization', 'religion_percentage'
         # Progress
         'turn_progress',
     ]
@@ -109,13 +109,13 @@ class GroupedMLPPredictor(GroupedTorchPredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        layer_sizes: Tuple[int, ...] = (121,),
-        dropout: float = 0.08772522535027732,
-        lr: float = 0.0045455480637559215,
-        weight_decay: float = 0.001447554416053373,
-        epochs: int = 9,
+        layer_sizes: Tuple[int, ...] = (45,45,45,45,45,45),
+        dropout: float = 0.10726123057010115,
+        lr: float = 0.00320236867338213,
+        weight_decay: float = 0.007788566976755283,
+        epochs: int = 29,
         batch_size_groups: int = 4096,
-        loss_tp_alpha: float = 1.8481557814028418,
+        loss_tp_alpha: float = 0.747520815240142,
         device: Optional[str] = None,
     ):
         super().__init__(

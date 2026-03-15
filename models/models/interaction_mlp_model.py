@@ -152,7 +152,7 @@ class InteractionMLPPredictor(GroupedTorchPredictor):
     DEFAULT_FEATURES = [
         # City-adjusted per-turn rates (not relative to opponents)
         'science_adj', 'culture_adj', 'tourism_adj', 'gold_adj',
-        'food_adj', 'production_adj', 'military_adj', 'fait_adj',
+        'food_adj', 'production_adj', 'military_adj', 'faith_adj',
         # Non-adjusted
         'population', 'cities', 'votes', 'minor_allies',
         # Gaps from leader
@@ -172,15 +172,15 @@ class InteractionMLPPredictor(GroupedTorchPredictor):
         random_state: int = 42,
         group_cols: Tuple[str, str] = ("game_id", "turn"),
         id_cols: Tuple[str, ...] = ("experiment", "game_id", "player_id", "turn"),
-        encoder_sizes: Tuple[int, ...] = (128,),
-        decoder_sizes: Tuple[int, ...] = (128,),
+        encoder_sizes: Tuple[int, ...] = (209,209,209),
+        decoder_sizes: Tuple[int, ...] = (203,203,203,203,203,203,203,203,203,203),
         pool_mode: str = 'mean+max',
-        dropout: float = 0.3,
-        lr: float = 0.001,
-        weight_decay: float = 0.001,
+        dropout: float = 0.437991214566468,
+        lr: float = 0.007319678896227284,
+        weight_decay: float = 0.00017801503319829408,
         epochs: int = 10,
         batch_size_groups: int = 4096,
-        loss_tp_alpha: float = 0.0,
+        loss_tp_alpha: float = 0.6043122664495545,
         device: Optional[str] = None,
     ):
         super().__init__(

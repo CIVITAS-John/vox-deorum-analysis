@@ -16,6 +16,7 @@ Usage:
 """
 
 import argparse
+import multiprocessing
 import sys
 import json
 from pathlib import Path
@@ -33,7 +34,7 @@ except ImportError:
 sys.path.append(str(Path(__file__).parent))
 
 import numpy as np
-from utils.model_evaluator import run_kfold_evaluation, evaluate_fold
+from utils.model_evaluator import evaluate_fold
 from utils.model_registry import MODEL_REGISTRY
 from utils.data_utils import load_and_prepare_base_data, load_and_prepare_data, FEATURE_GROUPS
 
@@ -519,6 +520,88 @@ def _format_params(params: Dict) -> str:
 # Main
 # ============================================================================
 
+def _mp_worker(
+    model_name: str,
+    n_trials: int,
+    csv_path: str,
+    metric: str,
+    n_splits: int,
+    random_state: int,
+    resample_method: Optional[str],
+    storage: str,
+    full_data: bool,
+    mode: str,
+    study_name: str,
+    result_file: str,
+):
+    """Worker process for multi-process Optuna tuning.
+
+    Each worker independently loads data, creates its objective, and runs
+    a portion of the trials. Coordination happens via Optuna's shared storage.
+    """
+    # Each process must re-import and set up its own state
+    model_class = MODEL_REGISTRY[model_name]
+
+    use_variants = (
+        mode in ('variables', 'both')
+        and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp', 'attention_mlp')
+    )
+    preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
+
+    needs_full_data = (
+        (callable(model_class) and not isinstance(model_class, type)) or
+        (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
+    )
+    if full_data:
+        phase_filter = None
+    elif needs_full_data:
+        phase_filter = (1, [0.5])
+    else:
+        phase_filter = (1, [0.8])
+
+    precomputed_data = load_and_prepare_data(
+        csv_path, n_splits=n_splits, random_state=random_state,
+        phase_filter=phase_filter, preloaded_df=preloaded_df,
+        use_variant_columns=use_variants,
+    )
+
+    objective, minimize = create_objective(
+        model_name, metric, random_state, resample_method,
+        precomputed_data=precomputed_data,
+        mode=mode,
+    )
+
+    study = optuna.load_study(study_name=study_name, storage=storage)
+
+    def save_best_callback(study, trial):
+        if study.best_trial.number == trial.number:
+            converted = convert_best_params(model_name, study.best_params)
+            code_snippet = generate_init_snippet(model_name, converted)
+            features = converted.get('include_features')
+            if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
+                features = list(model_class.DEFAULT_FEATURES)
+            direction = 'minimize' if minimize else 'maximize'
+            best = {
+                'model': model_name,
+                'mode': mode,
+                'metric': metric,
+                'direction': direction,
+                'best_value': study.best_value,
+                'best_params': study.best_params,
+                'best_trial': trial.number,
+                'n_trials_so_far': len(study.trials),
+                'resample_method': resample_method,
+                'features': features,
+                'generated_code': code_snippet,
+            }
+            with open(result_file, 'w') as f:
+                json.dump(best, f, indent=2, default=str)
+            print(f"  ★ New best! Trial {trial.number}: {metric} = {study.best_value:.6f} → saved to {result_file}")
+
+    study.optimize(objective, n_jobs=1, n_trials=n_trials,
+                   callbacks=[save_best_callback])
+
+
 def tune_model(
     model_name: str,
     n_trials: int = 100,
@@ -548,43 +631,26 @@ def tune_model(
               f"Available: {', '.join(SEARCH_SPACES.keys())}", file=sys.stderr)
         sys.exit(1)
 
-    # Preload data and precompute k-fold splits once - shared across all trials
-    # Use keep_variants=True to preserve raw/adj columns for feature variant tuning
-    # Only needed when tuning variables (mode='variables' or 'both')
-    use_variants = (
-        mode in ('variables', 'both')
-        and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp', 'attention_mlp')
-    )
-    preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
-
     model_class = MODEL_REGISTRY[model_name]
-    needs_full_data = (
-        (callable(model_class) and not isinstance(model_class, type)) or
-        (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
-    )
-    if full_data:
-        phase_filter = None
-    elif needs_full_data:
-        phase_filter = (1, [0.5])
-    else:
-        phase_filter = (1, [0.8])
 
-    precomputed_data = load_and_prepare_data(
-        csv_path, n_splits=n_splits, random_state=random_state,
-        phase_filter=phase_filter, preloaded_df=preloaded_df,
-        use_variant_columns=use_variants,
-    )
-
-    objective, minimize = create_objective(
-        model_name, metric, random_state, resample_method,
-        precomputed_data=precomputed_data,
-        mode=mode,
-    )
-
-    direction = 'minimize' if minimize else 'maximize'
+    # Metrics where lower is better
+    minimize_metrics = {'brier_score', 'log_loss'}
+    direction = 'minimize' if metric in minimize_metrics else 'maximize'
     study_name = f"tune_{model_name}_{mode}"
     if resample_method:
         study_name += f"_{resample_method}"
+
+    # Output file for best params
+    output_dir = Path('output')
+    output_dir.mkdir(exist_ok=True)
+    if mode == 'params':
+        result_file = output_dir / f"best_{model_name}_params.json"
+    else:
+        result_file = output_dir / f"best_{model_name}_{mode}_params.json"
+
+    # For multi-process, require storage for cross-process coordination
+    if n_jobs > 1 and storage is None:
+        storage = f"sqlite:///output/tuning_{study_name}.db"
 
     study = optuna.create_study(
         study_name=study_name,
@@ -604,112 +670,120 @@ def tune_model(
     print(f"CV Splits:  {n_splits}")
     print(f"Resample:   {resample_method or 'none'}")
     print(f"Full Data:  {full_data}")
+    print(f"Workers:    {n_jobs}")
     if storage:
         print(f"Storage:    {storage}")
     print("=" * 80)
 
-    # Callback to save best params whenever a new best trial is found
-    output_dir = Path('output')
-    output_dir.mkdir(exist_ok=True)
-    if mode == 'params':
-        result_file = output_dir / f"best_{model_name}_params.json"
+    if n_jobs > 1:
+        # Multi-process: spawn workers, each runs a portion of trials
+        ctx = multiprocessing.get_context('spawn')
+        trials_per_worker = n_trials // n_jobs
+        remainder = n_trials % n_jobs
+
+        processes = []
+        for i in range(n_jobs):
+            worker_trials = trials_per_worker + (1 if i < remainder else 0)
+            p = ctx.Process(
+                target=_mp_worker,
+                kwargs=dict(
+                    model_name=model_name,
+                    n_trials=worker_trials,
+                    csv_path=csv_path,
+                    metric=metric,
+                    n_splits=n_splits,
+                    random_state=random_state,
+                    resample_method=resample_method,
+                    storage=storage,
+                    full_data=full_data,
+                    mode=mode,
+                    study_name=study_name,
+                    result_file=str(result_file),
+                ),
+            )
+            processes.append(p)
+
+        for p in processes:
+            p.start()
+        for p in processes:
+            p.join()
+
+        # Reload study to get all results from workers
+        study = optuna.load_study(study_name=study_name, storage=storage)
     else:
-        result_file = output_dir / f"best_{model_name}_{mode}_params.json"
+        # Single-process: original code path
+        # Preload data and precompute k-fold splits once
+        use_variants = (
+            mode in ('variables', 'both')
+            and model_name in ('xgboost', 'mlp', 'grouped_mlp', 'interaction_mlp', 'attention_mlp')
+        )
+        preloaded_df = load_and_prepare_base_data(csv_path, keep_variants=use_variants)
 
-    def save_best_callback(study, trial):
-        if study.best_trial.number == trial.number:
-            converted = convert_best_params(model_name, study.best_params)
-            code_snippet = generate_init_snippet(model_name, converted)
-            # Resolve features: from tuned params if available, else model defaults
-            features = converted.get('include_features')
-            if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
-                features = list(model_class.DEFAULT_FEATURES)
-            best = {
-                'model': model_name,
-                'mode': mode,
-                'metric': metric,
-                'direction': direction,
-                'best_value': study.best_value,
-                'best_params': study.best_params,
-                'best_trial': trial.number,
-                'n_trials_so_far': len(study.trials),
-                'resample_method': resample_method,
-                'features': features,
-                'generated_code': code_snippet,
-            }
-            with open(result_file, 'w') as f:
-                json.dump(best, f, indent=2, default=str)
-            print(f"  ★ New best! Trial {trial.number}: {metric} = {study.best_value:.6f} → saved to {result_file}")
+        needs_full_data = (
+            (callable(model_class) and not isinstance(model_class, type)) or
+            (hasattr(model_class, 'NEEDS_FULL_DATA') and model_class.NEEDS_FULL_DATA)
+        )
+        if full_data:
+            phase_filter = None
+        elif needs_full_data:
+            phase_filter = (1, [0.5])
+        else:
+            phase_filter = (1, [0.8])
 
-    study.optimize(objective, n_jobs=n_jobs, n_trials=n_trials, show_progress_bar=True,
-                   callbacks=[save_best_callback])
+        precomputed_data = load_and_prepare_data(
+            csv_path, n_splits=n_splits, random_state=random_state,
+            phase_filter=phase_filter, preloaded_df=preloaded_df,
+            use_variant_columns=use_variants,
+        )
 
-    # Re-evaluate best trial to get full metrics including train performance
+        objective, _ = create_objective(
+            model_name, metric, random_state, resample_method,
+            precomputed_data=precomputed_data,
+            mode=mode,
+        )
+
+        def save_best_callback(study, trial):
+            if study.best_trial.number == trial.number:
+                converted = convert_best_params(model_name, study.best_params)
+                code_snippet = generate_init_snippet(model_name, converted)
+                features = converted.get('include_features')
+                if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
+                    features = list(model_class.DEFAULT_FEATURES)
+                best = {
+                    'model': model_name,
+                    'mode': mode,
+                    'metric': metric,
+                    'direction': direction,
+                    'best_value': study.best_value,
+                    'best_params': study.best_params,
+                    'best_trial': trial.number,
+                    'n_trials_so_far': len(study.trials),
+                    'resample_method': resample_method,
+                    'features': features,
+                    'generated_code': code_snippet,
+                }
+                with open(result_file, 'w') as f:
+                    json.dump(best, f, indent=2, default=str)
+                print(f"  ★ New best! Trial {trial.number}: {metric} = {study.best_value:.6f} → saved to {result_file}")
+
+        study.optimize(objective, n_jobs=1, n_trials=n_trials, show_progress_bar=True,
+                       callbacks=[save_best_callback])
+
+    # Print best result summary
     print("\n" + "=" * 80)
     print(f"BEST RESULT: {model_name.upper()}")
     print("=" * 80)
     print(f"Best {metric}: {study.best_value:.6f}")
     print(f"\nBest params:")
+    best_model_kwargs = convert_best_params(model_name, study.best_params)
     for k, v in study.best_params.items():
         if isinstance(v, float):
             print(f"  {k}: {v:.6g}")
         else:
             print(f"  {k}: {v}")
 
-    # Get full evaluation on best params to extract train metrics and overfitting gaps
-    print(f"\nRe-evaluating best params to extract train metrics...")
-    best_model_kwargs = convert_best_params(model_name, study.best_params)
-    best_summary, _, _ = run_kfold_evaluation(
-        model_class=model_class,
-        model_kwargs=best_model_kwargs,
-        csv_path=csv_path,
-        n_splits=n_splits,
-        random_state=random_state,
-        verbose=False,
-        save_importance_path=None,
-        resample_method=resample_method,
-        precomputed_data=precomputed_data,
-    )
-
-    # Print overfitting diagnostics
-    print(f"\n{'='*80}")
-    print("OVERFITTING DIAGNOSTICS")
-    print(f"{'='*80}")
-
-    train_metric_key = f'train_{metric}_mean'
-    gap_metric_key = f'overfitting_gap_{metric}_mean'
-
-    if train_metric_key in best_summary:
-        print(f"\nValidation {metric}: {best_summary[f'{metric}_mean']:.6f}")
-        print(f"Train {metric}:      {best_summary[train_metric_key]:.6f}")
-
-        if gap_metric_key in best_summary:
-            gap = best_summary[gap_metric_key]
-            print(f"Overfitting Gap:     {gap:+.6f}")
-
-            # Interpret the gap
-            if abs(gap) < 0.02:
-                print("✓ Minimal overfitting detected")
-            elif abs(gap) < 0.05:
-                print("⚠ Mild overfitting detected")
-            else:
-                print("⚠⚠ SIGNIFICANT overfitting detected - consider stronger regularization!")
-
-    print("=" * 80)
-
-    # Save final best params to JSON with overfitting diagnostics
-    # Extract train metrics and overfitting gaps from best_summary
-    train_metrics = {}
-    overfitting_gaps = {}
-    for key in best_summary.keys():
-        if key.startswith('train_'):
-            train_metrics[key] = best_summary[key]
-        elif key.startswith('overfitting_gap_'):
-            overfitting_gaps[key] = best_summary[key]
-
+    # Save final best params to JSON
     code_snippet = generate_init_snippet(model_name, best_model_kwargs)
-
-    # Resolve features: from tuned params if available, else model defaults
     features = best_model_kwargs.get('include_features')
     if features is None and hasattr(model_class, 'DEFAULT_FEATURES') and model_class.DEFAULT_FEATURES is not None:
         features = list(model_class.DEFAULT_FEATURES)
@@ -724,15 +798,6 @@ def tune_model(
         'n_trials': len(study.trials),
         'resample_method': resample_method,
         'features': features,
-        # Add train metrics and overfitting diagnostics
-        'validation_metrics': {
-            'roc_auc': best_summary.get('roc_auc_mean'),
-            'brier_score': best_summary.get('brier_score_mean'),
-            'log_loss': best_summary.get('log_loss_mean'),
-            'balanced_accuracy': best_summary.get('balanced_accuracy_mean'),
-        },
-        'train_metrics': train_metrics,
-        'overfitting_gaps': overfitting_gaps,
         'generated_code': code_snippet,
     }
     with open(result_file, 'w') as f:
