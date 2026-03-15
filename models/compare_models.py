@@ -151,6 +151,7 @@ def main():
 
     # Run evaluations
     results = []
+    all_binned_loss = []
 
     for model_name in model_names:
         print(f"\n{'=' * 80}")
@@ -160,7 +161,7 @@ def main():
         model_class = MODEL_REGISTRY[model_name.lower()]
 
         try:
-            summary, importance, models = run_kfold_evaluation(
+            summary, importance, models, binned_loss = run_kfold_evaluation(
                 model_class=model_class,
                 csv_path=args.data,
                 filter_experiments=filter_experiments,
@@ -186,6 +187,12 @@ def main():
                 'n_features': len(models[0].get_selected_features()) if models else 0
             }
             results.append(result)
+
+            # Collect binned loss with model name
+            if not binned_loss.empty:
+                binned_loss = binned_loss.copy()
+                binned_loss.insert(0, 'model', model_name)
+                all_binned_loss.append(binned_loss)
 
         except Exception as e:
             print(f"\nError evaluating {model_name}: {e}", file=sys.stderr)
@@ -245,6 +252,13 @@ def main():
     print(f"Highest Balanced Accuracy:  {comparison_df.loc[comparison_df['balanced_accuracy_mean'].idxmax(), 'model']} "
           f"({comparison_df['balanced_accuracy_mean'].max():.4f})")
     print("=" * 80 + "\n")
+
+    # Save binned loss by turn_progress
+    if all_binned_loss:
+        binned_loss_df = pd.concat(all_binned_loss, ignore_index=True)
+        binned_loss_file = output_path / 'loss_by_turn_progress.csv'
+        binned_loss_df.to_csv(binned_loss_file, index=False)
+        print(f"Loss by turn progress saved to: {binned_loss_file}")
 
     return 0
 

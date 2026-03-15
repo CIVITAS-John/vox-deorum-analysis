@@ -241,7 +241,7 @@ Examples:
 
         # Run evaluation
         try:
-            summary, feature_importance, models = run_kfold_evaluation(
+            summary, feature_importance, models, _ = run_kfold_evaluation(
                 model_class=model_class,
                 model_kwargs=model_kwargs,
                 csv_path=args.data,

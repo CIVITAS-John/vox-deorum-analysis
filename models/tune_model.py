@@ -156,7 +156,7 @@ def suggest_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0, 2.0),
     }
 
     return params
@@ -183,7 +183,7 @@ def suggest_grouped_mlp_params(trial: 'optuna.Trial') -> Dict:
         #'batch_size_groups': trial.suggest_categorical(
         #    'batch_size_groups', [1024, 2048, 4096]
         #),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0, 2.0),
     }
 
     return params
@@ -206,7 +206,7 @@ def suggest_interaction_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0, 2.0),
     }
 
     return params
@@ -235,7 +235,7 @@ def suggest_attention_mlp_params(trial: 'optuna.Trial') -> Dict:
         'lr': trial.suggest_float('lr', 1e-4, 1e-2, log=True),
         'weight_decay': trial.suggest_float('weight_decay', 1e-5, 1e-2, log=True),
         'epochs': trial.suggest_int('epochs', 5, 30),
-        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0.5, 2.0),
+        'loss_tp_alpha': trial.suggest_float('loss_tp_alpha', 0, 2.0),
     }
 
     return params
@@ -448,7 +448,7 @@ def create_objective(
                 # Instantiate a fresh model for each fold
                 model = model_class(random_state=random_state, **params)
 
-                fold_metrics = evaluate_fold(
+                fold_metrics, _ = evaluate_fold(
                     model, X_train, y_train, X_val, y_val,
                     clusters_train=clusters_train,
                     resample_method=resample_method,

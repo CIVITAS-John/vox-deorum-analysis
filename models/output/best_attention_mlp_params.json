@@ -3,23 +3,22 @@
   "mode": "params",
   "metric": "log_loss",
   "direction": "minimize",
-  "best_value": 0.3024577666948157,
+  "best_value": 0.30100058561161125,
   "best_params": {
     "n_encoder_layers": 5,
-    "num_heads": 3,
-    "encoder_mult": 84,
-    "n_decoder_layers": 7,
-    "decoder_size": 89,
+    "num_heads": 2,
+    "encoder_mult": 49,
+    "n_decoder_layers": 4,
+    "decoder_size": 39,
     "n_attn_layers": 2,
-    "attn_dropout": 0.08215941931090563,
-    "dropout": 0.3197342331354388,
-    "lr": 0.0030187142822915795,
-    "weight_decay": 0.007304300983079413,
-    "epochs": 10,
-    "loss_tp_alpha": 1.0444903814319473
+    "attn_dropout": 0.23841525905950908,
+    "dropout": 0.4108350342560503,
+    "lr": 0.00022424531976760964,
+    "weight_decay": 0.0052836844048850026,
+    "epochs": 22,
+    "loss_tp_alpha": 0.7399016921630343
   },
-  "best_trial": 18,
-  "n_trials_so_far": 19,
+  "n_trials": 1000,
   "resample_method": null,
   "features": [
     "science_adj",
@@ -41,5 +40,5 @@
     "military_utilization",
     "turn_progress"
   ],
-  "generated_code": "encoder_sizes: Tuple[int, ...] = (252,) * 5,\ndecoder_sizes: Tuple[int, ...] = (89,) * 7,\nnum_heads: int = 3,\nn_attn_layers: int = 2,\nattn_dropout: float = 0.0821594,\ndropout: float = 0.319734,\nlr: float = 0.00301871,\nweight_decay: float = 0.0073043,\nepochs: int = 10,\nloss_tp_alpha: float = 1.04449,"
+  "generated_code": "encoder_sizes: Tuple[int, ...] = (98,) * 5,\ndecoder_sizes: Tuple[int, ...] = (39,) * 4,\nnum_heads: int = 2,\nn_attn_layers: int = 2,\nattn_dropout: float = 0.238415,\ndropout: float = 0.410835,\nlr: float = 0.000224245,\nweight_decay: float = 0.00528368,\nepochs: int = 22,\nloss_tp_alpha: float = 0.739902,"
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Model-agnostic evaluation utilities for victory prediction models.
-Supports k-fold cross-validation, phase-wise evaluation, and feature importance aggregation.
+Supports k-fold cross-validation and feature importance aggregation.
 """
 
 import numpy as np
@@ -64,7 +64,8 @@ def evaluate_fold(
     random_state: int = 42,
     _resample_skip_warned: Optional[set] = None,
     epoch_callback=None,
-) -> Dict[str, float]:
+    val_turn_progress: pd.Series = None,
+) -> Tuple[Dict[str, float], Optional[pd.DataFrame]]:
     """
     Train and evaluate model on a single fold.
 
@@ -76,9 +77,12 @@ def evaluate_fold(
         resample_method: Resampling method to apply to training data
         random_state: Random seed for resampling
         _resample_skip_warned: Internal tracking set for warning messages
+        val_turn_progress: turn_progress values for the validation set (for binned loss)
 
     Returns:
-        Dictionary of metrics
+        Tuple of (metrics_dict, val_predictions_df)
+        val_predictions_df has columns [turn_progress, y_true, y_pred_proba] if
+        val_turn_progress is provided, otherwise None.
 
     Note:
         X_train and X_val may include ID columns. These will be stripped if the model
@@ -140,71 +144,16 @@ def evaluate_fold(
         'n_clusters_train': clusters_train.nunique() if clusters_train is not None else 0
     }
 
-    return metrics
+    # Build validation predictions DataFrame if turn_progress provided
+    val_preds = None
+    if val_turn_progress is not None:
+        val_preds = pd.DataFrame({
+            'turn_progress': val_turn_progress.values,
+            'y_true': y_val.values,
+            'y_pred_proba': y_val_pred_proba,
+        })
 
-
-def evaluate_by_turn_phase(
-    df: pd.DataFrame,
-    X: pd.DataFrame,
-    y: pd.Series,
-    train_idx: np.ndarray,
-    val_idx: np.ndarray,
-    model: BasePredictor,
-    phases: Optional[Dict[str, Tuple[float, float]]] = None
-) -> Dict[str, Dict[str, float]]:
-    """
-    Evaluate model performance across different game phases.
-
-    Args:
-        df: Full DataFrame with turn column
-        X, y: Feature matrix and target
-        train_idx, val_idx: Indices for train/val split
-        model: Fitted BasePredictor model
-        phases: Dictionary mapping phase name to (turn_min, turn_max) tuples
-                Default: {'mid': (100, 250), 'late': (250, inf)}
-
-    Returns:
-        Dictionary mapping phase name to metrics
-    """
-    if phases is None:
-        # Default phases
-        phases = {
-            'mid': (100, 250),
-            'late': (250, float('inf'))
-        }
-
-    X_val = X.iloc[val_idx]
-    y_val = y.iloc[val_idx]
-    df_val = df.iloc[val_idx]
-
-    phase_metrics = {}
-
-    for phase_name, (turn_min, turn_max) in phases.items():
-        # Filter validation set for this phase
-        phase_mask = (df_val['turn'] >= turn_min) & (df_val['turn'] < turn_max)
-        X_phase = X_val[phase_mask]
-        y_phase = y_val[phase_mask]
-
-        if len(y_phase) == 0:
-            continue
-
-        # Strip IDs if model doesn't need them
-        X_phase = _strip_id_columns_if_not_needed(X_phase, model)
-
-        # Predict
-        y_pred_proba = model.predict_proba(X_phase)[:, 1]
-        y_pred = model.predict(X_phase)
-
-        # Compute metrics
-        phase_metrics[phase_name] = {
-            'roc_auc': roc_auc_score(y_phase, y_pred_proba),
-            'brier_score': brier_score_loss(y_phase, y_pred_proba),
-            'log_loss': log_loss(y_phase, y_pred_proba),
-            'balanced_accuracy': balanced_accuracy_score(y_phase, y_pred),
-            'n_samples': len(y_phase)
-        }
-
-    return phase_metrics
+    return metrics, val_preds
 
 
 def aggregate_feature_importance(
@@ -274,14 +223,13 @@ def run_kfold_evaluation(
     filter_experiments: List[str] = None,
     n_splits: int = 5,
     random_state: int = 42,
-    phases: Optional[Dict[str, Tuple[float, float]]] = None,
     verbose: bool = True,
     save_importance_path: Optional[str] = None,
     resample_method: Optional[Literal['oversample', 'undersample', 'combined']] = None,
     full_data: bool = False,
     preloaded_df: Optional[pd.DataFrame] = None,
     precomputed_data: Optional[Tuple[pd.DataFrame, pd.DataFrame, pd.Series, list]] = None
-) -> Tuple[Dict, Optional[pd.DataFrame], List[BasePredictor]]:
+) -> Tuple[Dict, Optional[pd.DataFrame], List[BasePredictor], pd.DataFrame]:
     """
     Run full k-fold cross-validation evaluation for any BasePredictor model.
 
@@ -292,7 +240,6 @@ def run_kfold_evaluation(
         filter_experiments: Experiment filter
         n_splits: Number of folds
         random_state: Random seed
-        phases: Phase definitions for evaluate_by_turn_phase
         verbose: Print progress and results
         save_importance_path: Path to save feature importance CSV (if None, auto-saves)
         resample_method: Resampling method ('oversample', 'undersample', 'combined', or None)
@@ -303,7 +250,9 @@ def run_kfold_evaluation(
                           When provided, skips all data loading and split generation entirely.
 
     Returns:
-        Tuple of (metrics_summary, feature_importance, fitted_models)
+        Tuple of (metrics_summary, feature_importance, fitted_models, binned_loss_df)
+        binned_loss_df has columns: turn_progress_bin, brier_mean, brier_std,
+        log_loss_mean, log_loss_std, n_samples
     """
     if model_kwargs is None:
         model_kwargs = {}
@@ -345,7 +294,7 @@ def run_kfold_evaluation(
     # Store results
     fold_metrics = []
     fold_models = []
-    phase_metrics_all = []
+    val_predictions_all = []
     resample_skip_warned = set()  # Track which models we've warned about
 
     # Run k-fold CV
@@ -361,7 +310,6 @@ def run_kfold_evaluation(
         X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
         y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
         clusters_train = df.iloc[train_idx]['game_id']
-        clusters_val = df.iloc[val_idx]['game_id']
 
         # Train and evaluate
         # Check if model_class is actually a factory function (for phase ensembles)
@@ -371,16 +319,15 @@ def run_kfold_evaluation(
         else:
             # It's a class, instantiate normally
             model = model_class(random_state=random_state, **model_kwargs)
-        metrics = evaluate_fold(
+        val_turn_progress = df.iloc[val_idx]['turn_progress']
+        metrics, val_preds = evaluate_fold(
             model, X_train, y_train, X_val, y_val,
             clusters_train=clusters_train,
             resample_method=resample_method,
             random_state=random_state,
-            _resample_skip_warned=resample_skip_warned
+            _resample_skip_warned=resample_skip_warned,
+            val_turn_progress=val_turn_progress,
         )
-
-        n_train_games = clusters_train.nunique()
-        n_val_games = clusters_val.nunique()
 
         if verbose:
             # Display train vs validation metrics with overfitting gaps
@@ -401,11 +348,9 @@ def run_kfold_evaluation(
 
         fold_metrics.append(metrics)
         fold_models.append(model)
-
-        # Evaluate by turn phase
-        phase_metrics = evaluate_by_turn_phase(df, X, y, train_idx, val_idx, model, phases)
-        phase_metrics['fold'] = fold_idx
-        phase_metrics_all.append(phase_metrics)
+        if val_preds is not None:
+            val_preds['fold'] = fold_idx
+            val_predictions_all.append(val_preds)
 
     # Aggregate metrics
     if verbose:
@@ -506,33 +451,38 @@ def run_kfold_evaluation(
         if verbose:
             print(f"\nFeature importance saved to: {save_importance_path}")
 
-    # Phase-wise performance
-    if verbose and phase_metrics_all:
-        print("\n" + "=" * 80)
-        print("PERFORMANCE BY GAME PHASE")
-        print("=" * 80)
+    # Compute binned loss by turn_progress
+    binned_loss_df = pd.DataFrame()
+    if val_predictions_all:
+        all_preds = pd.concat(val_predictions_all, ignore_index=True)
+        bins = np.arange(0, 1.1, 0.1)
+        labels = [f"{bins[i]:.1f}-{bins[i+1]:.1f}" for i in range(len(bins) - 1)]
+        all_preds['bin'] = pd.cut(all_preds['turn_progress'], bins=bins, labels=labels, right=False)
 
-        # Get unique phase names
-        phase_names = set()
-        for pm in phase_metrics_all:
-            phase_names.update(k for k in pm.keys() if k != 'fold')
+        # Compute metrics per (fold, bin), then aggregate across folds
+        fold_bin_rows = []
+        for (fold, bin_label), group in all_preds.groupby(['fold', 'bin'], observed=True):
+            if len(group) < 2:
+                continue
+            fold_bin_rows.append({
+                'fold': fold,
+                'turn_progress_bin': bin_label,
+                'brier_score': brier_score_loss(group['y_true'], group['y_pred_proba']),
+                'log_loss': log_loss(group['y_true'], group['y_pred_proba']),
+                'n_samples': len(group),
+            })
 
-        for phase in sorted(phase_names):
-            phase_data = []
-            for pm in phase_metrics_all:
-                if phase in pm:
-                    phase_data.append(pm[phase])
+        if fold_bin_rows:
+            fold_bin_df = pd.DataFrame(fold_bin_rows)
+            binned_loss_df = fold_bin_df.groupby('turn_progress_bin', observed=True).agg(
+                brier_mean=('brier_score', 'mean'),
+                brier_std=('brier_score', 'std'),
+                log_loss_mean=('log_loss', 'mean'),
+                log_loss_std=('log_loss', 'std'),
+                n_samples=('n_samples', 'sum'),
+            ).reset_index()
 
-            if phase_data:
-                phase_df = pd.DataFrame(phase_data)
-                print(f"\n{phase.upper()} game:")
-                print(f"  ROC-AUC: {phase_df['roc_auc'].mean():.4f} ± {phase_df['roc_auc'].std():.4f}")
-                print(f"  Brier Score: {phase_df['brier_score'].mean():.4f} ± {phase_df['brier_score'].std():.4f}")
-                print(f"  Log Loss: {phase_df['log_loss'].mean():.4f} ± {phase_df['log_loss'].std():.4f}")
-                print(f"  Balanced Accuracy: {phase_df['balanced_accuracy'].mean():.4f} ± {phase_df['balanced_accuracy'].std():.4f}")
-                print(f"  Samples: {phase_df['n_samples'].sum()}")
-
-    return summary, feature_importance, fold_models
+    return summary, feature_importance, fold_models, binned_loss_df
 
 
 def run_full_prediction(

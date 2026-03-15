@@ -18,7 +18,6 @@ from .data_utils import (
 
 from .model_evaluator import (
     evaluate_fold,
-    evaluate_by_turn_phase,
     aggregate_feature_importance,
     run_kfold_evaluation
 )
@@ -46,7 +45,6 @@ __all__ = [
 
     # model_evaluator
     'evaluate_fold',
-    'evaluate_by_turn_phase',
     'aggregate_feature_importance',
     'run_kfold_evaluation',
 

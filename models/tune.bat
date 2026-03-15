@@ -1,1 +1,1 @@
-python tune_model.py --model=attention_mlp --full-data --storage sqlite:///output/grouped_mlp.db --metric=log_loss --n-jobs=1
+python tune_model.py --model=attention_mlp --full-data --storage sqlite:///output/attention_mlp.db --metric=log_loss --n-jobs=1
