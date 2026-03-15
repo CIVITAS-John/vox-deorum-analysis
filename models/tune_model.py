@@ -472,12 +472,9 @@ def create_objective(
 
             fold_penalized_values.append(fold_val)
 
-            # Report penalized running mean to Optuna for pruning
-            # Use step after all epoch steps to avoid conflicts
-            max_epochs = params.get('epochs', 0)
-            fold_step = len(cv_splits) * max_epochs + fold_idx if max_epochs > 0 else fold_idx
+            # Report penalized running mean to Optuna for fold-level pruning
             running_mean = np.mean(fold_penalized_values)
-            trial.report(running_mean, fold_step)
+            trial.report(running_mean, fold_idx)
             if trial.should_prune():
                 raise optuna.TrialPruned()
 
